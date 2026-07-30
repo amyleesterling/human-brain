@@ -105,6 +105,41 @@
   .sparkax { display:flex; justify-content:space-between; font-size:10.5px;
     color:var(--faint); margin-top:3px; }
 
+
+  /* ---- the five rhythms -------------------------------------------------- */
+  .waves { background:#090B10; border:1px solid var(--line); border-radius:12px;
+    padding:16px 18px 20px; margin:20px 0 0; }
+  .wtop { display:flex; flex-wrap:wrap; gap:10px 16px; align-items:baseline;
+    justify-content:space-between; margin:0 0 12px; }
+  .whead { font-size:13.5px; color:var(--dim); margin:0; }
+  .whead b { color:var(--ink); font-weight:500; }
+  .wgrid { display:grid; grid-template-columns: 168px minmax(0,1fr); gap:0 14px;
+    align-items:stretch; }
+  @media (max-width:640px){ .wgrid { grid-template-columns: 120px minmax(0,1fr); } }
+  .wlabels { display:flex; flex-direction:column; }
+  .wrow { flex:1; display:flex; align-items:center; gap:7px; font-size:12px;
+    color:var(--dim); border-bottom:1px solid #10141B; }
+  .wrow:last-child { border-bottom:0; }
+  .wrow s { width:9px; height:9px; border-radius:50%; text-decoration:none; flex:0 0 auto; }
+  .wrow b { color:var(--ink); font-weight:500; text-transform:capitalize; }
+  .wrow u { text-decoration:none; color:var(--faint); font-size:10.5px; }
+  .wrow em { font-style:normal; margin-left:auto; color:var(--ink);
+    font-variant-numeric:tabular-nums; font-size:11.5px; }
+  svg.wsvg { display:block; width:100%; height:auto; background:#06080C;
+    border-radius:6px; }
+  .wsvg .wbase { stroke:#141922; stroke-width:1; }
+  .wsvg .wline { fill:none; stroke-width:1.2; vector-effect:non-scaling-stroke; }
+  .bars { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:10px 20px; margin:16px 0 0; }
+  .bgrp { font-size:11.5px; color:var(--dim); }
+  .bname { text-transform:capitalize; color:var(--ink); font-size:12.5px; }
+  .btrack { position:relative; height:16px; margin-top:3px; background:#0D1117;
+    border-radius:3px; overflow:hidden; display:flex; align-items:center; }
+  .btrack i { position:absolute; left:0; top:0; bottom:0; opacity:.55; }
+  .btrack.o i { opacity:.26; }
+  .btrack span { position:relative; padding-left:6px; font-size:10.5px;
+    color:var(--ink); }
+
   .legend { display:flex; flex-wrap:wrap; gap:6px 18px; margin:12px 0 0;
     font-size:12px; color:var(--dim); }
   .legend .lk { display:inline-flex; align-items:center; gap:7px; }
@@ -138,6 +173,39 @@
     <aside class="side" data-panel></aside>
   </section>
 </div>
+
+
+<div class="wide">
+  <section class="waves" id="waves">
+    <div class="wtop">
+      <h2 style="margin:0">The five rhythms</h2>
+      <div class="tabs" role="tablist" aria-label="Eye state" data-state></div>
+    </div>
+    <p class="whead" data-head></p>
+    <div class="wgrid">
+      <div class="wlabels" data-labels></div>
+      <div data-stack></div>
+    </div>
+    <div class="bars" data-bars></div>
+  </section>
+</div>
+
+<main class="wrap">
+  <p class="lede" style="margin-top:18px">Delta, theta, alpha, beta and gamma
+    are not five different recordings. They are one recording, from one channel
+    at the back of one person's head, separated by filtering. All five traces
+    above share a single vertical scale, so the size difference between them is
+    real rather than a drawing choice.</p>
+  <p>Closing the eyes multiplies alpha's share of the total power by
+    <b>4.2</b>. That is Hans Berger's 1929 result, and you can still get it out
+    of a free file in about a second of arithmetic.</p>
+
+  <div class="note"><b>Do not read the eyes-open delta as sleep.</b> Delta
+    takes nearly half the power in the eyes-open trace, and almost all of that
+    is eye movement and blinking rather than cortical delta. Low frequency
+    power on a scalp electrode is the least trustworthy thing on this page, and
+    the filter cannot tell an eyeball from a brain.</div>
+</main>
 
 <main class="wrap">
   <h2>What the picture says</h2>
@@ -222,6 +290,11 @@
 
 <script type="module">
   import { mountScales } from "./js/scales.js";
+  import { mountWaves } from "./js/waves.js";
+  mountWaves(document.getElementById("waves")).catch(function (e) {
+    document.getElementById("waves").querySelector("[data-head]").textContent =
+      "The rhythms did not load. " + e.message;
+  });
   const el = document.getElementById("scales");
   mountScales(el).then(function (h) { window.__scales = h; }).catch(function (e) {
     el.querySelector("[data-panel]").innerHTML =

@@ -131,7 +131,14 @@ export async function mountTracts(el) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 16 / 9, 1, 4000);
-  camera.position.set(420, 90, 130);
+  /* MNI is a right anterior superior frame: x is left to right, y is back to
+     front, and Z IS UP. three.js assumes Y is up, so leaving this alone draws
+     the brain lying on its back with the nose pointing at the ceiling, and
+     orbiting it spins around the wrong axis so a lateral view is unreachable.
+     Telling the camera that up is +Z fixes both: OrbitControls builds its
+     rotation from object.up, so the drag then behaves the way the anatomy
+     says it should. */
+  camera.up.set(0, 0, 1);
   const renderer = makeRenderer(mount);
 
   /* ---- the tracts -------------------------------------------------------
@@ -216,11 +223,23 @@ export async function mountTracts(el) {
   const NV = surfMeta.surface.vertices_per_hemisphere;
   let labelBuf = null;
 
-  const surfMat = () => new THREE.MeshBasicMaterial({
+  /* Lambert, not Basic. An unlit surface is a flat silhouette: the gyri and
+     sulci vanish and a tinted parcellation reads as a smear of colour with no
+     shape under it, which is what made the first version hard to look at.
+     Two lights and a rim give it form without making it shiny, and the cortex
+     is wet tissue rather than plastic so there is no specular here at all. */
+  const surfMat = () => new THREE.MeshLambertMaterial({
     color: 0x9fc4e8, transparent: true, opacity: 0.075,
     side: THREE.FrontSide, depthWrite: false, blending: THREE.AdditiveBlending,
-    vertexColors: false,
+    vertexColors: false, emissive: 0x0a1420,
   });
+  scene.add(new THREE.AmbientLight(0xffffff, 1.35));
+  const key = new THREE.DirectionalLight(0xffffff, 1.15);
+  key.position.set(-500, -260, 420);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9fd0ff, 0.75);
+  rim.position.set(420, 300, -260);
+  scene.add(rim);
 
   await Promise.all(["L", "R"].map((h) => new Promise((res) => {
     loader.load(surfMeta.surface.mesh[h], (g) => {
@@ -253,7 +272,29 @@ export async function mountTracts(el) {
   renderer.domElement.addEventListener("pointerup", () => {
     renderer.domElement.style.cursor = "grab";
   });
-  camera.position.copy(centre).add(new THREE.Vector3(420, 60, 90));
+  /* Named viewpoints, in MNI, so "show me the side" is one tap rather than a
+     drag you have to get lucky with. Anatomy is always drawn from one of
+     these, and hunting for them by orbiting is the thing that made this panel
+     frustrating to use. */
+  const VIEWS = {
+    left: { v: [-1, -0.13, 0.16], label: "Left" },
+    right: { v: [1, -0.13, 0.16], label: "Right" },
+    front: { v: [0.05, 1, 0.14], label: "Front" },
+    back: { v: [0.05, -1, 0.14], label: "Back" },
+    top: { v: [0.02, -0.1, 1], label: "Top" },
+  };
+  const DIST = 430;
+  function setView(k, animate) {
+    const v = VIEWS[k] || VIEWS.left;
+    const d = new THREE.Vector3(...v.v).normalize().multiplyScalar(DIST);
+    camera.position.copy(centre).add(d);
+    controls.target.copy(centre);
+    /* A viewpoint the reader asked for should stay where they put it. */
+    controls.autoRotate = false;
+    controls.update();
+    loop.once();
+  }
+  controls.autoRotateSpeed = 0.42;
 
   const loop = makeLoop(el, (dt) => {
     mat.uniforms.time.value += dt;
@@ -267,6 +308,12 @@ export async function mountTracts(el) {
 
   /* ---- surface colouring ------------------------------------------------ */
   let surfMode = "off";
+  /* How solid the cortex is drawn. A tint you cannot see is not a tint, and a
+     cortex you cannot see through hides the tracts, so this is the reader's
+     choice rather than one number picked for them. */
+  const VEIL = { ghost: 0.30, mid: 0.62, solid: 0.94 };
+  let veil = "mid";
+
   function paintSurface() {
     const set = surfMeta.sets[surfMode];
     ["L", "R"].forEach((h, hi) => {
@@ -280,6 +327,7 @@ export async function mountTracts(el) {
         mesh.material.color.setHex(0x9fc4e8);
         mesh.material.opacity = 0.075;
         mesh.material.blending = THREE.AdditiveBlending;
+        mesh.material.depthWrite = false;
         mesh.geometry.deleteAttribute("color");
         mesh.material.needsUpdate = true;
         return;
@@ -302,7 +350,11 @@ export async function mountTracts(el) {
          Normal blending lets it sit in front of the tracts and be seen
          through, which is what a translucent surface actually does. */
       mesh.material.blending = THREE.NormalBlending;
-      mesh.material.opacity = 0.34;
+      mesh.material.opacity = VEIL[veil];
+      /* A translucent surface must not write depth or it culls the tracts it
+         contains, but at full opacity it should, or the far wall of the brain
+         shows through the near one and the folds stop reading. */
+      mesh.material.depthWrite = veil === "solid";
       mesh.material.needsUpdate = true;
     });
     loop.once();
@@ -428,6 +480,44 @@ export async function mountTracts(el) {
     });
   }
 
+  const viewEl = el.querySelector("[data-view]");
+  if (viewEl) {
+    viewEl.innerHTML = Object.entries(VIEWS).map(([k, v], i) =>
+      `<button type="button" role="tab" data-view-k="${k}"` +
+      ` aria-selected="${i === 0}">${v.label}</button>`).join("") +
+      `<button type="button" data-spin>Spin</button>`;
+    viewEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-view-k]");
+      if (b) {
+        setView(b.dataset.viewK);
+        viewEl.querySelectorAll("[data-view-k]").forEach((x) =>
+          x.setAttribute("aria-selected", String(x === b)));
+        return;
+      }
+      if (e.target.closest("[data-spin]")) {
+        controls.autoRotate = !controls.autoRotate;
+        e.target.closest("[data-spin]")
+          .setAttribute("aria-selected", String(controls.autoRotate));
+      }
+    });
+  }
+
+  const veilEl = el.querySelector("[data-veil]");
+  if (veilEl) {
+    veilEl.innerHTML = [["ghost", "Ghost"], ["mid", "Translucent"],
+                        ["solid", "Solid"]].map(([k, l]) =>
+      `<button type="button" role="tab" data-veil-k="${k}"` +
+      ` aria-selected="${k === veil}">${l}</button>`).join("");
+    veilEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-veil-k]");
+      if (!b) return;
+      veil = b.dataset.veilK;
+      veilEl.querySelectorAll("[data-veil-k]").forEach((x) =>
+        x.setAttribute("aria-selected", String(x === b)));
+      paintSurface();
+    });
+  }
+
   if (speedEl) {
     speedEl.innerHTML = SPEEDS.map((s, i) =>
       `<button type="button" role="tab" data-v="${s.v}" aria-selected="${s.v === 60}">` +
@@ -443,11 +533,12 @@ export async function mountTracts(el) {
     });
   }
 
+  setView("left");
   renderBundles();
   retime();
   showInfo();
   paintSurface();
   if (status) status.textContent = "";
   loop.run();
-  return { loop, meta, mat };
+  return { loop, meta, mat, camera, controls, scene };
 }

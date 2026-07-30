@@ -58,6 +58,12 @@ def cached(url, name):
 
 
 # ------------------------------------------------------------------ EDF ----
+def clean_label(s):
+    """EDF pads channel names to 16 characters. This dataset pads with dots,
+    so the occipital midline channel arrives as "Oz.." and prints that way."""
+    return s.strip().strip(".").strip()
+
+
 def read_edf(path):
     """EDF is a 256 byte header, one 256 byte block per signal, then records of
     int16. Simple enough to read directly rather than take a dependency."""
@@ -196,7 +202,7 @@ def get_eeg():
         band = (ff >= 6) & (ff <= 14)
         peak = float(ff[band][np.argmax(pw[band])])
         out[state] = {
-            "state": state, "channel": key.strip(), "fs": f0,
+            "state": state, "channel": clean_label(key), "fs": f0,
             "alpha_over_theta": round(alpha / theta, 2),
             "alpha_over_beta": round(alpha / beta, 2),
             "peak_Hz": round(peak, 2),
@@ -247,13 +253,105 @@ def get_seeg():
         "title": "Inside a living human hippocampus",
         "source": SEEG_URL, "licence": "CC0",
         "citation": "OpenNeuro ds007095, human stereo EEG.",
-        "channel": picked.strip(), "fs": pf,
+        "channel": clean_label(picked), "fs": pf,
         "x_label": "seconds", "y_label": "microvolts",
         "x": [round(i / pf, 4) for i in range(len(seg))],
         "y": [round(float(v), 1) for v in seg],
         "channel_report": [
             {"channel": a.strip(), "min": round(b, 1), "max": round(c, 1),
              "fraction_at_floor": round(d, 4)} for a, b, c, d in report],
+    }
+
+
+# -------------------------------------------------------------- bands ----
+BANDS = [
+    ("delta", 1.0, 4.0, "Deep sleep, and the slowest thing a scalp can hear."),
+    ("theta", 4.0, 8.0, "Drowsiness and navigation. Sets the windows the faster "
+                        "rhythms are allowed to matter in."),
+    ("alpha", 8.0, 13.0, "The idling rhythm of the back of the head. Present "
+                         "with the eyes closed, gone when they open."),
+    ("beta", 13.0, 30.0, "Alert, engaged, holding still."),
+    ("gamma", 30.0, 45.0, "Fast enough that a single spike can be early or late "
+                          "within one cycle."),
+]
+
+
+def get_bands():
+    """The same one recording, split into the five named rhythms.
+
+    Everything here is one channel of one person: nothing is simulated and no
+    band is drawn from a different source than any other. The bands are the
+    conventional clinical ranges and the power in each is measured, so the
+    reason alpha towers over the rest with the eyes closed is the recording's,
+    not a choice made while drawing it.
+    """
+    from scipy.signal import butter, sosfiltfilt, welch
+
+    out = {}
+    for state, url in EEG.items():
+        sig, fs, units, dur = read_edf(cached(url, f"eegmmidb_S001_{state}.edf"))
+        key = next(k for k in sig if k.replace(".", "").strip().lower() == "oz")
+        x = sig[key]
+        f0 = fs[key]
+        # Analyse a clean stretch away from both ends of the run.
+        seg_full = x[int(5 * f0):int(55 * f0)]
+        ff, pw = welch(seg_full, f0, nperseg=int(4 * f0))
+
+        # 4 seconds is long enough to show four cycles of delta and hundreds of
+        # gamma, which is what makes the pile legible.
+        t0, t1 = int(20 * f0), int(24 * f0)
+        traces, power = {}, {}
+        for name, lo, hi in [(b[0], b[1], b[2]) for b in BANDS]:
+            # Butterworth as second order sections, applied forwards and
+            # backwards so the filter adds no phase shift. A one-directional
+            # filter would slide each band in time against the others and the
+            # stack would be lying about when things happen.
+            sos = butter(4, [lo / (f0 / 2), hi / (f0 / 2)], btype="band",
+                         output="sos")
+            y = sosfiltfilt(sos, seg_full)
+            traces[name] = [round(float(v), 2)
+                            for v in y[t0 - int(5 * f0):t1 - int(5 * f0)]]
+            m = (ff >= lo) & (ff < hi)
+            power[name] = float(np.trapezoid(pw[m], ff[m]))
+
+        tot = sum(power.values())
+        out[state] = {
+            "state": state, "channel": clean_label(key), "fs": f0,
+            "seconds": 4.0,
+            "traces": traces,
+            "power": {k: round(v, 2) for k, v in power.items()},
+            "share": {k: round(100 * v / tot, 1) for k, v in power.items()},
+            "spectrum": {
+                "f": [round(float(v), 2) for v in ff[(ff >= 1) & (ff <= 45)]],
+                "p": [round(float(v), 3) for v in pw[(ff >= 1) & (ff <= 45)]],
+            },
+            "source": url,
+        }
+        sh = out[state]["share"]
+        print(f"  eyes {state:6s} " +
+              "  ".join(f"{k} {sh[k]:5.1f}%" for k in sh))
+
+    ao, ac = out["open"]["share"]["alpha"], out["closed"]["share"]["alpha"]
+    print(f"  alpha share of total power: closed {ac}%, open {ao}%, "
+          f"ratio {ac/ao:.1f}")
+    # The whole point of showing five bands from one recording is that closing
+    # the eyes moves power into exactly one of them.
+    assert ac > ao, (ac, ao)
+    return {
+        "id": "eeg-bands",
+        "title": "The five rhythms, from one recording",
+        "licence": "ODC-BY 1.0",
+        "citation": "PhysioNet EEG Motor Movement/Imagery Database, subject 1, "
+                    "runs 1 and 2. Goldberger et al., Circulation 101:e215 "
+                    "(2000); Schalk et al., IEEE TBME 51:1034 (2004).",
+        "x_label": "seconds", "y_label": "microvolts",
+        "method": "Fourth order Butterworth band pass, applied forwards and "
+                  "backwards so no band is shifted in time against another. "
+                  "Power is the integral of Welch's spectrum over each band.",
+        "bands": [{"name": n, "low_Hz": lo, "high_Hz": hi, "note": d}
+                  for n, lo, hi, d in BANDS],
+        "alpha_share_ratio": round(ac / ao, 1),
+        "states": out,
     }
 
 
@@ -317,13 +415,15 @@ if __name__ == "__main__":
     eeg = get_eeg()
     print("seeg")
     seeg = get_seeg()
+    print("the five rhythms")
+    bands = get_bands()
     print("myelin across the lifespan")
     mye = get_myelin()
     doc = {
         "about": "Real recordings and real measurements of real human brains. "
                  "Each carries its own source, licence and citation, because "
                  "they differ.",
-        "signals": {s["id"]: s for s in (ap, eeg, seeg, mye)},
+        "signals": {s["id"]: s for s in (ap, eeg, bands, seeg, mye)},
     }
     with open(p("data", "signals.json"), "w") as f:
         json.dump(doc, f, separators=(",", ":"))

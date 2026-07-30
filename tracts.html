@@ -165,6 +165,8 @@
 
   <div class="controls">
     <div class="in">
+      <div class="row"><h3>Point of view</h3>
+        <div class="tabs" role="tablist" aria-label="Point of view" data-view></div></div>
       <div class="row"><h3>Bundle family</h3>
         <div class="tabs" role="tablist" aria-label="Bundle family" data-groups></div></div>
       <div class="row"><h3>Pick one</h3>
@@ -173,6 +175,8 @@
         <div class="tabs" role="tablist" aria-label="Conduction velocity" data-speed></div></div>
       <div class="row"><h3>Colour the cortex by</h3>
         <div class="tabs" role="tablist" aria-label="Surface colouring" data-surface></div></div>
+      <div class="row"><h3>How solid the cortex is</h3>
+        <div class="tabs" role="tablist" aria-label="Cortex opacity" data-veil></div></div>
       <p class="info" data-info></p>
       <p class="fallback" data-status></p>
     </div>
@@ -249,7 +253,7 @@
 </main>
 
 <script type="module">
-  import { mountTracts } from "./js/tracts.js";
+  import { mountTracts } from "./js/tracts.js?v=3";
   const el = document.getElementById("tracts");
   mountTracts(el).then(function (h) {
     /* The pane this was built in composites no frames, so requestAnimationFrame
