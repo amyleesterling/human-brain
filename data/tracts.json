@@ -1,0 +1,2328 @@
+{
+ "source": "https://github.com/data-others/atlas/releases/download/hcp1065/hcp1065_avg_tracts_trk.zip",
+ "citation": "Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).",
+ "licence": "CC-BY-SA 4.0",
+ "subjects": 1065,
+ "space": "MNI, via the vox_to_ras affine in each .trk header",
+ "affine": [
+  [
+   -1.0,
+   0.0,
+   0.0,
+   78.0
+  ],
+  [
+   0.0,
+   -1.0,
+   0.0,
+   76.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0,
+   -50.0
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "units": "millimetres, stored as int16 hundredths",
+ "scale": 100,
+ "bin": "data/tracts.bin",
+ "registration_checks": [
+  {
+   "check": "left corticospinal tract is on the left",
+   "passed": true,
+   "detail": "max MNI x = -0.0"
+  },
+  {
+   "check": "left corticospinal tract runs brainstem to vertex",
+   "passed": true,
+   "detail": "MNI z from -53.3 to 80.6"
+  },
+  {
+   "check": "left arcuate is on the left",
+   "passed": true,
+   "detail": "max MNI x = -28.9"
+  },
+  {
+   "check": "left arcuate spans frontal to posterior temporal",
+   "passed": true,
+   "detail": "MNI y from -63.8 to 44.1"
+  },
+  {
+   "check": "corpus callosum crosses the midline",
+   "passed": true,
+   "detail": "MNI x from -64.0 to 60.8"
+  }
+ ],
+ "sampling": "at most 220 streamlines per bundle, each arc length resampled to 28 points. Lengths are measured on every streamline in the atlas, not on the shipped sample.",
+ "bundles": [
+  {
+   "id": "AF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 0,
+   "bytes": 36960,
+   "streamlines_in_atlas": 34156,
+   "length_mm": {
+    "median": 136.5,
+    "p5": 102.9,
+    "p95": 158.5
+   },
+   "mni_bounds": [
+    [
+     -67.1,
+     -63.8,
+     -37.8
+    ],
+    [
+     -28.9,
+     44.1,
+     52.2
+    ]
+   ]
+  },
+  {
+   "id": "AF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 36960,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3356,
+   "length_mm": {
+    "median": 135.1,
+    "p5": 117.6,
+    "p95": 149.7
+   },
+   "mni_bounds": [
+    [
+     25.5,
+     -66.4,
+     -15.9
+    ],
+    [
+     63.0,
+     34.6,
+     57.2
+    ]
+   ]
+  },
+  {
+   "id": "C_FPH_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 73920,
+   "bytes": 36960,
+   "streamlines_in_atlas": 679,
+   "length_mm": {
+    "median": 109.9,
+    "p5": 101.9,
+    "p95": 122.4
+   },
+   "mni_bounds": [
+    [
+     -25.3,
+     -51.4,
+     -29.7
+    ],
+    [
+     -3.8,
+     40.3,
+     35.9
+    ]
+   ]
+  },
+  {
+   "id": "C_FPH_R",
+   "group": "Association",
+   "lines": 142,
+   "points_per_line": 28,
+   "offset": 110880,
+   "bytes": 23856,
+   "streamlines_in_atlas": 142,
+   "length_mm": {
+    "median": 116.3,
+    "p5": 99.5,
+    "p95": 135.6
+   },
+   "mni_bounds": [
+    [
+     0.8,
+     -49.5,
+     -31.0
+    ],
+    [
+     26.1,
+     54.3,
+     41.9
+    ]
+   ]
+  },
+  {
+   "id": "C_FP_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 134736,
+   "bytes": 36960,
+   "streamlines_in_atlas": 10806,
+   "length_mm": {
+    "median": 105.1,
+    "p5": 47.8,
+    "p95": 153.0
+   },
+   "mni_bounds": [
+    [
+     -19.2,
+     -76.5,
+     5.6
+    ],
+    [
+     -1.4,
+     71.3,
+     52.8
+    ]
+   ]
+  },
+  {
+   "id": "C_FP_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 171696,
+   "bytes": 36960,
+   "streamlines_in_atlas": 9146,
+   "length_mm": {
+    "median": 88.5,
+    "p5": 47.0,
+    "p95": 139.2
+   },
+   "mni_bounds": [
+    [
+     -0.2,
+     -71.8,
+     0.8
+    ],
+    [
+     18.2,
+     68.5,
+     61.6
+    ]
+   ]
+  },
+  {
+   "id": "C_PHP_L",
+   "group": "Association",
+   "lines": 74,
+   "points_per_line": 28,
+   "offset": 208656,
+   "bytes": 12432,
+   "streamlines_in_atlas": 74,
+   "length_mm": {
+    "median": 107.1,
+    "p5": 71.3,
+    "p95": 112.5
+   },
+   "mni_bounds": [
+    [
+     -29.7,
+     -79.5,
+     -31.8
+    ],
+    [
+     -4.2,
+     -14.5,
+     52.1
+    ]
+   ]
+  },
+  {
+   "id": "C_PHP_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 221088,
+   "bytes": 36960,
+   "streamlines_in_atlas": 386,
+   "length_mm": {
+    "median": 106.4,
+    "p5": 80.8,
+    "p95": 112.9
+   },
+   "mni_bounds": [
+    [
+     2.1,
+     -76.8,
+     -31.1
+    ],
+    [
+     30.6,
+     -12.3,
+     60.9
+    ]
+   ]
+  },
+  {
+   "id": "C_PH_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 258048,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1022,
+   "length_mm": {
+    "median": 38.6,
+    "p5": 20.0,
+    "p95": 59.6
+   },
+   "mni_bounds": [
+    [
+     -31.6,
+     -54.2,
+     -32.7
+    ],
+    [
+     -10.0,
+     -7.2,
+     17.2
+    ]
+   ]
+  },
+  {
+   "id": "C_PH_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 295008,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1245,
+   "length_mm": {
+    "median": 35.8,
+    "p5": 19.9,
+    "p95": 48.9
+   },
+   "mni_bounds": [
+    [
+     9.2,
+     -49.8,
+     -32.6
+    ],
+    [
+     31.8,
+     -4.6,
+     13.8
+    ]
+   ]
+  },
+  {
+   "id": "C_PO_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 331968,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1356,
+   "length_mm": {
+    "median": 74.8,
+    "p5": 45.0,
+    "p95": 86.9
+   },
+   "mni_bounds": [
+    [
+     -14.8,
+     -41.0,
+     -9.9
+    ],
+    [
+     -2.1,
+     42.5,
+     37.2
+    ]
+   ]
+  },
+  {
+   "id": "C_PO_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 368928,
+   "bytes": 36960,
+   "streamlines_in_atlas": 958,
+   "length_mm": {
+    "median": 108.3,
+    "p5": 97.8,
+    "p95": 131.6
+   },
+   "mni_bounds": [
+    [
+     -0.3,
+     -67.2,
+     -8.8
+    ],
+    [
+     18.8,
+     38.5,
+     53.2
+    ]
+   ]
+  },
+  {
+   "id": "EMC_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 405888,
+   "bytes": 36960,
+   "streamlines_in_atlas": 7265,
+   "length_mm": {
+    "median": 105.9,
+    "p5": 96.8,
+    "p95": 121.6
+   },
+   "mni_bounds": [
+    [
+     -45.5,
+     -54.2,
+     -19.8
+    ],
+    [
+     -16.9,
+     20.2,
+     78.8
+    ]
+   ]
+  },
+  {
+   "id": "EMC_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 442848,
+   "bytes": 36960,
+   "streamlines_in_atlas": 12874,
+   "length_mm": {
+    "median": 99.8,
+    "p5": 91.2,
+    "p95": 116.6
+   },
+   "mni_bounds": [
+    [
+     19.9,
+     -62.3,
+     -18.7
+    ],
+    [
+     45.2,
+     19.5,
+     75.0
+    ]
+   ]
+  },
+  {
+   "id": "FAT_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 479808,
+   "bytes": 36960,
+   "streamlines_in_atlas": 12708,
+   "length_mm": {
+    "median": 86.4,
+    "p5": 72.5,
+    "p95": 97.1
+   },
+   "mni_bounds": [
+    [
+     -64.1,
+     -17.9,
+     -4.9
+    ],
+    [
+     -1.1,
+     38.5,
+     77.4
+    ]
+   ]
+  },
+  {
+   "id": "FAT_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 516768,
+   "bytes": 36960,
+   "streamlines_in_atlas": 5057,
+   "length_mm": {
+    "median": 80.4,
+    "p5": 67.8,
+    "p95": 89.0
+   },
+   "mni_bounds": [
+    [
+     15.2,
+     -9.4,
+     -1.6
+    ],
+    [
+     63.2,
+     37.6,
+     73.6
+    ]
+   ]
+  },
+  {
+   "id": "IFOF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 553728,
+   "bytes": 36960,
+   "streamlines_in_atlas": 30856,
+   "length_mm": {
+    "median": 185.2,
+    "p5": 169.7,
+    "p95": 199.6
+   },
+   "mni_bounds": [
+    [
+     -54.7,
+     -103.9,
+     -22.0
+    ],
+    [
+     -4.2,
+     74.5,
+     44.4
+    ]
+   ]
+  },
+  {
+   "id": "IFOF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 590688,
+   "bytes": 36960,
+   "streamlines_in_atlas": 11167,
+   "length_mm": {
+    "median": 165.5,
+    "p5": 144.1,
+    "p95": 190.0
+   },
+   "mni_bounds": [
+    [
+     6.5,
+     -102.0,
+     -21.3
+    ],
+    [
+     47.2,
+     70.7,
+     52.3
+    ]
+   ]
+  },
+  {
+   "id": "ILF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 627648,
+   "bytes": 36960,
+   "streamlines_in_atlas": 21209,
+   "length_mm": {
+    "median": 121.9,
+    "p5": 67.4,
+    "p95": 136.7
+   },
+   "mni_bounds": [
+    [
+     -61.5,
+     -104.6,
+     -43.1
+    ],
+    [
+     -4.1,
+     19.6,
+     44.6
+    ]
+   ]
+  },
+  {
+   "id": "ILF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 664608,
+   "bytes": 36960,
+   "streamlines_in_atlas": 14596,
+   "length_mm": {
+    "median": 116.5,
+    "p5": 90.3,
+    "p95": 138.0
+   },
+   "mni_bounds": [
+    [
+     7.8,
+     -101.0,
+     -42.2
+    ],
+    [
+     59.6,
+     20.4,
+     51.9
+    ]
+   ]
+  },
+  {
+   "id": "MdLF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 701568,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1674,
+   "length_mm": {
+    "median": 114.4,
+    "p5": 87.9,
+    "p95": 125.5
+   },
+   "mni_bounds": [
+    [
+     -66.4,
+     -69.7,
+     -18.2
+    ],
+    [
+     -10.1,
+     16.4,
+     71.3
+    ]
+   ]
+  },
+  {
+   "id": "MdLF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 738528,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3244,
+   "length_mm": {
+    "median": 101.9,
+    "p5": 83.9,
+    "p95": 116.8
+   },
+   "mni_bounds": [
+    [
+     22.2,
+     -67.5,
+     -5.8
+    ],
+    [
+     69.6,
+     11.5,
+     67.6
+    ]
+   ]
+  },
+  {
+   "id": "PAT_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 775488,
+   "bytes": 36960,
+   "streamlines_in_atlas": 4357,
+   "length_mm": {
+    "median": 60.6,
+    "p5": 50.5,
+    "p95": 69.5
+   },
+   "mni_bounds": [
+    [
+     -67.6,
+     -77.8,
+     -15.2
+    ],
+    [
+     -34.3,
+     -37.2,
+     47.2
+    ]
+   ]
+  },
+  {
+   "id": "PAT_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 812448,
+   "bytes": 36960,
+   "streamlines_in_atlas": 6213,
+   "length_mm": {
+    "median": 56.0,
+    "p5": 45.7,
+    "p95": 66.6
+   },
+   "mni_bounds": [
+    [
+     35.0,
+     -74.2,
+     -16.3
+    ],
+    [
+     65.3,
+     -34.4,
+     44.5
+    ]
+   ]
+  },
+  {
+   "id": "SLF1_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 849408,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2514,
+   "length_mm": {
+    "median": 89.0,
+    "p5": 65.8,
+    "p95": 113.5
+   },
+   "mni_bounds": [
+    [
+     -21.5,
+     -72.6,
+     27.5
+    ],
+    [
+     1.0,
+     47.9,
+     66.3
+    ]
+   ]
+  },
+  {
+   "id": "SLF1_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 886368,
+   "bytes": 36960,
+   "streamlines_in_atlas": 4668,
+   "length_mm": {
+    "median": 112.5,
+    "p5": 70.3,
+    "p95": 127.7
+   },
+   "mni_bounds": [
+    [
+     -0.2,
+     -54.4,
+     32.5
+    ],
+    [
+     18.8,
+     46.0,
+     81.5
+    ]
+   ]
+  },
+  {
+   "id": "SLF2_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 923328,
+   "bytes": 36960,
+   "streamlines_in_atlas": 12687,
+   "length_mm": {
+    "median": 96.5,
+    "p5": 45.0,
+    "p95": 112.6
+   },
+   "mni_bounds": [
+    [
+     -60.4,
+     -63.2,
+     9.3
+    ],
+    [
+     -14.2,
+     57.3,
+     76.9
+    ]
+   ]
+  },
+  {
+   "id": "SLF2_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 960288,
+   "bytes": 36960,
+   "streamlines_in_atlas": 11528,
+   "length_mm": {
+    "median": 115.2,
+    "p5": 77.0,
+    "p95": 146.9
+   },
+   "mni_bounds": [
+    [
+     16.0,
+     -68.5,
+     -5.6
+    ],
+    [
+     59.6,
+     65.6,
+     70.9
+    ]
+   ]
+  },
+  {
+   "id": "SLF3_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 997248,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2637,
+   "length_mm": {
+    "median": 70.6,
+    "p5": 46.1,
+    "p95": 86.3
+   },
+   "mni_bounds": [
+    [
+     -67.2,
+     -54.8,
+     1.3
+    ],
+    [
+     -35.0,
+     11.0,
+     50.1
+    ]
+   ]
+  },
+  {
+   "id": "SLF3_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1034208,
+   "bytes": 36960,
+   "streamlines_in_atlas": 17028,
+   "length_mm": {
+    "median": 65.8,
+    "p5": 42.0,
+    "p95": 99.9
+   },
+   "mni_bounds": [
+    [
+     22.7,
+     -55.9,
+     1.3
+    ],
+    [
+     62.6,
+     20.8,
+     62.6
+    ]
+   ]
+  },
+  {
+   "id": "UF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1071168,
+   "bytes": 36960,
+   "streamlines_in_atlas": 5672,
+   "length_mm": {
+    "median": 82.2,
+    "p5": 54.3,
+    "p95": 92.9
+   },
+   "mni_bounds": [
+    [
+     -47.0,
+     -7.7,
+     -35.1
+    ],
+    [
+     -11.3,
+     58.6,
+     2.9
+    ]
+   ]
+  },
+  {
+   "id": "UF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1108128,
+   "bytes": 36960,
+   "streamlines_in_atlas": 9425,
+   "length_mm": {
+    "median": 88.2,
+    "p5": 72.0,
+    "p95": 96.4
+   },
+   "mni_bounds": [
+    [
+     8.3,
+     -8.7,
+     -36.1
+    ],
+    [
+     42.4,
+     62.8,
+     -2.3
+    ]
+   ]
+  },
+  {
+   "id": "VOF_L",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1145088,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1756,
+   "length_mm": {
+    "median": 46.6,
+    "p5": 30.8,
+    "p95": 59.3
+   },
+   "mni_bounds": [
+    [
+     -46.0,
+     -97.3,
+     -14.2
+    ],
+    [
+     -14.5,
+     -66.3,
+     42.6
+    ]
+   ]
+  },
+  {
+   "id": "VOF_R",
+   "group": "Association",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1182048,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1074,
+   "length_mm": {
+    "median": 37.4,
+    "p5": 30.4,
+    "p95": 47.3
+   },
+   "mni_bounds": [
+    [
+     20.0,
+     -95.1,
+     -10.3
+    ],
+    [
+     43.7,
+     -68.3,
+     34.1
+    ]
+   ]
+  },
+  {
+   "id": "CB_L",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1219008,
+   "bytes": 36960,
+   "streamlines_in_atlas": 68195,
+   "length_mm": {
+    "median": 58.4,
+    "p5": 34.9,
+    "p95": 70.4
+   },
+   "mni_bounds": [
+    [
+     -56.6,
+     -91.7,
+     -47.1
+    ],
+    [
+     -2.3,
+     -30.6,
+     -3.3
+    ]
+   ]
+  },
+  {
+   "id": "CB_R",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1255968,
+   "bytes": 36960,
+   "streamlines_in_atlas": 22777,
+   "length_mm": {
+    "median": 56.7,
+    "p5": 37.0,
+    "p95": 72.4
+   },
+   "mni_bounds": [
+    [
+     2.4,
+     -91.2,
+     -50.2
+    ],
+    [
+     55.9,
+     -31.0,
+     -1.2
+    ]
+   ]
+  },
+  {
+   "id": "ICP_L",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1292928,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3003,
+   "length_mm": {
+    "median": 74.5,
+    "p5": 50.5,
+    "p95": 89.9
+   },
+   "mni_bounds": [
+    [
+     -29.6,
+     -87.9,
+     -51.3
+    ],
+    [
+     -0.1,
+     -37.7,
+     -3.5
+    ]
+   ]
+  },
+  {
+   "id": "ICP_R",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1329888,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2315,
+   "length_mm": {
+    "median": 77.2,
+    "p5": 47.3,
+    "p95": 89.9
+   },
+   "mni_bounds": [
+    [
+     -0.8,
+     -89.8,
+     -51.3
+    ],
+    [
+     27.2,
+     -32.2,
+     -3.7
+    ]
+   ]
+  },
+  {
+   "id": "MCP",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1366848,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2780,
+   "length_mm": {
+    "median": 93.6,
+    "p5": 58.0,
+    "p95": 125.2
+   },
+   "mni_bounds": [
+    [
+     -34.2,
+     -88.6,
+     -47.9
+    ],
+    [
+     36.2,
+     -12.6,
+     -2.4
+    ]
+   ]
+  },
+  {
+   "id": "SCP",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1403808,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2847,
+   "length_mm": {
+    "median": 53.0,
+    "p5": 46.4,
+    "p95": 58.1
+   },
+   "mni_bounds": [
+    [
+     -16.7,
+     -64.0,
+     -38.6
+    ],
+    [
+     14.9,
+     -11.7,
+     -0.3
+    ]
+   ]
+  },
+  {
+   "id": "V",
+   "group": "Cerebellum",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1440768,
+   "bytes": 36960,
+   "streamlines_in_atlas": 4775,
+   "length_mm": {
+    "median": 57.9,
+    "p5": 32.1,
+    "p95": 115.0
+   },
+   "mni_bounds": [
+    [
+     -52.2,
+     -78.2,
+     -50.6
+    ],
+    [
+     40.3,
+     -40.5,
+     -27.2
+    ]
+   ]
+  },
+  {
+   "id": "AC",
+   "group": "Commissural",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1477728,
+   "bytes": 36960,
+   "streamlines_in_atlas": 10302,
+   "length_mm": {
+    "median": 273.5,
+    "p5": 136.4,
+    "p95": 283.6
+   },
+   "mni_bounds": [
+    [
+     -44.2,
+     -103.4,
+     -43.8
+    ],
+    [
+     42.2,
+     72.5,
+     13.8
+    ]
+   ]
+  },
+  {
+   "id": "CC",
+   "group": "Commissural",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1514688,
+   "bytes": 36960,
+   "streamlines_in_atlas": 32200,
+   "length_mm": {
+    "median": 131.3,
+    "p5": 93.0,
+    "p95": 188.1
+   },
+   "mni_bounds": [
+    [
+     -64.0,
+     -102.8,
+     -43.8
+    ],
+    [
+     60.8,
+     74.4,
+     79.7
+    ]
+   ]
+  },
+  {
+   "id": "CNIII_L",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1551648,
+   "bytes": 36960,
+   "streamlines_in_atlas": 7888,
+   "length_mm": {
+    "median": 40.1,
+    "p5": 38.3,
+    "p95": 41.8
+   },
+   "mni_bounds": [
+    [
+     -15.3,
+     -32.6,
+     -28.7
+    ],
+    [
+     -0.4,
+     0.6,
+     -13.5
+    ]
+   ]
+  },
+  {
+   "id": "CNIII_R",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1588608,
+   "bytes": 36960,
+   "streamlines_in_atlas": 11476,
+   "length_mm": {
+    "median": 38.0,
+    "p5": 17.0,
+    "p95": 40.8
+   },
+   "mni_bounds": [
+    [
+     -1.0,
+     -32.3,
+     -26.2
+    ],
+    [
+     14.0,
+     -0.9,
+     -14.1
+    ]
+   ]
+  },
+  {
+   "id": "CNII_L",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1625568,
+   "bytes": 36960,
+   "streamlines_in_atlas": 508,
+   "length_mm": {
+    "median": 54.5,
+    "p5": 48.4,
+    "p95": 61.0
+   },
+   "mni_bounds": [
+    [
+     -27.2,
+     -36.1,
+     -23.3
+    ],
+    [
+     6.8,
+     7.9,
+     -2.6
+    ]
+   ]
+  },
+  {
+   "id": "CNII_R",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1662528,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1804,
+   "length_mm": {
+    "median": 56.5,
+    "p5": 49.0,
+    "p95": 62.5
+   },
+   "mni_bounds": [
+    [
+     -7.3,
+     -36.5,
+     -22.8
+    ],
+    [
+     27.3,
+     7.7,
+     2.5
+    ]
+   ]
+  },
+  {
+   "id": "CNVIII_L",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1699488,
+   "bytes": 36960,
+   "streamlines_in_atlas": 332,
+   "length_mm": {
+    "median": 58.3,
+    "p5": 46.9,
+    "p95": 64.5
+   },
+   "mni_bounds": [
+    [
+     -26.3,
+     -62.4,
+     -42.5
+    ],
+    [
+     1.7,
+     -29.2,
+     -2.7
+    ]
+   ]
+  },
+  {
+   "id": "CNVIII_R",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1736448,
+   "bytes": 36960,
+   "streamlines_in_atlas": 273,
+   "length_mm": {
+    "median": 54.7,
+    "p5": 47.0,
+    "p95": 62.0
+   },
+   "mni_bounds": [
+    [
+     0.0,
+     -61.4,
+     -42.6
+    ],
+    [
+     26.5,
+     -30.2,
+     -3.4
+    ]
+   ]
+  },
+  {
+   "id": "CNVII_L",
+   "group": "Cranial nerve",
+   "lines": 61,
+   "points_per_line": 28,
+   "offset": 1773408,
+   "bytes": 10248,
+   "streamlines_in_atlas": 61,
+   "length_mm": {
+    "median": 30.1,
+    "p5": 30.0,
+    "p95": 33.1
+   },
+   "mni_bounds": [
+    [
+     -39.1,
+     -41.6,
+     -42.4
+    ],
+    [
+     -8.3,
+     -23.4,
+     -34.1
+    ]
+   ]
+  },
+  {
+   "id": "CNVII_R",
+   "group": "Cranial nerve",
+   "lines": 54,
+   "points_per_line": 28,
+   "offset": 1783656,
+   "bytes": 9072,
+   "streamlines_in_atlas": 54,
+   "length_mm": {
+    "median": 33.0,
+    "p5": 30.0,
+    "p95": 33.4
+   },
+   "mni_bounds": [
+    [
+     9.2,
+     -41.7,
+     -42.2
+    ],
+    [
+     39.2,
+     -24.0,
+     -33.8
+    ]
+   ]
+  },
+  {
+   "id": "CNV_L",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1792728,
+   "bytes": 36960,
+   "streamlines_in_atlas": 320,
+   "length_mm": {
+    "median": 32.0,
+    "p5": 25.0,
+    "p95": 44.0
+   },
+   "mni_bounds": [
+    [
+     -21.8,
+     -47.2,
+     -50.9
+    ],
+    [
+     -1.2,
+     -14.5,
+     -28.4
+    ]
+   ]
+  },
+  {
+   "id": "CNV_R",
+   "group": "Cranial nerve",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1829688,
+   "bytes": 36960,
+   "streamlines_in_atlas": 565,
+   "length_mm": {
+    "median": 32.1,
+    "p5": 28.1,
+    "p95": 40.4
+   },
+   "mni_bounds": [
+    [
+     1.5,
+     -46.7,
+     -46.6
+    ],
+    [
+     22.1,
+     -14.9,
+     -27.2
+    ]
+   ]
+  },
+  {
+   "id": "AR_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1866648,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2252,
+   "length_mm": {
+    "median": 57.1,
+    "p5": 50.0,
+    "p95": 66.1
+   },
+   "mni_bounds": [
+    [
+     -40.1,
+     -56.6,
+     -7.2
+    ],
+    [
+     -5.6,
+     -19.6,
+     31.2
+    ]
+   ]
+  },
+  {
+   "id": "AR_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1903608,
+   "bytes": 36960,
+   "streamlines_in_atlas": 654,
+   "length_mm": {
+    "median": 50.0,
+    "p5": 38.1,
+    "p95": 60.1
+   },
+   "mni_bounds": [
+    [
+     8.5,
+     -52.0,
+     -6.0
+    ],
+    [
+     38.5,
+     -20.5,
+     33.0
+    ]
+   ]
+  },
+  {
+   "id": "CBT_L",
+   "group": "Projection",
+   "lines": 165,
+   "points_per_line": 28,
+   "offset": 1940568,
+   "bytes": 27720,
+   "streamlines_in_atlas": 165,
+   "length_mm": {
+    "median": 125.4,
+    "p5": 117.3,
+    "p95": 129.1
+   },
+   "mni_bounds": [
+    [
+     -60.8,
+     -39.0,
+     -52.8
+    ],
+    [
+     -0.2,
+     15.3,
+     30.1
+    ]
+   ]
+  },
+  {
+   "id": "CBT_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 1968288,
+   "bytes": 36960,
+   "streamlines_in_atlas": 631,
+   "length_mm": {
+    "median": 126.1,
+    "p5": 120.1,
+    "p95": 129.3
+   },
+   "mni_bounds": [
+    [
+     -1.2,
+     -38.2,
+     -52.9
+    ],
+    [
+     63.0,
+     14.8,
+     34.1
+    ]
+   ]
+  },
+  {
+   "id": "CPT_F_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2005248,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1038,
+   "length_mm": {
+    "median": 117.7,
+    "p5": 100.1,
+    "p95": 132.2
+   },
+   "mni_bounds": [
+    [
+     -44.7,
+     -35.2,
+     -45.5
+    ],
+    [
+     1.1,
+     63.8,
+     73.1
+    ]
+   ]
+  },
+  {
+   "id": "CPT_F_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2042208,
+   "bytes": 36960,
+   "streamlines_in_atlas": 4576,
+   "length_mm": {
+    "median": 118.2,
+    "p5": 102.9,
+    "p95": 131.1
+   },
+   "mni_bounds": [
+    [
+     -0.4,
+     -34.0,
+     -45.8
+    ],
+    [
+     47.7,
+     60.9,
+     74.0
+    ]
+   ]
+  },
+  {
+   "id": "CPT_O_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2079168,
+   "bytes": 36960,
+   "streamlines_in_atlas": 324,
+   "length_mm": {
+    "median": 121.4,
+    "p5": 105.6,
+    "p95": 136.0
+   },
+   "mni_bounds": [
+    [
+     -47.4,
+     -95.0,
+     -48.1
+    ],
+    [
+     -0.3,
+     -15.0,
+     44.9
+    ]
+   ]
+  },
+  {
+   "id": "CPT_O_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2116128,
+   "bytes": 36960,
+   "streamlines_in_atlas": 242,
+   "length_mm": {
+    "median": 113.1,
+    "p5": 104.0,
+    "p95": 128.2
+   },
+   "mni_bounds": [
+    [
+     2.1,
+     -92.3,
+     -46.3
+    ],
+    [
+     49.0,
+     -14.9,
+     55.8
+    ]
+   ]
+  },
+  {
+   "id": "CPT_P_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2153088,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3064,
+   "length_mm": {
+    "median": 124.7,
+    "p5": 110.3,
+    "p95": 142.9
+   },
+   "mni_bounds": [
+    [
+     -32.2,
+     -69.0,
+     -51.3
+    ],
+    [
+     -0.4,
+     -6.1,
+     77.5
+    ]
+   ]
+  },
+  {
+   "id": "CPT_P_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2190048,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3393,
+   "length_mm": {
+    "median": 124.1,
+    "p5": 108.3,
+    "p95": 139.6
+   },
+   "mni_bounds": [
+    [
+     1.2,
+     -60.8,
+     -51.2
+    ],
+    [
+     40.0,
+     -2.6,
+     80.5
+    ]
+   ]
+  },
+  {
+   "id": "CST_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2227008,
+   "bytes": 36960,
+   "streamlines_in_atlas": 5577,
+   "length_mm": {
+    "median": 134.3,
+    "p5": 123.4,
+    "p95": 141.1
+   },
+   "mni_bounds": [
+    [
+     -49.6,
+     -38.2,
+     -53.3
+    ],
+    [
+     -0.0,
+     7.6,
+     80.6
+    ]
+   ]
+  },
+  {
+   "id": "CST_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2263968,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2397,
+   "length_mm": {
+    "median": 132.6,
+    "p5": 124.1,
+    "p95": 138.5
+   },
+   "mni_bounds": [
+    [
+     -1.1,
+     -38.3,
+     -53.5
+    ],
+    [
+     51.6,
+     6.2,
+     80.0
+    ]
+   ]
+  },
+  {
+   "id": "CS_A_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2300928,
+   "bytes": 36960,
+   "streamlines_in_atlas": 959,
+   "length_mm": {
+    "median": 50.0,
+    "p5": 35.0,
+    "p95": 65.1
+   },
+   "mni_bounds": [
+    [
+     -50.1,
+     -8.1,
+     -19.0
+    ],
+    [
+     -1.0,
+     68.9,
+     49.5
+    ]
+   ]
+  },
+  {
+   "id": "CS_A_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2337888,
+   "bytes": 36960,
+   "streamlines_in_atlas": 734,
+   "length_mm": {
+    "median": 46.0,
+    "p5": 35.2,
+    "p95": 65.0
+   },
+   "mni_bounds": [
+    [
+     1.8,
+     -1.1,
+     -18.7
+    ],
+    [
+     50.2,
+     67.1,
+     50.4
+    ]
+   ]
+  },
+  {
+   "id": "CS_P_L",
+   "group": "Projection",
+   "lines": 123,
+   "points_per_line": 28,
+   "offset": 2374848,
+   "bytes": 20664,
+   "streamlines_in_atlas": 123,
+   "length_mm": {
+    "median": 76.0,
+    "p5": 66.2,
+    "p95": 90.1
+   },
+   "mni_bounds": [
+    [
+     -36.1,
+     -81.7,
+     -7.2
+    ],
+    [
+     -10.0,
+     -0.3,
+     67.9
+    ]
+   ]
+  },
+  {
+   "id": "CS_P_R",
+   "group": "Projection",
+   "lines": 165,
+   "points_per_line": 28,
+   "offset": 2395512,
+   "bytes": 27720,
+   "streamlines_in_atlas": 165,
+   "length_mm": {
+    "median": 72.3,
+    "p5": 60.7,
+    "p95": 87.0
+   },
+   "mni_bounds": [
+    [
+     7.3,
+     -91.6,
+     -5.8
+    ],
+    [
+     51.4,
+     -10.8,
+     62.4
+    ]
+   ]
+  },
+  {
+   "id": "CS_S_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2423232,
+   "bytes": 36960,
+   "streamlines_in_atlas": 954,
+   "length_mm": {
+    "median": 55.1,
+    "p5": 36.0,
+    "p95": 75.0
+   },
+   "mni_bounds": [
+    [
+     -59.8,
+     -48.2,
+     -6.6
+    ],
+    [
+     -0.8,
+     40.0,
+     73.7
+    ]
+   ]
+  },
+  {
+   "id": "CS_S_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2460192,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1077,
+   "length_mm": {
+    "median": 55.0,
+    "p5": 36.0,
+    "p95": 75.1
+   },
+   "mni_bounds": [
+    [
+     3.4,
+     -52.8,
+     -5.5
+    ],
+    [
+     59.9,
+     39.8,
+     72.5
+    ]
+   ]
+  },
+  {
+   "id": "DRTT_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2497152,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3698,
+   "length_mm": {
+    "median": 152.1,
+    "p5": 136.7,
+    "p95": 161.1
+   },
+   "mni_bounds": [
+    [
+     -28.2,
+     -67.8,
+     -39.9
+    ],
+    [
+     14.4,
+     41.3,
+     78.3
+    ]
+   ]
+  },
+  {
+   "id": "DRTT_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2534112,
+   "bytes": 36960,
+   "streamlines_in_atlas": 6984,
+   "length_mm": {
+    "median": 140.6,
+    "p5": 124.2,
+    "p95": 154.7
+   },
+   "mni_bounds": [
+    [
+     -16.7,
+     -70.4,
+     -38.0
+    ],
+    [
+     27.8,
+     50.6,
+     77.8
+    ]
+   ]
+  },
+  {
+   "id": "F_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2571072,
+   "bytes": 36960,
+   "streamlines_in_atlas": 600,
+   "length_mm": {
+    "median": 110.1,
+    "p5": 70.5,
+    "p95": 125.9
+   },
+   "mni_bounds": [
+    [
+     -36.7,
+     -62.0,
+     -28.6
+    ],
+    [
+     0.1,
+     7.9,
+     19.0
+    ]
+   ]
+  },
+  {
+   "id": "F_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2608032,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2633,
+   "length_mm": {
+    "median": 104.0,
+    "p5": 75.7,
+    "p95": 119.5
+   },
+   "mni_bounds": [
+    [
+     -0.9,
+     -53.0,
+     -29.8
+    ],
+    [
+     36.6,
+     7.8,
+     20.5
+    ]
+   ]
+  },
+  {
+   "id": "ML_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2644992,
+   "bytes": 36960,
+   "streamlines_in_atlas": 6621,
+   "length_mm": {
+    "median": 137.5,
+    "p5": 124.8,
+    "p95": 145.0
+   },
+   "mni_bounds": [
+    [
+     -28.6,
+     -55.1,
+     -51.2
+    ],
+    [
+     -2.2,
+     -12.7,
+     80.6
+    ]
+   ]
+  },
+  {
+   "id": "ML_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2681952,
+   "bytes": 36960,
+   "streamlines_in_atlas": 5817,
+   "length_mm": {
+    "median": 137.6,
+    "p5": 120.7,
+    "p95": 146.2
+   },
+   "mni_bounds": [
+    [
+     1.3,
+     -47.3,
+     -51.4
+    ],
+    [
+     27.6,
+     -13.7,
+     79.9
+    ]
+   ]
+  },
+  {
+   "id": "OR_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2718912,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1968,
+   "length_mm": {
+    "median": 107.1,
+    "p5": 97.6,
+    "p95": 122.2
+   },
+   "mni_bounds": [
+    [
+     -42.8,
+     -102.8,
+     -12.8
+    ],
+    [
+     -2.1,
+     -18.6,
+     15.7
+    ]
+   ]
+  },
+  {
+   "id": "OR_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2755872,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1235,
+   "length_mm": {
+    "median": 101.6,
+    "p5": 93.1,
+    "p95": 109.0
+   },
+   "mni_bounds": [
+    [
+     5.3,
+     -103.3,
+     -12.7
+    ],
+    [
+     38.1,
+     -19.8,
+     16.5
+    ]
+   ]
+  },
+  {
+   "id": "RST_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2792832,
+   "bytes": 36960,
+   "streamlines_in_atlas": 2382,
+   "length_mm": {
+    "median": 140.3,
+    "p5": 128.3,
+    "p95": 152.2
+   },
+   "mni_bounds": [
+    [
+     -51.7,
+     -49.5,
+     -51.2
+    ],
+    [
+     0.1,
+     73.0,
+     64.7
+    ]
+   ]
+  },
+  {
+   "id": "RST_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2829792,
+   "bytes": 36960,
+   "streamlines_in_atlas": 3249,
+   "length_mm": {
+    "median": 139.7,
+    "p5": 129.7,
+    "p95": 151.6
+   },
+   "mni_bounds": [
+    [
+     -3.0,
+     -47.8,
+     -51.2
+    ],
+    [
+     54.8,
+     70.5,
+     64.3
+    ]
+   ]
+  },
+  {
+   "id": "TR_A_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2866752,
+   "bytes": 36960,
+   "streamlines_in_atlas": 602,
+   "length_mm": {
+    "median": 75.1,
+    "p5": 60.2,
+    "p95": 85.3
+   },
+   "mni_bounds": [
+    [
+     -49.6,
+     -17.4,
+     -17.7
+    ],
+    [
+     -0.5,
+     70.3,
+     47.5
+    ]
+   ]
+  },
+  {
+   "id": "TR_A_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2903712,
+   "bytes": 36960,
+   "streamlines_in_atlas": 414,
+   "length_mm": {
+    "median": 75.1,
+    "p5": 60.1,
+    "p95": 90.2
+   },
+   "mni_bounds": [
+    [
+     0.7,
+     -25.2,
+     -16.3
+    ],
+    [
+     47.8,
+     67.5,
+     48.7
+    ]
+   ]
+  },
+  {
+   "id": "TR_P_L",
+   "group": "Projection",
+   "lines": 84,
+   "points_per_line": 28,
+   "offset": 2940672,
+   "bytes": 14112,
+   "streamlines_in_atlas": 84,
+   "length_mm": {
+    "median": 66.1,
+    "p5": 55.0,
+    "p95": 83.3
+   },
+   "mni_bounds": [
+    [
+     -43.6,
+     -90.6,
+     -1.4
+    ],
+    [
+     -8.9,
+     -20.2,
+     62.9
+    ]
+   ]
+  },
+  {
+   "id": "TR_P_R",
+   "group": "Projection",
+   "lines": 94,
+   "points_per_line": 28,
+   "offset": 2954784,
+   "bytes": 15792,
+   "streamlines_in_atlas": 94,
+   "length_mm": {
+    "median": 72.0,
+    "p5": 60.1,
+    "p95": 84.3
+   },
+   "mni_bounds": [
+    [
+     9.3,
+     -90.6,
+     -1.5
+    ],
+    [
+     40.4,
+     -13.4,
+     63.3
+    ]
+   ]
+  },
+  {
+   "id": "TR_S_L",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 2970576,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1210,
+   "length_mm": {
+    "median": 64.1,
+    "p5": 45.3,
+    "p95": 78.1
+   },
+   "mni_bounds": [
+    [
+     -59.4,
+     -56.8,
+     -1.5
+    ],
+    [
+     -2.8,
+     42.1,
+     75.0
+    ]
+   ]
+  },
+  {
+   "id": "TR_S_R",
+   "group": "Projection",
+   "lines": 220,
+   "points_per_line": 28,
+   "offset": 3007536,
+   "bytes": 36960,
+   "streamlines_in_atlas": 1159,
+   "length_mm": {
+    "median": 60.2,
+    "p5": 48.1,
+    "p95": 75.1
+   },
+   "mni_bounds": [
+    [
+     4.5,
+     -59.0,
+     -1.5
+    ],
+    [
+     60.4,
+     45.3,
+     73.2
+    ]
+   ]
+  }
+ ]
+}

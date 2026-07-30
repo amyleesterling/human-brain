@@ -3,3 +3,4 @@ node_modules/
 scratch/
 *.pyc
 __pycache__/
+.cache/

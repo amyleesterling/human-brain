@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The white matter, and a signal running through it</title>
+<meta name="description" content="87 named white matter bundles from the HCP1065 population-averaged tractography atlas, inside the Human Connectome Project's group-average cortical surface, with a signal whose travel time is computed from each tract's real length.">
+<meta property="og:title" content="The white matter, and a signal running through it">
+<meta property="og:description" content="87 real white matter bundles from 1,065 Human Connectome Project subjects, with signal transit times computed from real tract lengths.">
+<meta property="og:url" content="https://amyleesterling.github.io/human-brain/tracts.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}
+</script>
+<style>
+  :root {
+    --ink: #EFF2F7; --dim: #9AA2B1; --faint: #666E7C;
+    --ground: #07080B; --panel: #0F1218; --line: #1D222B;
+    --edge: #4A5568; --accent: #3E96F0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 17px/1.7 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px,5vw,32px) 90px; }
+  h1 { margin: 0 0 8px; font-size: clamp(21px,4.6vw,30px); font-weight: 500;
+       letter-spacing: -.015em; text-wrap: balance; }
+  h2 { margin: 52px 0 12px; font-size: 13px; font-weight: 500; letter-spacing: .12em;
+       text-transform: uppercase; color: var(--faint); }
+  p { margin: 0 0 15px; }
+  a { color: var(--accent); }
+  code { font: 400 .88em/1 ui-monospace, Consolas, monospace; color: #b9c6d6; }
+  .lede { color: var(--dim); font-size: 15px; margin: 0; }
+  .cite { margin: 26px 0 0; padding: 16px 18px; background: var(--panel);
+    border-radius: 10px; font-size: 14.5px; color: var(--dim); line-height: 1.62; }
+  .cite .t { color: var(--ink); display: block; margin-bottom: 6px; }
+  .cite a { text-decoration: none; } .cite a:hover { text-decoration: underline; }
+  .note { font-size: 14.5px; color: var(--dim); border-left: 2px solid var(--line);
+    padding: 2px 0 2px 16px; margin: 22px 0; }
+  .note b { color: var(--ink); font-weight: 500; }
+
+  .stage { background: var(--ground); }
+  .stage .viewport { position: relative; }
+  .stage .canvas { height: min(76vh, 780px); min-height: 380px; width: 100%; }
+
+  .heropanel {
+    position: absolute; z-index: 3; isolation: isolate;
+    top: clamp(14px,3.6vw,40px); left: 50%; transform: translateX(-50%);
+    width: min(640px, calc(100% - 32px));
+    background: linear-gradient(178deg, rgba(13,26,45,.80), rgba(7,14,26,.86) 62%, rgba(6,12,22,.90));
+    border: 1px solid rgba(122,186,246,.26); border-radius: 3px;
+    backdrop-filter: blur(9px) saturate(1.15);
+    -webkit-backdrop-filter: blur(9px) saturate(1.15);
+    box-shadow: 0 0 0 1px rgba(6,12,22,.55), 0 18px 54px rgba(0,0,0,.62),
+                0 0 40px rgba(62,150,240,.10);
+  }
+  .heropanel::before { content:""; position:absolute; left:9%; right:9%; top:-1px; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(150,212,255,.85) 22%,
+      rgba(214,240,255,1) 50%, rgba(150,212,255,.85) 78%, transparent);
+    box-shadow: 0 0 11px rgba(120,196,255,.62); }
+  .heropanel::after { content:""; position:absolute; inset:0; pointer-events:none; border-radius:3px;
+    background-image: repeating-linear-gradient(0deg, rgba(158,210,255,.035) 0 1px, transparent 1px 3px); }
+  .heropanel .inner { position: relative; z-index: 1;
+    padding: clamp(18px,2.7vw,26px) clamp(18px,3vw,30px) clamp(16px,2.4vw,22px); }
+  .heropanel i.tick { position:absolute; width:11px; height:11px; pointer-events:none;
+    border: 0 solid rgba(150,208,252,.55); }
+  .heropanel i.tl { top:6px; left:6px; border-top-width:1px; border-left-width:1px; }
+  .heropanel i.tr { top:6px; right:6px; border-top-width:1px; border-right-width:1px; }
+  .heropanel i.bl { bottom:6px; left:6px; border-bottom-width:1px; border-left-width:1px; }
+  .heropanel i.br { bottom:6px; right:6px; border-bottom-width:1px; border-right-width:1px; }
+  @media (min-width: 1000px) {
+    .heropanel { left: clamp(24px,5vw,76px); transform: none; top: 50%;
+      translate: 0 -50%; width: min(500px, 44%); }
+  }
+  @media (max-width: 760px) {
+    .heropanel { position: static; transform: none; width: auto; border-left: 0;
+      border-right: 0; border-radius: 0; backdrop-filter: none;
+      -webkit-backdrop-filter: none; box-shadow: none; }
+    .heropanel::before { left: 0; right: 0; }
+    .heropanel i.tick { display: none; }
+    .stage .canvas { height: min(56vh, 420px); }
+  }
+
+  .eyebrow { display:flex; align-items:center; gap:9px; margin:0 0 12px;
+    font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(140,190,240,.9); }
+  .eyebrow s { width:5px; height:5px; border-radius:50%; flex:0 0 auto;
+    background: rgb(120,205,255); box-shadow: 0 0 8px rgba(120,205,255,.9); text-decoration:none; }
+  .eyebrow u { flex:1 1 auto; height:5px; text-decoration:none;
+    background-image: repeating-linear-gradient(90deg, rgba(140,196,246,.42) 0 1px, transparent 1px 7px); }
+
+  .controls { border-top: 1px solid var(--line); background: #090B10; }
+  .controls .in { max-width: 1100px; margin: 0 auto; padding: 16px clamp(16px,5vw,32px) 22px; }
+  .row { margin: 0 0 14px; }
+  .row > h3 { margin: 0 0 7px; font-size: 10px; font-weight: 500; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tabs button { appearance:none; background:transparent; color:var(--dim);
+    border:1px solid var(--line); border-radius:999px; padding:6px 14px;
+    font:inherit; font-size:13.5px; cursor:pointer;
+    transition: color .15s, border-color .15s, background .15s; }
+  .tabs button u { display:block; text-decoration:none; font-size:10.5px; color:var(--faint); }
+  .tabs button:hover { color:var(--ink); border-color:var(--edge); }
+  .tabs button[aria-selected="true"] { color:#cfe6ff; border-color:rgba(122,186,246,.55);
+    background:rgba(62,150,240,.10); }
+
+  .bundles { display:flex; flex-wrap:wrap; gap:6px; max-height:184px; overflow-y:auto;
+    scrollbar-width:thin; padding-right:4px; }
+  .bundles .lg { appearance:none; display:inline-flex; align-items:center; gap:8px;
+    background:transparent; border:1px solid var(--line); border-radius:6px;
+    color:var(--dim); font:inherit; font-size:12.5px; padding:5px 10px; cursor:pointer;
+    transition: border-color .15s, color .15s, background .15s; }
+  .bundles .lg s { width:9px; height:9px; border-radius:50%; flex:0 0 auto; text-decoration:none; }
+  .bundles .lg em { font-style:normal; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .bundles .lg:hover { color:var(--ink); border-color:var(--edge); }
+  .bundles .lg[aria-pressed="true"] { color:var(--ink);
+    border-color: color-mix(in srgb, var(--cc) 60%, transparent);
+    background: color-mix(in srgb, var(--cc) 14%, transparent); }
+
+  .info { margin: 14px 0 0; font-size: 13.5px; color: var(--dim); }
+  .info b { color: var(--ink); font-weight: 500; }
+  .pill { display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px;
+    border:1px solid color-mix(in srgb, var(--cc,#4aa6ff) 55%, transparent);
+    color:var(--ink); background: color-mix(in srgb, var(--cc,#4aa6ff) 14%, transparent);
+    vertical-align: 2px; }
+  .rows { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:2px 24px; margin:10px 0 0; }
+  .rows > div { display:flex; justify-content:space-between; gap:12px; padding:5px 0;
+    border-bottom:1px solid #12151C; }
+  .rows dt { margin:0; color:var(--dim); }
+  .rows dd { margin:0; color:var(--ink); font-variant-numeric:tabular-nums; }
+  /* micrometres and millimetres must not be shouted into MM */
+  .rows dd u, .tabs button u { text-transform: none; text-decoration: none;
+    color: var(--faint); font-size: 11.5px; }
+  .fallback { color: var(--faint); font-size: 14px; margin: 8px 0 0; }
+
+  footer { border-top:1px solid var(--line); color:var(--faint); font-size:13.5px;
+    padding:26px 0 0; margin:56px 0 0; }
+  footer a { color: var(--dim); }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="stage" id="tracts">
+  <div class="viewport">
+    <div class="canvas" data-mount></div>
+    <div class="heropanel">
+      <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      <div class="inner">
+        <p class="eyebrow"><s></s><span>HCP1065 &middot; 1,065 people</span><u></u></p>
+        <h1>The white matter, and a signal running through it</h1>
+        <p class="lede">Eighty seven named cable bundles, averaged over a
+          thousand Human Connectome Project brains, inside that project's own
+          average cortex. The pulses are not decoration: each one is timed by
+          how long its tract really is and how fast you set the signal to
+          travel.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="in">
+      <div class="row"><h3>Bundle family</h3>
+        <div class="tabs" role="tablist" aria-label="Bundle family" data-groups></div></div>
+      <div class="row"><h3>Pick one</h3>
+        <div class="bundles" data-bundles></div></div>
+      <div class="row"><h3>Conduction velocity</h3>
+        <div class="tabs" role="tablist" aria-label="Conduction velocity" data-speed></div></div>
+      <div class="row"><h3>Colour the cortex by</h3>
+        <div class="tabs" role="tablist" aria-label="Surface colouring" data-surface></div></div>
+      <p class="info" data-info></p>
+      <p class="fallback" data-status></p>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="cite">
+    <span class="t">Tractography</span>
+    Yeh FC. <i>Population-based tract-to-region connectome of the human brain.</i>
+    Nature Communications <b>13</b>, 4933 (2022).
+    <a href="https://doi.org/10.1038/s41467-022-32595-4">doi.org/10.1038/s41467-022-32595-4</a>.
+    HCP1065 atlas, CC-BY-SA 4.0.<br>
+    <span class="t" style="margin-top:10px">Cortical surface</span>
+    Van Essen DC, Smith SM, Barch DM, Behrens TEJ, Yacoub E, Ugurbil K.
+    <i>The WU-Minn Human Connectome Project: an overview.</i>
+    NeuroImage <b>80</b>, 62 (2013). S1200 group average, fs_LR 32k, MSMAll.<br>
+    <span class="t" style="margin-top:10px">Resting state networks</span>
+    Yeo BTT, Krienen FM, Sepulcre J, et al. <i>The organization of the human
+    cerebral cortex estimated by intrinsic functional connectivity.</i>
+    J Neurophysiol <b>106</b>, 1125 (2011). Parcellation
+    <a href="https://doi.org/10.1152/jn.00338.2011">doi.org/10.1152/jn.00338.2011</a>.
+  </div>
+
+  <h2>How the two were put in one place</h2>
+  <p>The tracts and the cortex come from different files in different spaces,
+    and lining them up by eye would have been the easiest thing on this page to
+    get wrong and the hardest to notice. They are aligned instead by the affine
+    carried inside the tractography's own file header, which maps a streamline
+    point to MNI coordinates exactly.</p>
+  <p>The build script then refuses to write anything unless five anatomical
+    facts come out right: the left corticospinal tract has to land on the left,
+    it has to run from the brainstem to the top of the head, the left arcuate
+    has to arch from frontal to posterior temporal on the left, and the corpus
+    callosum has to cross the midline. If the affine were wrong, those fail
+    loudly rather than the page quietly drawing a brain inside out.</p>
+
+  <h2>Why the animation is a measurement</h2>
+  <p>Every point on every streamline carries how far along its own tract it
+    sits, in millimetres, measured from the real geometry. The shader turns
+    that into an arrival time by dividing by the conduction velocity you
+    choose. So the corticospinal tract, at 133 millimetres, genuinely takes
+    longer to cross than a short cingulum segment, in the correct ratio, and
+    changing the velocity changes every transit time in the scene at once.</p>
+  <p>This is the one place in the brain where being big does not mean being
+    slow. A metre of axon crossed in a hundredth of a second is what myelin
+    buys, and it is why the impulse sits so far off the diagonal that every
+    other biological process lies on.</p>
+
+  <div class="note"><b>What tractography is not.</b> These are not axons. They
+    are the paths a reconstruction algorithm found by following how water
+    diffuses, averaged over 1,065 people. The algorithm can bridge fibres that
+    do not connect and miss ones that do, and nothing in a tractogram says
+    which way a bundle carries signal. What is solid here is that these are the
+    named, replicated bundles of human white matter, in the right places, at
+    the right lengths.</div>
+
+  <div class="note"><b>Colours on the cortex.</b> The resting state networks
+    and the 360 region parcellation are the real published label maps, vertex
+    by vertex. The colours assigned to them here are generated to be evenly
+    spaced and distinguishable, not copied from those papers' own palettes, so
+    do not read a colour on this page as the colour that network is usually
+    drawn in.</div>
+
+  <footer>
+    <p><a href="./">Back to the cubic millimetre</a> &middot;
+      Source: <a href="https://github.com/amyleesterling/human-brain">github.com/amyleesterling/human-brain</a>.
+      Built by <a href="https://x.com/amyneurons">Amy Sterling</a>.</p>
+    <p>The tractography, the surface and the parcellations are the work of the
+      groups cited above and were released publicly by them. Please cite their
+      papers, not this page.</p>
+  </footer>
+</main>
+
+<script type="module">
+  import { mountTracts } from "./js/tracts.js";
+  const el = document.getElementById("tracts");
+  mountTracts(el).then(function (h) {
+    /* The pane this was built in composites no frames, so requestAnimationFrame
+       never fires and there is no way to observe the scene except by driving it
+       by hand. Keeping the handle costs nothing and is the only way to check
+       the animation is a function of the real tract lengths. */
+    window.__tracts = h;
+  }).catch(function (e) {
+    const s = el.querySelector("[data-status]");
+    if (s) s.textContent = "The tracts did not load. " + e.message;
+    throw e;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+/* The white matter, and a signal running through it.
+ *
+ * WHAT IS REAL HERE. Every streamline is from the HCP1065 population-averaged
+ * tractography atlas, 87 named bundles averaged over 1,065 Human Connectome
+ * Project subjects (Yeh, Nat Commun 13:4933, 2022, CC-BY-SA 4.0). The cortical
+ * surface is the HCP S1200 group average, fs_LR 32k, MSMAll registered. The
+ * two are brought into one space by the affine in the tractography's own file
+ * header, and scripts/fetch_hcp.py refuses to write the data at all unless the
+ * left corticospinal tract comes out on the left running brainstem to vertex,
+ * the left arcuate comes out arching frontal to temporal, and the corpus
+ * callosum crosses the midline.
+ *
+ * WHAT THE ANIMATION IS. Not decoration, and not a guess. Each vertex carries
+ * how far along its own streamline it sits, in millimetres, measured from the
+ * real geometry. The shader turns that into an arrival time by dividing by a
+ * conduction velocity you choose. So a long tract genuinely takes longer than
+ * a short one, in the correct ratio, and changing the velocity changes every
+ * transit time in the scene at once. The number printed beside a bundle is
+ * that division done on its real median length.
+ *
+ * WHAT IT IS NOT. Tractography is an inference from how water diffuses, not a
+ * picture of axons. These are the paths a reconstruction algorithm found in a
+ * population average. They are not the 1,065 people's actual fibres, and no
+ * tractogram distinguishes which direction a bundle carries signal.
+ */
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { REDUCED, makeRenderer, fitRenderer, makeLoop, fmt } from "./holo3d.js";
+
+const GROUP_COLOR = {
+  "Association": "#3E96F0",
+  "Projection": "#FFB24D",
+  "Commissural": "#B884FF",
+  "Cerebellum": "#3FE3B0",
+  "Cranial nerve": "#FF5C7A",
+};
+
+/* The named bundles worth calling out by name, because an acronym list is not
+ * a page. Everything not in here still draws and still labels with its
+ * atlas id; this only adds English where there is English to add. */
+const NAMED = {
+  AF: "Arcuate fasciculus", CST: "Corticospinal tract", CC: "Corpus callosum",
+  AC: "Anterior commissure", IFOF: "Inferior fronto-occipital fasciculus",
+  ILF: "Inferior longitudinal fasciculus", UF: "Uncinate fasciculus",
+  OR: "Optic radiation", AR: "Acoustic radiation", F: "Fornix",
+  ML: "Medial lemniscus", MCP: "Middle cerebellar peduncle",
+  SCP: "Superior cerebellar peduncle", ICP: "Inferior cerebellar peduncle",
+  VOF: "Vertical occipital fasciculus", FAT: "Frontal aslant tract",
+  MdLF: "Middle longitudinal fasciculus", EMC: "Extreme capsule",
+  SLF1: "Superior longitudinal fasciculus I",
+  SLF2: "Superior longitudinal fasciculus II",
+  SLF3: "Superior longitudinal fasciculus III",
+  CBT: "Corticobulbar tract", RST: "Rubrospinal tract",
+  DRTT: "Dentatorubrothalamic tract", CB: "Cerebellum",
+  CNII: "Optic nerve", CNIII: "Oculomotor nerve", CNV: "Trigeminal nerve",
+  CNVII: "Facial nerve", CNVIII: "Vestibulocochlear nerve",
+};
+
+function prettyName(id) {
+  const m = /^([A-Za-z_0-9]+?)(_[LR])?$/.exec(id);
+  const stem = m ? m[1] : id;
+  const side = m && m[2] ? (m[2] === "_L" ? " (left)" : " (right)") : "";
+  const base = NAMED[stem] || NAMED[stem.split("_")[0]];
+  return (base ? base : id.replace(/_/g, " ")) + side;
+}
+
+/* Conduction velocities that actually occur in human white matter. The slow
+ * end is unmyelinated fibre, the fast end the largest myelinated ones. */
+const SPEEDS = [
+  { v: 1, label: "1 m/s", note: "unmyelinated" },
+  { v: 10, label: "10 m/s", note: "thinly myelinated" },
+  { v: 60, label: "60 m/s", note: "typical large myelinated fibre" },
+  { v: 120, label: "120 m/s", note: "the fastest in the body" },
+];
+
+const VERT = `
+attribute float cum;      // millimetres along this streamline
+attribute vec3 acolor;
+attribute float bundle;
+uniform float uBundle;    // -1 for all
+uniform float vmm;        // conduction velocity, mm per second
+uniform float slow;       // how many times slower than real this is shown
+uniform float time;
+uniform float period;
+uniform float pulse;      // 0 = no pulse, static lines
+varying vec3 vcolor;
+varying float vlit;
+varying float vdrop;
+void main() {
+  vcolor = acolor;
+  vdrop = (uBundle < 0.0 || abs(bundle - uBundle) < 0.5) ? 0.0 : 1.0;
+  // Arrival time at this point, from the real distance along the real
+  // streamline divided by the chosen velocity. This is the whole physics.
+  // The slow factor stretches the clock and nothing else: it cannot change
+  // the ratio between two tracts, only how long you get to watch it.
+  float arrival = (cum / vmm) * slow;
+  float g = fract((time - arrival) / period);
+  // a short bright head with a tail behind it
+  float head = smoothstep(0.10, 0.0, g) + 0.35 * smoothstep(0.30, 0.05, g);
+  vlit = mix(1.0, head, pulse);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}`;
+
+const FRAG = `
+varying vec3 vcolor;
+varying float vlit;
+varying float vdrop;
+uniform float base;
+uniform float dim;
+void main() {
+  if (vdrop > 0.5) discard;
+  gl_FragColor = vec4(vcolor * (base + vlit), dim * (base + vlit) * 0.9);
+}`;
+
+export async function mountTracts(el) {
+  const mount = el.querySelector("[data-mount]");
+  const status = el.querySelector("[data-status]");
+  const groupsEl = el.querySelector("[data-groups]");
+  const bundleEl = el.querySelector("[data-bundles]");
+  const surfEl = el.querySelector("[data-surface]");
+  const speedEl = el.querySelector("[data-speed]");
+  const infoEl = el.querySelector("[data-info]");
+  if (!mount) return;
+
+  if (status) status.textContent = "Loading 87 white matter bundles";
+  const meta = await fetch("data/tracts.json").then((r) => r.json());
+  const buf = await fetch(meta.bin).then((r) => r.arrayBuffer());
+  const surfMeta = await fetch("data/surface.json").then((r) => r.json());
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 16 / 9, 1, 4000);
+  camera.position.set(420, 90, 130);
+  const renderer = makeRenderer(mount);
+
+  /* ---- the tracts -------------------------------------------------------
+     One geometry for all 87 bundles. 18,122 streamlines at 28 points each is
+     489,258 line segments, which is one draw call and no per-bundle state; a
+     bundle is hidden by an attribute the shader reads, not by a second mesh. */
+  const K = meta.bundles[0].points_per_line;
+  const totalLines = meta.bundles.reduce((s, b) => s + b.lines, 0);
+  const segs = totalLines * (K - 1);
+  const pos = new Float32Array(segs * 2 * 3);
+  const cum = new Float32Array(segs * 2);
+  const col = new Float32Array(segs * 2 * 3);
+  const bid = new Float32Array(segs * 2);
+
+  const centre = new THREE.Vector3();
+  let w = 0, nv = 0;
+  meta.bundles.forEach((b, bi) => {
+    const c = new THREE.Color(GROUP_COLOR[b.group] || "#8b94a3");
+    const q = new Int16Array(buf, b.offset, b.lines * K * 3);
+    for (let l = 0; l < b.lines; l++) {
+      let run = 0;
+      const o = l * K * 3;
+      for (let k = 0; k < K - 1; k++) {
+        const a0 = o + k * 3, a1 = o + (k + 1) * 3;
+        const x0 = q[a0] / meta.scale, y0 = q[a0 + 1] / meta.scale, z0 = q[a0 + 2] / meta.scale;
+        const x1 = q[a1] / meta.scale, y1 = q[a1 + 1] / meta.scale, z1 = q[a1 + 2] / meta.scale;
+        const d = Math.hypot(x1 - x0, y1 - y0, z1 - z0);
+        pos[w] = x0; pos[w + 1] = y0; pos[w + 2] = z0;
+        pos[w + 3] = x1; pos[w + 4] = y1; pos[w + 5] = z1;
+        col[w] = c.r; col[w + 1] = c.g; col[w + 2] = c.b;
+        col[w + 3] = c.r; col[w + 4] = c.g; col[w + 5] = c.b;
+        cum[nv] = run; cum[nv + 1] = run + d;
+        bid[nv] = bi; bid[nv + 1] = bi;
+        run += d;
+        w += 6; nv += 2;
+      }
+    }
+  });
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geom.setAttribute("acolor", new THREE.BufferAttribute(col, 3));
+  geom.setAttribute("cum", new THREE.BufferAttribute(cum, 1));
+  geom.setAttribute("bundle", new THREE.BufferAttribute(bid, 1));
+  geom.computeBoundingSphere();
+  centre.copy(geom.boundingSphere.center);
+
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: VERT, fragmentShader: FRAG,
+    uniforms: {
+      time: { value: 0 }, vmm: { value: 60000 }, period: { value: 2.4 },
+      /* A real impulse crosses the whole corticospinal tract in 2.2 ms. Shown
+         at life speed the entire white matter would flash at once and there
+         would be nothing to see, so the clock is stretched by a fixed factor
+         and the page says so. The factor is the same for every tract and every
+         velocity, so every ratio on screen is still the real one. */
+      slow: { value: 300 },
+      pulse: { value: REDUCED ? 0 : 1 }, uBundle: { value: -1 },
+      /* 489,258 additively blended segments stacked over one brain sum
+         straight to white, and a saturated scene cannot show a pulse at all:
+         measured, the lit fraction moved by 0.01 per cent across a whole
+         cycle. These two were set by reading the framebuffer back until the
+         resting state was dim and the pulse had somewhere to go. */
+      base: { value: 0.09 }, dim: { value: 0.16 },
+    },
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  });
+  const lines = new THREE.LineSegments(geom, mat);
+  scene.add(lines);
+
+  /* ---- the cortex -------------------------------------------------------
+     A glass shell around the tracts. FrontSide with depthWrite off, or a
+     translucent surface culls everything it contains. */
+  const loader = new GLTFLoader();
+  const draco = new DRACOLoader();
+  draco.setDecoderPath("vendor/three/addons/libs/draco/gltf/");
+  loader.setDRACOLoader(draco);
+
+  const cortex = new THREE.Group();
+  scene.add(cortex);
+  const hemis = {};
+  const NV = surfMeta.surface.vertices_per_hemisphere;
+  let labelBuf = null;
+
+  const surfMat = () => new THREE.MeshBasicMaterial({
+    color: 0x9fc4e8, transparent: true, opacity: 0.075,
+    side: THREE.FrontSide, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexColors: false,
+  });
+
+  await Promise.all(["L", "R"].map((h) => new Promise((res) => {
+    loader.load(surfMeta.surface.mesh[h], (g) => {
+      const m = g.scene.getObjectByProperty("isMesh", true);
+      if (!m) return res();
+      const mesh = new THREE.Mesh(m.geometry, surfMat());
+      mesh.renderOrder = 2;
+      hemis[h] = mesh;
+      cortex.add(mesh);
+      res();
+    }, undefined, () => res());
+  })));
+
+  labelBuf = await fetch(surfMeta.bin).then((r) => r.arrayBuffer());
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.copy(centre);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enablePan = false;
+  controls.minDistance = 120;
+  controls.maxDistance = 900;
+  controls.autoRotate = !REDUCED;
+  controls.autoRotateSpeed = 0.5;
+  renderer.domElement.style.cursor = "grab";
+  renderer.domElement.addEventListener("pointerdown", () => {
+    controls.autoRotate = false;
+    renderer.domElement.style.cursor = "grabbing";
+  });
+  renderer.domElement.addEventListener("pointerup", () => {
+    renderer.domElement.style.cursor = "grab";
+  });
+  camera.position.copy(centre).add(new THREE.Vector3(420, 60, 90));
+
+  const loop = makeLoop(el, (dt) => {
+    mat.uniforms.time.value += dt;
+    controls.update();
+    renderer.render(scene, camera);
+  });
+  fitRenderer(renderer, camera, mount);
+  new ResizeObserver(() => {
+    if (fitRenderer(renderer, camera, mount)) loop.once();
+  }).observe(mount);
+
+  /* ---- surface colouring ------------------------------------------------ */
+  let surfMode = "off";
+  function paintSurface() {
+    const set = surfMeta.sets[surfMode];
+    ["L", "R"].forEach((h, hi) => {
+      const mesh = hemis[h];
+      if (!mesh) return;
+      if (!set) {
+        /* Untinted, the shell is barely there and additive is right: it reads
+           as a faint glow around the tracts rather than a wall in front of
+           them. */
+        mesh.material.vertexColors = false;
+        mesh.material.color.setHex(0x9fc4e8);
+        mesh.material.opacity = 0.075;
+        mesh.material.blending = THREE.AdditiveBlending;
+        mesh.geometry.deleteAttribute("color");
+        mesh.material.needsUpdate = true;
+        return;
+      }
+      const lab = new Uint16Array(labelBuf, set.offset + hi * NV * 2, NV);
+      const c = new Float32Array(NV * 3);
+      for (let i = 0; i < NV; i++) {
+        const v = lab[i];
+        /* Label 0 is the medial wall, which is not a network and must not be
+           given a colour as though it were one. */
+        const col3 = v === 0 ? [0.10, 0.12, 0.16] : labelColor(v, set);
+        c[i * 3] = col3[0]; c[i * 3 + 1] = col3[1]; c[i * 3 + 2] = col3[2];
+      }
+      mesh.geometry.setAttribute("color", new THREE.BufferAttribute(c, 3));
+      mesh.material.vertexColors = true;
+      mesh.material.color.setHex(0xffffff);
+      /* A tinted shell has to be a skin, not a lamp. Additively blended at
+         this opacity it sums with every tract behind it and the whole brain
+         goes white: measured, 2.2 per cent of the frame was fully saturated.
+         Normal blending lets it sit in front of the tracts and be seen
+         through, which is what a translucent surface actually does. */
+      mesh.material.blending = THREE.NormalBlending;
+      mesh.material.opacity = 0.34;
+      mesh.material.needsUpdate = true;
+    });
+    loop.once();
+  }
+
+  /* Distinct hues around the wheel. The Yeo networks have canonical colours in
+     their own label tables, but those tables are not carried in the packed
+     binary, so this generates a stable, evenly spaced set instead and says so
+     rather than pretending to be the published palette. */
+  function labelColor(v, set) {
+    const n = Math.max(2, set.n_regions);
+    const h = (v * 0.6180339887) % 1;
+    const c = new THREE.Color().setHSL(h, n > 40 ? 0.55 : 0.62, n > 40 ? 0.55 : 0.6);
+    return [c.r, c.g, c.b];
+  }
+
+  /* ---- controls ---------------------------------------------------------- */
+  let activeGroup = "all", activeBundle = -1;
+
+  function bundleList() {
+    return meta.bundles
+      .map((b, i) => ({ ...b, i }))
+      .filter((b) => activeGroup === "all" || b.group === activeGroup);
+  }
+
+  function renderBundles() {
+    if (!bundleEl) return;
+    bundleEl.innerHTML = bundleList().map((b) =>
+      `<button type="button" class="lg" data-b="${b.i}"` +
+      ` aria-pressed="${activeBundle === b.i}"` +
+      ` style="--cc:${GROUP_COLOR[b.group]}"><s style="background:${GROUP_COLOR[b.group]}"></s>` +
+      `<span>${prettyName(b.id)}</span><em>${fmt(b.length_mm.median)} mm</em></button>`
+    ).join("");
+  }
+
+  /* Keep roughly one pulse in flight. The longest tract on screen decides how
+     long a cycle has to be; without this, a slow velocity puts a dozen bands
+     on one tract at once and a fast one leaves the scene empty most of the
+     time. This changes only how often the pulse repeats, never how fast it
+     travels, which is the part that is a measurement. */
+  function retime() {
+    const vis = bundleList();
+    const longest = activeBundle >= 0
+      ? meta.bundles[activeBundle].length_mm.p95
+      : Math.max(...vis.map((b) => b.length_mm.p95));
+    const shown = (longest / mat.uniforms.vmm.value) * mat.uniforms.slow.value;
+    mat.uniforms.period.value = Math.min(9, Math.max(1.4, shown * 1.45));
+  }
+
+  function showInfo() {
+    if (!infoEl) return;
+    const v = mat.uniforms.vmm.value / 1000;
+    const slow = mat.uniforms.slow.value;
+    if (activeBundle < 0) {
+      const tot = meta.bundles.reduce((s, b) => s + b.streamlines_in_atlas, 0);
+      infoEl.innerHTML =
+        `<b>${meta.bundles.length}</b> named bundles from <b>${fmt(meta.subjects)}</b> ` +
+        `people. The atlas holds ${fmt(tot)} streamlines; this page draws ` +
+        `${fmt(totalLines)} of them. Pick one to see how long a signal takes to cross it.`;
+      return;
+    }
+    const b = meta.bundles[activeBundle];
+    const ms = (L) => (L / (v * 1000)) * 1000;
+    infoEl.innerHTML =
+      `<b>${prettyName(b.id)}</b> <span class="pill" style="--cc:${GROUP_COLOR[b.group]}">${b.group}</span>` +
+      `<div class="rows">` +
+      `<div><dt>Median length</dt><dd>${fmt(b.length_mm.median)} <u>mm</u></dd></div>` +
+      `<div><dt>Range, 5th to 95th</dt><dd>${fmt(b.length_mm.p5)} to ${fmt(b.length_mm.p95)} <u>mm</u></dd></div>` +
+      `<div><dt>Streamlines in the atlas</dt><dd>${fmt(b.streamlines_in_atlas)}</dd></div>` +
+      `<div><dt>Drawn here</dt><dd>${fmt(b.lines)}</dd></div>` +
+      `<div><dt>Crossing time at ${v} m/s</dt><dd>${ms(b.length_mm.median).toFixed(ms(b.length_mm.median) < 10 ? 2 : 1)} <u>ms</u></dd></div>` +
+      `</div>` +
+      `<p class="slowline">Shown <b>${fmt(slow)} times slower</b> than real. ` +
+      `At life speed this crossing would be over before the screen had ` +
+      `finished drawing one frame.</p>`;
+  }
+
+  if (groupsEl) {
+    const gs = ["all", ...Object.keys(GROUP_COLOR)];
+    groupsEl.innerHTML = gs.map((g, i) =>
+      `<button type="button" role="tab" data-g="${g}" aria-selected="${i === 0}">` +
+      `${g === "all" ? "Every bundle" : g}</button>`).join("");
+    groupsEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-g]");
+      if (!b) return;
+      activeGroup = b.dataset.g;
+      activeBundle = -1;
+      mat.uniforms.uBundle.value = -1;
+      groupsEl.querySelectorAll("[data-g]").forEach((x) =>
+        x.setAttribute("aria-selected", String(x === b)));
+      renderBundles(); retime(); showInfo(); loop.once();
+    });
+  }
+
+  if (bundleEl) {
+    bundleEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-b]");
+      if (!b) return;
+      const i = +b.dataset.b;
+      activeBundle = activeBundle === i ? -1 : i;
+      mat.uniforms.uBundle.value = activeBundle;
+      /* One bundle on its own is a hundredth of the ink, so it has to be
+         drawn brighter or selecting a tract looks like turning it off. */
+      mat.uniforms.dim.value = activeBundle < 0 ? 0.16 : 0.75;
+      renderBundles(); retime(); showInfo(); loop.once();
+    });
+  }
+
+  if (surfEl) {
+    const opts = [["off", "No surface tint"],
+                  ["yeo7", "Resting state networks, 7"],
+                  ["yeo17", "Resting state networks, 17"],
+                  ["glasser", "HCP-MMP1, 360 regions"]];
+    surfEl.innerHTML = opts.map(([k, l], i) =>
+      `<button type="button" role="tab" data-s="${k}" aria-selected="${i === 0}">${l}</button>`).join("");
+    surfEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-s]");
+      if (!b) return;
+      surfMode = b.dataset.s;
+      surfEl.querySelectorAll("[data-s]").forEach((x) =>
+        x.setAttribute("aria-selected", String(x === b)));
+      paintSurface();
+    });
+  }
+
+  if (speedEl) {
+    speedEl.innerHTML = SPEEDS.map((s, i) =>
+      `<button type="button" role="tab" data-v="${s.v}" aria-selected="${s.v === 60}">` +
+      `${s.label}<u>${s.note}</u></button>`).join("");
+    speedEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-v]");
+      if (!b) return;
+      mat.uniforms.vmm.value = +b.dataset.v * 1000;
+      retime();
+      speedEl.querySelectorAll("[data-v]").forEach((x) =>
+        x.setAttribute("aria-selected", String(x === b)));
+      showInfo(); loop.once();
+    });
+  }
+
+  renderBundles();
+  retime();
+  showInfo();
+  paintSurface();
+  if (status) status.textContent = "";
+  loop.run();
+  return { loop, meta, mat };
+}

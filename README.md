@@ -3,7 +3,9 @@
 Human brain data, rendered from the public releases, with the provenance of
 every number kept attached to it.
 
-**Live: https://amyleesterling.github.io/human-brain/**
+**Live:**
+- [A cubic millimetre of human brain](https://amyleesterling.github.io/human-brain/), H01 cell by cell
+- [The white matter, and a signal running through it](https://amyleesterling.github.io/human-brain/tracts.html), HCP tractography and the cortical surface
 
 The first page is **H01**, the cubic millimetre of human temporal cortex imaged
 by serial section electron microscopy by the Lichtman laboratory at Harvard and
@@ -46,6 +48,45 @@ scripts/draco.sh      compresses the meshes, run last
 vendor/three/         three.js, vendored rather than pulled from a CDN
 ```
 
+## Page two: the Human Connectome Project
+
+`tracts.html` steps back about eight orders of magnitude from the first page.
+
+- **87 named white matter bundles** from the HCP1065 population-averaged
+  tractography atlas, 1,065 subjects, CC-BY-SA 4.0.
+  Yeh FC, *Nat Commun* **13**, 4933 (2022).
+- **The HCP S1200 group-average cortical surface**, fs_LR 32k, MSMAll,
+  32,492 vertices per hemisphere.
+- **Functional parcellations on that surface**: the Yeo 7 and 17 resting state
+  networks (Yeo et al., *J Neurophysiol* **106**, 1125, 2011) and the Glasser
+  HCP-MMP1 360 region parcellation.
+
+Everything is openly downloadable with no account and no data use agreement.
+
+**Registration is exact, not eyeballed.** The tracts and the surface arrive in
+different spaces. They are aligned by the affine carried inside each `.trk`
+header, and `fetch_hcp.py` refuses to write the index unless five anatomical
+facts hold: the left corticospinal tract lands on the left, it runs from the
+brainstem to the vertex, the left arcuate arches frontal to posterior temporal
+on the left, and the corpus callosum crosses the midline.
+
+**The animation is a measurement.** Every vertex carries how far along its own
+streamline it sits, in millimetres, from the real geometry. The shader divides
+that by a conduction velocity you pick to get an arrival time, so a 134 mm
+corticospinal tract genuinely takes longer to cross than a short cingulum
+segment, in the correct ratio. A fixed slow-motion factor stretches the clock
+so there is something to watch, and the page states the factor: at 60 m/s a
+real crossing takes 2.24 ms, which is faster than one screen refresh.
+
+## Staged, not yet a page
+
+`data/scales-source.json` and `data/scale-anchors.json` are the beginning of a
+third page: the brain across every spatial and temporal scale, from an ion
+channel opening in microseconds to a cortex thinning over decades. Every entry
+is tagged `measured`, `cited` or `pending`, and `scale_anchors.py` produces the
+`measured` ones from the H01 data in this repo. Nothing is rendered from them
+yet.
+
 ## Rebuilding the data
 
 The order matters: `build_data.py` reads the layer meshes with trimesh to work
@@ -58,6 +99,11 @@ python scripts/fetch_h01.py cells --lod 3
 python scripts/build_data.py
 bash   scripts/draco.sh meshes/cells
 bash   scripts/draco.sh meshes/layers
+
+python scripts/fetch_hcp.py tracts     # 588 MB download, cached in .cache/
+python scripts/fetch_hcp.py surface
+bash   scripts/draco.sh meshes/cortex
+python scripts/scale_anchors.py
 ```
 
 Needs `cloud-volume`, `trimesh`, `pandas`, and `npx` for

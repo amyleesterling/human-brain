@@ -1,0 +1,223 @@
+{
+  "about": "The processes placed on the scale map. Space is metres, time is seconds, both as [low, high]. Every entry carries `evidence`, which is the honest part: `measured` means the number came out of the H01 data in this repo and scripts/scale_anchors.py prints it; `cited` means it is a published range this repo did not measure; `pending` means we intend to show real data here and do not have it yet. Nothing is `measured` unless a script in this repo produced it.",
+  "axes": {
+    "space": {
+      "low": 1e-9, "high": 1.0,
+      "landmarks": [
+        {"at": 1e-9, "label": "an ion channel"},
+        {"at": 2e-8, "label": "a synaptic cleft"},
+        {"at": 1e-6, "label": "a dendritic spine"},
+        {"at": 1.94e-5, "label": "a cell in H01", "evidence": "measured"},
+        {"at": 5.34e-4, "label": "a dendritic tree", "evidence": "measured"},
+        {"at": 2.63e-3, "label": "the depth of cortex", "evidence": "measured"},
+        {"at": 0.15, "label": "your whole brain"}
+      ]
+    },
+    "time": {
+      "low": 1e-5, "high": 3.15e9,
+      "landmarks": [
+        {"at": 1e-3, "label": "one nerve impulse"},
+        {"at": 1.0, "label": "one heartbeat"},
+        {"at": 2.88e4, "label": "a night's sleep"},
+        {"at": 3.15e7, "label": "a year"},
+        {"at": 3.15e9, "label": "a hundred years"}
+      ]
+    }
+  },
+  "domains": {
+    "electrical": {"label": "Electrical", "color": "#3E96F0"},
+    "chemical": {"label": "Chemical", "color": "#3FE3B0"},
+    "structural": {"label": "Structural", "color": "#FFB24D"},
+    "developmental": {"label": "Lifespan", "color": "#B884FF"}
+  },
+  "processes": [
+    {
+      "id": "channel",
+      "name": "An ion channel opens",
+      "domain": "electrical",
+      "space": [1e-9, 1e-8],
+      "time": [1e-5, 1e-3],
+      "evidence": "cited",
+      "source": "Hille, Ion Channels of Excitable Membranes, 3rd ed. (2001). Gating transitions of tens of microseconds to milliseconds; the pore is a few nanometres across.",
+      "blurb": "A protein in the membrane changes shape and lets charged atoms through. This is the smallest and fastest thing on the map, and every single thing above it is built out of it happening over and over."
+    },
+    {
+      "id": "vesicle",
+      "name": "A vesicle empties into the cleft",
+      "domain": "chemical",
+      "space": [2e-8, 5e-8],
+      "time": [1e-4, 1e-3],
+      "evidence": "cited",
+      "source": "Sudhof, Neuron 80:675 (2013); cleft width and vesicle diameter are standard ultrastructural values of roughly 20 nm and 40 nm.",
+      "blurb": "A packet of neurotransmitter fuses with the membrane and spills across a gap twenty nanometres wide. H01 annotates 149,871,669 of these junctions but cannot see the moment itself: the tissue was fixed."
+    },
+    {
+      "id": "psp",
+      "name": "One synapse is felt",
+      "domain": "electrical",
+      "space": [5e-7, 2e-6],
+      "time": [1e-3, 1e-1],
+      "evidence": "cited",
+      "source": "Standard synaptic physiology: fast AMPA currents decay in a few milliseconds, NMDA currents over tens to a hundred.",
+      "blurb": "The receiving spine depolarises by a fraction of a millivolt. A cortical neuron in H01 carries a median of 1,065 incoming synapses and the busiest carries 8,198, so this is the unit that everything else sums."
+    },
+    {
+      "id": "spike",
+      "name": "A neuron fires",
+      "domain": "electrical",
+      "space": [1e-5, 3e-5],
+      "time": [5e-4, 2e-3],
+      "evidence": "cited",
+      "source": "Action potential width at the soma, standard electrophysiology. The cell body size is measured here: the median H01 cell has the volume of a 19.4 micrometre sphere.",
+      "blurb": "The decision. Taken at the axon initial segment, which the release counts separately for every proofread cell, and which is the one place on a neuron where inhibition can veto everything at once."
+    },
+    {
+      "id": "conduct",
+      "name": "The impulse travels",
+      "domain": "electrical",
+      "space": [1e-4, 1.0],
+      "time": [1e-4, 1e-1],
+      "evidence": "cited",
+      "source": "Conduction velocities from about 0.5 m/s unmyelinated to about 120 m/s in the largest myelinated fibres.",
+      "blurb": "The one thing on this map that breaks the pattern. Everything else that reaches across a metre takes years. A nerve impulse does it in a hundredth of a second, and that is what myelin is for. H01 contains 20,139 oligodendrocytes, the cells that make it."
+    },
+    {
+      "id": "integrate",
+      "name": "A dendritic tree adds up",
+      "domain": "electrical",
+      "space": [2.284e-4, 1.147e-3],
+      "time": [1e-2, 1e-1],
+      "evidence": "measured",
+      "source": "Space measured here: longest bounding box axis of each of the 104 proofread H01 cells, 5th to 95th percentile, median 534 micrometres. Time is the cited membrane integration window.",
+      "blurb": "Thousands of inputs arriving over tens of milliseconds are weighed against each other across half a millimetre of branching cable. This is the first scale on the map where H01 measures the size directly."
+    },
+    {
+      "id": "column",
+      "name": "A patch of cortex responds",
+      "domain": "electrical",
+      "space": [3e-4, 3e-3],
+      "time": [3e-2, 5e-1],
+      "evidence": "measured",
+      "source": "Space measured here: the H01 block spans 2,626 micrometres from the pial surface to the deepest reliable layer band, and packs 31,240 cell bodies into every cubic millimetre.",
+      "blurb": "The scale of the entire H01 dataset. One cubic millimetre, 49,379 cells, the full depth of cortex, and 1.4 petabytes to photograph it."
+    },
+    {
+      "id": "gamma",
+      "name": "A fast rhythm",
+      "domain": "electrical",
+      "space": [1e-3, 5e-2],
+      "time": [1.2e-2, 3.3e-2],
+      "evidence": "cited",
+      "source": "Gamma band, 30 to 80 Hz, so one cycle lasts 12 to 33 milliseconds. Buzsaki and Draguhn, Science 304:1926 (2004).",
+      "blurb": "Populations of cells firing in near lockstep. Fast enough that a single spike can be early or late within one cycle, which is one way a brain can encode something in timing rather than in rate."
+    },
+    {
+      "id": "theta",
+      "name": "A slow rhythm",
+      "domain": "electrical",
+      "space": [1e-2, 1.5e-1],
+      "time": [1.25e-1, 2.5e-1],
+      "evidence": "cited",
+      "source": "Theta band, 4 to 8 Hz. Buzsaki and Draguhn, Science 304:1926 (2004).",
+      "blurb": "Slower waves that sweep across whole structures and set the windows in which the faster rhythms are allowed to matter."
+    },
+    {
+      "id": "percept",
+      "name": "You notice something",
+      "domain": "electrical",
+      "space": [1e-2, 1.5e-1],
+      "time": [1e-1, 5e-1],
+      "evidence": "cited",
+      "source": "Reaction and recognition latencies of roughly 100 to 500 ms across many tasks.",
+      "blurb": "By the time you are aware of a thing, the impulse has crossed most of your brain several times."
+    },
+    {
+      "id": "bold",
+      "name": "Blood arrives where it is needed",
+      "domain": "chemical",
+      "space": [1e-3, 1.5e-1],
+      "time": [1.0, 2e1],
+      "evidence": "cited",
+      "source": "The haemodynamic response peaks around 5 s and resolves over 15 to 20 s. This is what functional MRI actually measures.",
+      "blurb": "Not activity, but the plumbing catching up with it. H01 contains about 230 millimetres of blood vessel in a single cubic millimetre, which is the physical reason this signal exists at all."
+    },
+    {
+      "id": "working",
+      "name": "You hold something in mind",
+      "domain": "electrical",
+      "space": [1e-2, 1.5e-1],
+      "time": [1.0, 3e1],
+      "evidence": "cited",
+      "source": "Working memory maintenance over seconds to tens of seconds.",
+      "blurb": "A pattern kept alive by the network re-exciting itself, with no structural change to show for it. Nothing in a fixed volume like H01 can record this happening."
+    },
+    {
+      "id": "ltp",
+      "name": "A synapse gets stronger",
+      "domain": "structural",
+      "space": [5e-7, 2e-6],
+      "time": [1e0, 3e3],
+      "evidence": "cited",
+      "source": "Early phase LTP is expressed within seconds to minutes; late phase requires protein synthesis over tens of minutes to hours. Bliss and Collingridge, Nature 361:31 (1993).",
+      "blurb": "The smallest lasting change a brain makes. One junction, twenty nanometres across, becomes a little more persuasive than it was."
+    },
+    {
+      "id": "protein",
+      "name": "The cell makes new protein",
+      "domain": "chemical",
+      "space": [1e-6, 2e-5],
+      "time": [6e2, 1e4],
+      "evidence": "cited",
+      "source": "Transcription and translation responses over tens of minutes to hours.",
+      "blurb": "For a change to outlast the afternoon, the nucleus has to be told, and new machinery has to be built and shipped out to the branch that asked for it."
+    },
+    {
+      "id": "spine-turnover",
+      "name": "A spine appears or disappears",
+      "domain": "structural",
+      "space": [5e-7, 2e-6],
+      "time": [1e4, 1e7],
+      "evidence": "cited",
+      "source": "Two-photon imaging of cortical spine turnover over hours to months. Trachtenberg et al., Nature 420:788 (2002); Grutzendler et al., Nature 420:812 (2002).",
+      "blurb": "Physical rewiring. A branch grows a new bump, finds a partner, and a connection exists that did not. H01 counts spines on every proofread cell: a median of 0.185 spines per unit of dendrite, and 0.387 on the spiniest cell in the set."
+    },
+    {
+      "id": "myelin",
+      "name": "An axon gets insulated",
+      "domain": "structural",
+      "space": [1e-6, 1e-3],
+      "time": [1e6, 1e9],
+      "evidence": "cited",
+      "source": "Myelination continues into the third and fourth decades in human association cortex. Yakovlev and Lecours (1967); Miller et al., PNAS 109:16480 (2012).",
+      "blurb": "The slowest structural change with a fast payoff: it is what lets the impulse cross a metre in milliseconds. Oligodendrocytes are the most common cell in H01, 20,139 of 49,379, more numerous than every neuron combined."
+    },
+    {
+      "id": "pruning",
+      "name": "Connections are thrown away",
+      "domain": "developmental",
+      "space": [2e-8, 1e-1],
+      "time": [3e7, 6e8],
+      "evidence": "cited",
+      "source": "Synaptic density in human cortex peaks in the first years and declines through adolescence. Huttenlocher and Dabholkar, J Comp Neurol 387:167 (1997).",
+      "blurb": "A child's cortex builds far more synapses than it keeps. Becoming yourself is substantially a process of deletion."
+    },
+    {
+      "id": "aging",
+      "name": "The cortex thins",
+      "domain": "developmental",
+      "space": [1e-3, 1.5e-1],
+      "time": [3e8, 3.15e9],
+      "evidence": "cited",
+      "source": "Longitudinal structural MRI shows cortical thinning across adulthood at a fraction of a per cent per year.",
+      "blurb": "The far right of the map. Whole decades, whole brain, and a change so slow that the only way to see it is to photograph the same person twice, twenty years apart."
+    }
+  ],
+  "coverage": {
+    "id": "h01",
+    "name": "What H01 covers",
+    "space": [2e-8, 3.864e-3],
+    "time": null,
+    "evidence": "measured",
+    "blurb": "The dataset this site is built on spans eight orders of magnitude in space, from a synaptic cleft to the whole block, and none at all in time. It is one instant, fixed in resin. Every temporal scale on this map comes from somewhere else."
+  }
+}

@@ -1,0 +1,73 @@
+{
+ "source": "measured from this repo's H01 data by scripts/scale_anchors.py",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "anchors": {
+  "volume_block": {
+   "low": 173.2,
+   "high": 3864.3,
+   "typical": null,
+   "unit": "um",
+   "how": "bounding box of every cell body in the release's soma table"
+  },
+  "cortical_thickness": {
+   "low": 0.0,
+   "high": 2625.7,
+   "typical": 2625.7,
+   "unit": "um",
+   "how": "deepest reliable layer band, measured as distance to the pial surface"
+  },
+  "soma_spacing": {
+   "low": 5.00056730360745,
+   "high": 23.075138006977486,
+   "typical": 10.666612588508187,
+   "unit": "um",
+   "how": "distance from each cell body to its nearest neighbour, 5th to 95th percentile over all 49,379"
+  },
+  "cell_density": {
+   "value": 31239,
+   "unit": "cell bodies per mm3",
+   "how": "49379 cell bodies in the 1.58 mm3 bounding box"
+  },
+  "arbor_extent": {
+   "low": 228.435,
+   "high": 1146.5149999999996,
+   "typical": 534.0500000000001,
+   "unit": "um",
+   "how": "longest bounding box axis of each of the 104 proofread cells"
+  },
+  "cell_volume": {
+   "low": 893.3,
+   "high": 47099.3,
+   "typical": 3806.6,
+   "unit": "um3",
+   "how": "reconstructed voxel count times the release's 8x8x33 nm voxel"
+  },
+  "cell_equivalent_diameter": {
+   "low": 11.949036944308281,
+   "high": 44.806251275780824,
+   "typical": 19.372058887727093,
+   "unit": "um",
+   "how": "diameter of a sphere of the same reconstructed volume"
+  },
+  "synapses_per_cell": {
+   "low": 83.0,
+   "high": 8198.0,
+   "typical": 1064.5,
+   "unit": "incoming synapses",
+   "how": "release property NSI over the 104 proofread cells"
+  },
+  "spinyness": {
+   "low": 0.022058823529411766,
+   "high": 0.3871360278139939,
+   "typical": 0.1849162752610951,
+   "unit": "spines per dendrite node",
+   "how": "release property Sp over the 104 proofread cells"
+  }
+ },
+ "not_measured_here": {
+  "synaptic_cleft": "the release annotates 149,871,669 synapses but publishes no cleft width, so the map cites the literature",
+  "vesicle": "not segmented in this release",
+  "ion_channel": "far below the 4 nm imaging resolution",
+  "conduction_speed": "H01 is a fixed volume: it has no time axis at all"
+ }
+}
