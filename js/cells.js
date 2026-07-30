@@ -133,13 +133,84 @@ export async function mountCells(el) {
 
   let group = null, token = 0, current = -1;
 
-  rail.innerHTML = cells.map((c, i) => {
-    const col = KLASS_COLOR[c.klass] || "#8b94a3";
-    return `<button type="button" role="tab" data-i="${i}"` +
-      ` aria-selected="${i === 0}" style="--cc:${col}">` +
-      `<s></s><b>${c.layer || "?"}</b>` +
-      `<span>${KLASS_LABEL[c.klass] || c.klass || "cell"}</span></button>`;
-  }).join("");
+  /* ---- narrowing 104 buttons down to something choosable -----------------
+     A flat rail of 104 is a scroll bar with cells in it. Filtering by what a
+     cell is, and by which layer it sits in, turns "pick one of 104" into
+     "show me the layer 5 pyramidal cells", which is the question a reader
+     actually has. Shuffle is for the reader who does not have one. */
+  const filterEl = el.querySelector("[data-filter]");
+  const shuffleEl = el.querySelector("[data-shuffle]");
+  const countEl = el.querySelector("[data-count]");
+  let fKlass = "all", fLayer = "all";
+
+  const KLASSES = [...new Set(cells.map((c) => c.klass))]
+    .sort((a, b) => cells.filter((c) => c.klass === b).length -
+                    cells.filter((c) => c.klass === a).length);
+  const LAYERS = LAYER_ORDER.filter((L) => cells.some((c) => c.layer === L));
+
+  const shown = () => cells
+    .map((c, i) => ({ c, i }))
+    .filter(({ c }) => (fKlass === "all" || c.klass === fKlass) &&
+                       (fLayer === "all" || c.layer === fLayer));
+
+  function renderFilters() {
+    if (!filterEl) return;
+    const chip = (k, v, label, n, col) =>
+      `<button type="button" class="chip" data-f="${k}" data-v="${v}"` +
+      ` aria-pressed="${(k === "klass" ? fKlass : fLayer) === v}"` +
+      (col ? ` style="--cc:${col}"` : "") +
+      `>${col ? `<s style="background:${col}"></s>` : ""}${label}` +
+      (n == null ? "" : `<em>${n}</em>`) + `</button>`;
+    filterEl.innerHTML =
+      `<div class="frow"><span class="flab">Kind</span>` +
+      chip("klass", "all", "Any", cells.length) +
+      KLASSES.map((k) => chip("klass", k, KLASS_LABEL[k] || k,
+        cells.filter((c) => c.klass === k).length, KLASS_COLOR[k])).join("") +
+      `</div><div class="frow"><span class="flab">Layer</span>` +
+      chip("layer", "all", "Any") +
+      LAYERS.map((L) => chip("layer", L, L,
+        cells.filter((c) => c.layer === L).length)).join("") + `</div>`;
+  }
+
+  function renderRail() {
+    const list = shown();
+    rail.innerHTML = list.map(({ c, i }) => {
+      const col = KLASS_COLOR[c.klass] || "#8b94a3";
+      return `<button type="button" role="tab" data-i="${i}"` +
+        ` aria-selected="${i === current}" style="--cc:${col}">` +
+        `<s></s><b>${c.layer || "?"}</b>` +
+        `<span>${KLASS_LABEL[c.klass] || c.klass || "cell"}</span>` +
+        `<em>${fmt(c.NSI)}</em></button>`;
+    }).join("");
+    if (countEl) {
+      countEl.innerHTML = list.length === cells.length
+        ? `All <b>${cells.length}</b> proofread cells.`
+        : `<b>${list.length}</b> of ${cells.length} proofread cells.`;
+    }
+    /* If the current cell was filtered out, move to one that is showing
+       rather than leaving the stage on a cell the rail no longer offers. */
+    if (list.length && !list.some(({ i }) => i === current)) select(list[0].i);
+  }
+
+  if (filterEl) {
+    filterEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-f]");
+      if (!b) return;
+      if (b.dataset.f === "klass") fKlass = b.dataset.v;
+      else fLayer = b.dataset.v;
+      renderFilters();
+      renderRail();
+    });
+  }
+  if (shuffleEl) {
+    shuffleEl.addEventListener("click", () => {
+      const list = shown().filter(({ i }) => i !== current);
+      if (!list.length) return;
+      select(list[Math.floor(Math.random() * list.length)].i, true);
+    });
+  }
+
+  renderFilters();
 
   rail.addEventListener("click", (e) => {
     const b = e.target.closest("[data-i]");
@@ -159,6 +230,7 @@ export async function mountCells(el) {
 
     rail.querySelectorAll("[data-i]").forEach((b) =>
       b.setAttribute("aria-selected", String(+b.dataset.i === i)));
+    if (countEl && !rail.querySelector(`[data-i="${i}"]`)) renderRail();
     const btn = rail.querySelector(`[data-i="${i}"]`);
     if (btn) {
       btn.scrollIntoView({ block: "nearest", inline: "nearest" });
@@ -288,6 +360,7 @@ export async function mountCells(el) {
     }
   }
 
+  renderRail();
   select(0);
   loop.run();
   return { loop, select, cells };

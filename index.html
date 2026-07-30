@@ -281,6 +281,75 @@
   /* the ladder is horizontal, so its marker travels in `left`, not `top` */
   .lad-rail i, .lad-rail b { --unused: 0; }
 
+
+  /* ---- the ratio bars ---------------------------------------------------
+     Two bars against one width: the three groups above, the eleven classes
+     below, so the eye can read straight down from a group into the classes
+     that make it up. A table of percentages cannot do that. */
+  .ratio { margin: 18px 0 0; }
+  .rbar { display:flex; width:100%; height:44px; border-radius:6px;
+    overflow:hidden; background:#0C1017; }
+  .rbar-cls { height:22px; margin-top:4px; }
+  .rbar i { position:relative; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; min-width:1px;
+    border-right:1px solid #07080B; }
+  .rbar i:last-child { border-right:0; }
+  .rbar b { font-size:12px; font-weight:500; color:#07080B; }
+  .rbar u { text-decoration:none; font-size:10.5px; color:rgba(7,8,11,.72);
+    font-variant-numeric:tabular-nums; }
+  .rkey { display:flex; flex-wrap:wrap; gap:5px 14px; margin:12px 0 0;
+    font-size:11.5px; color:var(--dim); }
+  .rk { display:inline-flex; align-items:center; gap:6px; }
+  .rk s { width:9px; height:9px; border-radius:2px; text-decoration:none; }
+  .rk em { font-style:normal; color:var(--faint); font-variant-numeric:tabular-nums; }
+
+  /* ---- the type gallery -------------------------------------------------- */
+  .typerail { display:flex; gap:5px; overflow-x:auto; padding:12px 14px;
+    border-top:1px solid var(--line); scrollbar-width:thin; }
+  .typerail button { appearance:none; flex:0 0 auto; display:flex;
+    align-items:center; gap:7px; background:transparent;
+    border:1px solid var(--line); border-radius:6px; color:var(--dim);
+    font:inherit; font-size:12.5px; padding:5px 11px; cursor:pointer;
+    white-space:nowrap; transition:border-color .15s,color .15s,background .15s; }
+  .typerail button s { width:8px; height:8px; border-radius:50%;
+    background:var(--cc); text-decoration:none; flex:0 0 auto; }
+  .typerail button em { font-style:normal; color:var(--faint);
+    font-variant-numeric:tabular-nums; }
+  .typerail button:hover { color:var(--ink); border-color:var(--edge); }
+  .typerail button[aria-selected="true"] { color:var(--ink);
+    border-color: color-mix(in srgb, var(--cc) 60%, transparent);
+    background: color-mix(in srgb, var(--cc) 12%, transparent); }
+  .typeinfo { padding:18px clamp(14px,3vw,22px) 22px; border-top:1px solid var(--line); }
+  .typeinfo h3 { margin:0 0 2px; font-size:19px; font-weight:500; }
+  .tagline { margin:0 0 10px; font-size:13px; color:var(--dim);
+    letter-spacing:.02em; }
+  .pill-warn { --cc:#FF5C7A; }
+
+  /* ---- the picker filters ------------------------------------------------ */
+  .filters { padding:12px 14px 4px; border-top:1px solid var(--line); }
+  .frow { display:flex; flex-wrap:wrap; align-items:center; gap:5px;
+    margin:0 0 7px; }
+  .flab { font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--faint); margin-right:4px; min-width:40px; }
+  .chip { appearance:none; display:inline-flex; align-items:center; gap:6px;
+    background:transparent; border:1px solid var(--line); border-radius:999px;
+    color:var(--dim); font:inherit; font-size:12px; padding:4px 11px;
+    cursor:pointer; transition:border-color .15s,color .15s,background .15s; }
+  .chip s { width:8px; height:8px; border-radius:50%; text-decoration:none; }
+  .chip em { font-style:normal; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .chip:hover { color:var(--ink); border-color:var(--edge); }
+  .chip[aria-pressed="true"] { color:var(--ink);
+    border-color: color-mix(in srgb, var(--cc,#4aa6ff) 60%, transparent);
+    background: color-mix(in srgb, var(--cc,#4aa6ff) 12%, transparent); }
+  .pickbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:0 14px 10px; }
+  .shuffle { appearance:none; background:rgba(62,150,240,.10); color:#cfe6ff;
+    border:1px solid rgba(122,186,246,.5); border-radius:999px;
+    padding:5px 15px; font:inherit; font-size:12.5px; cursor:pointer; }
+  .shuffle:hover { background:rgba(62,150,240,.2); }
+  .pickcount { font-size:12.5px; color:var(--faint); }
+  .pickcount b { color:var(--ink); font-weight:500; }
+
   .fallback { padding: 26px; color: var(--faint); font-size: 14px; }
 
   table.plain { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 0; }
@@ -371,11 +440,16 @@
     rows. Sorted by what each cell is, the shape of a piece of human cortex
     turns out to be mostly not what people picture.</p>
 
-  <div class="scroller"><table class="plain" data-counts>
-    <caption class="lede" style="text-align:left;padding-bottom:8px">
-      Counted from <code>c3/tables/somas.csv</code> in the release.
-    </caption>
-  </table></div>
+  <div class="ratio" data-ratio></div>
+
+  <details class="scroller" style="margin-top:22px">
+    <summary style="cursor:pointer;color:var(--dim);font-size:14px">The same thing as a table</summary>
+    <table class="plain" data-counts>
+      <caption class="lede" style="text-align:left;padding-bottom:8px">
+        Counted from <code>c3/tables/somas.csv</code> in the release.
+      </caption>
+    </table>
+  </details>
 
   <p class="note"><b>Why these groups and not others.</b> The table names eleven
     classes and does not say which of them are neurons. The grouping used here
@@ -389,6 +463,33 @@
   <p>Oligodendrocytes alone outnumber every neuron in the block. They make
     myelin, and they are densest where the axons leave the cortex, which is why
     filtering to them in the volume above draws the white matter for you.</p>
+
+  <h2>One of each</h2>
+  <p>Eleven classes, eleven cells. Each was picked by measuring eleven
+    candidates of its own class and taking the one closest to the middle, so
+    none of them is an outlier. They are drawn at the same height on screen
+    whatever their real size, because a 44 micrometre oligodendrocyte beside a
+    509 micrometre pyramidal cell would otherwise be a single pixel.</p>
+
+  <section class="panel" id="types">
+    <div class="stagebox">
+      <div class="canvas" data-mount></div>
+      <p class="status" data-status></p>
+      <button type="button" class="loadnow" data-load>Show me one of each</button>
+    </div>
+    <div class="typerail" role="tablist" aria-label="Cell classes" data-rail></div>
+    <div class="typeinfo" data-info></div>
+  </section>
+
+  <div class="note"><b>None of these eleven is proofread.</b> The 104 cells
+    further down were checked by hand; these come from the automatic
+    agglomeration, so any of them may be two cells stuck together or one cell
+    torn in half. The sampled range on each card is the evidence: when a class
+    turns up a blood vessel cell 835 micrometres long, that is a merge rather
+    than a cell. Choosing the median of a sample avoids the obvious errors but
+    cannot promise the median cell is clean, so the segment IDs are published
+    in <code>PROOFREADING-REQUEST.md</code> in the repository for anyone
+    willing to check them.</div>
 
   <h2>How deep is deep</h2>
   <p>Depth in cortex is measured from the pial surface, and in this volume that
@@ -429,6 +530,11 @@
            affordance for a reader who wants them now, and it is also the only
            way in where IntersectionObserver never delivers. -->
       <button type="button" class="loadnow" data-load>Load the 104 cells</button>
+    </div>
+    <div class="filters" data-filter></div>
+    <div class="pickbar">
+      <button type="button" class="shuffle" data-shuffle>Shuffle</button>
+      <span class="pickcount" data-count></span>
     </div>
     <div class="cellrail" role="tablist" aria-label="Proofread cells" data-rail></div>
     <div class="cellinfo">
@@ -486,6 +592,7 @@
 <script type="module">
   import { mountColumn } from "./js/column.js";
   import { mountCells } from "./js/cells.js";
+  import { mountTypes, mountRatios } from "./js/types.js";
   import { whenNear, fmt } from "./js/holo3d.js";
 
   const volume = document.getElementById("volume");
@@ -493,11 +600,24 @@
   mountColumn(volume).then(function () {
     fillStats();
     fillTables();
+    meta().then(function (m) { mountRatios(document, m); });
   }).catch(function (e) {
     const s = volume.querySelector("[data-status]");
     if (s) s.textContent = "The volume did not load. " + e.message;
     throw e;
   });
+
+  const typesEl = document.getElementById("types");
+  const typesBtn = typesEl.querySelector("[data-load]");
+  const goTypes = whenNear(typesEl, function () {
+    if (typesBtn) typesBtn.remove();
+    mountTypes(typesEl).catch(function (e) {
+      const st = typesEl.querySelector("[data-status]");
+      if (st) st.textContent = "The gallery did not load. " + e.message;
+      throw e;
+    });
+  });
+  if (typesBtn) typesBtn.addEventListener("click", goTypes);
 
   const cellsEl = document.getElementById("cells");
   const loadBtn = cellsEl.querySelector("[data-load]");

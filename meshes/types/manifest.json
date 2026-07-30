@@ -1,0 +1,492 @@
+{
+ "source": "gs://h01-release/data/20210601/c3",
+ "mesh_lod": "chosen per cell, see faces_by_lod on each",
+ "proofread": false,
+ "warning": "c3 agglomeration segments. None of these is proofread and any may contain a merge or a split. Chosen as the median of a sample; see scripts/pick_type_examples.py.",
+ "selection": "11 candidates sampled per class from somas at least 400 um from the side walls and 30 um from the cut faces; the one closest to the class median longest axis was chosen.",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "types": [
+  {
+   "class": "ASTROCYTE",
+   "label": "Astrocyte",
+   "id": "47128933376",
+   "file": "meshes/types/47128933376.glb",
+   "faces": 275024,
+   "lod": 3,
+   "faces_by_lod": {
+    "0": 33059425,
+    "1": 8990764,
+    "2": 1426197,
+    "3": 275024
+   },
+   "bytes": 5146852,
+   "extent_um": [
+    107.5,
+    138.9,
+    98.5
+   ],
+   "longest_um": 138.9,
+   "soma_um": [
+    2185.6,
+    995.3,
+    135.2
+   ],
+   "soma_vox": [
+    273201,
+    124417,
+    4096
+   ],
+   "layer": "Layer 3",
+   "count": 5474,
+   "share_pct": 11.1,
+   "depth_um": {
+    "p10": 99.0,
+    "median": 604.0,
+    "p90": 2023.0
+   },
+   "sampled_range_um": [
+    74.5,
+    462.8
+   ],
+   "population_in_block": 2758,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2247128933376%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B273201.0%2C124417.0%2C4096.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "BLOOD_VESSEL_CELL",
+   "label": "Blood vessel cell",
+   "id": "40906643439",
+   "file": "meshes/types/40906643439.glb",
+   "faces": 20832,
+   "lod": 3,
+   "faces_by_lod": {
+    "3": 20832
+   },
+   "bytes": 403168,
+   "extent_um": [
+    57.7,
+    59.6,
+    24.6
+   ],
+   "longest_um": 59.6,
+   "soma_um": [
+    669.0,
+    1634.9,
+    63.4
+   ],
+   "soma_vox": [
+    83626,
+    204362,
+    1920
+   ],
+   "layer": "White matter",
+   "count": 285,
+   "share_pct": 0.6,
+   "depth_um": {
+    "p10": 214.0,
+    "median": 2084.0,
+    "p90": 2471.0
+   },
+   "sampled_range_um": [
+    10.0,
+    835.0
+   ],
+   "population_in_block": 80,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2240906643439%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B83626.0%2C204362.0%2C1920.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "C_SHAPED",
+   "label": "C shaped cell",
+   "id": "37854466335",
+   "file": "meshes/types/37854466335.glb",
+   "faces": 32005,
+   "lod": 2,
+   "faces_by_lod": {
+    "2": 32005,
+    "3": 6464
+   },
+   "bytes": 588560,
+   "extent_um": [
+    45.1,
+    95.7,
+    66.8
+   ],
+   "longest_um": 95.7,
+   "soma_um": [
+    1828.0,
+    874.5,
+    88.7
+   ],
+   "soma_vox": [
+    228502,
+    109308,
+    2688
+   ],
+   "layer": "Layer 4",
+   "count": 166,
+   "share_pct": 0.3,
+   "depth_um": {
+    "p10": 352.0,
+    "median": 1057.0,
+    "p90": 1653.0
+   },
+   "sampled_range_um": [
+    48.8,
+    162.7
+   ],
+   "population_in_block": 119,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2237854466335%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B228502.0%2C109308.0%2C2688.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "INTERNEURON",
+   "label": "Interneuron",
+   "id": "36942459652",
+   "file": "meshes/types/36942459652.glb",
+   "faces": 36397,
+   "lod": 2,
+   "faces_by_lod": {
+    "2": 36397,
+    "3": 6562
+   },
+   "bytes": 672392,
+   "extent_um": [
+    105.8,
+    144.5,
+    67.3
+   ],
+   "longest_um": 144.5,
+   "soma_um": [
+    3062.3,
+    697.6,
+    88.7
+   ],
+   "soma_vox": [
+    382787,
+    87204,
+    2688
+   ],
+   "layer": "Layer 1",
+   "count": 4688,
+   "share_pct": 9.5,
+   "depth_um": {
+    "p10": 90.0,
+    "median": 378.0,
+    "p90": 1332.0
+   },
+   "sampled_range_um": [
+    19.7,
+    506.5
+   ],
+   "population_in_block": 2759,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2236942459652%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B382787.0%2C87204.0%2C2688.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "MG_OPC",
+   "label": "Microglia or OPC",
+   "id": "40641141206",
+   "file": "meshes/types/40641141206.glb",
+   "faces": 43000,
+   "lod": 3,
+   "faces_by_lod": {
+    "3": 43000
+   },
+   "bytes": 781804,
+   "extent_um": [
+    63.3,
+    66.0,
+    40.6
+   ],
+   "longest_um": 66.0,
+   "soma_um": [
+    3328.4,
+    1543.8,
+    88.7
+   ],
+   "soma_vox": [
+    416050,
+    192979,
+    2688
+   ],
+   "layer": "Layer 2",
+   "count": 6536,
+   "share_pct": 13.2,
+   "depth_um": {
+    "p10": 134.0,
+    "median": 924.0,
+    "p90": 2237.0
+   },
+   "sampled_range_um": [
+    15.5,
+    120.4
+   ],
+   "population_in_block": 3251,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2240641141206%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B416050.0%2C192979.0%2C2688.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "OLIGO",
+   "label": "Oligodendrocyte",
+   "id": "47609949041",
+   "file": "meshes/types/47609949041.glb",
+   "faces": 74637,
+   "lod": 1,
+   "faces_by_lod": {
+    "1": 74637,
+    "2": 9767,
+    "3": 1704
+   },
+   "bytes": 1376096,
+   "extent_um": [
+    34.9,
+    42.4,
+    43.5
+   ],
+   "longest_um": 43.5,
+   "soma_um": [
+    2329.1,
+    1099.2,
+    92.9
+   ],
+   "soma_vox": [
+    291143,
+    137403,
+    2816
+   ],
+   "layer": "Layer 3",
+   "count": 20139,
+   "share_pct": 40.8,
+   "depth_um": {
+    "p10": 601.0,
+    "median": 1943.0,
+    "p90": 2484.0
+   },
+   "sampled_range_um": [
+    15.8,
+    120.1
+   ],
+   "population_in_block": 8114,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2247609949041%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B291143.0%2C137403.0%2C2816.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "PYRAMIDAL",
+   "label": "Pyramidal cell",
+   "id": "2527127825",
+   "file": "meshes/types/2527127825.glb",
+   "faces": 98694,
+   "lod": 3,
+   "faces_by_lod": {
+    "3": 98694
+   },
+   "bytes": 1856060,
+   "extent_um": [
+    476.3,
+    509.4,
+    174.6
+   ],
+   "longest_um": 509.4,
+   "soma_um": [
+    2571.4,
+    745.4,
+    126.7
+   ],
+   "soma_vox": [
+    321428,
+    93175,
+    3840
+   ],
+   "layer": "Layer 2",
+   "count": 8803,
+   "share_pct": 17.8,
+   "depth_um": {
+    "p10": 139.0,
+    "median": 766.0,
+    "p90": 1581.0
+   },
+   "sampled_range_um": [
+    54.7,
+    908.9
+   ],
+   "population_in_block": 5288,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%222527127825%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B321428.0%2C93175.0%2C3840.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "SPINY_ATYPICAL",
+   "label": "Spiny cell, atypical tree",
+   "id": "31043406757",
+   "file": "meshes/types/31043406757.glb",
+   "faces": 21979,
+   "lod": 3,
+   "faces_by_lod": {
+    "3": 21979
+   },
+   "bytes": 412820,
+   "extent_um": [
+    469.5,
+    326.5,
+    119.7
+   ],
+   "longest_um": 469.5,
+   "soma_um": [
+    2194.6,
+    1386.9,
+    139.4
+   ],
+   "soma_vox": [
+    274326,
+    173360,
+    4224
+   ],
+   "layer": "Layer 4",
+   "count": 1535,
+   "share_pct": 3.1,
+   "depth_um": {
+    "p10": 121.0,
+    "median": 1032.0,
+    "p90": 1782.0
+   },
+   "sampled_range_um": [
+    148.2,
+    1039.2
+   ],
+   "population_in_block": 567,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2231043406757%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B274326.0%2C173360.0%2C4224.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "SPINY_STELLATE",
+   "label": "Spiny stellate cell",
+   "id": "6427024613",
+   "file": "meshes/types/6427024613.glb",
+   "faces": 83700,
+   "lod": 3,
+   "faces_by_lod": {
+    "3": 83700
+   },
+   "bytes": 1572636,
+   "extent_um": [
+    485.6,
+    428.5,
+    174.2
+   ],
+   "longest_um": 485.6,
+   "soma_um": [
+    2182.3,
+    1869.0,
+    46.5
+   ],
+   "soma_vox": [
+    272793,
+    233622,
+    1408
+   ],
+   "layer": "Layer 5",
+   "count": 193,
+   "share_pct": 0.4,
+   "depth_um": {
+    "p10": 959.0,
+    "median": 1404.0,
+    "p90": 1711.0
+   },
+   "sampled_range_um": [
+    292.5,
+    1301.5
+   ],
+   "population_in_block": 148,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%226427024613%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B272793.0%2C233622.0%2C1408.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "UNCLASSIFIED_NEURON",
+   "label": "Neuron, unclassified",
+   "id": "3949045115",
+   "file": "meshes/types/3949045115.glb",
+   "faces": 41908,
+   "lod": 2,
+   "faces_by_lod": {
+    "2": 41908,
+    "3": 6000
+   },
+   "bytes": 773352,
+   "extent_um": [
+    117.2,
+    92.2,
+    57.7
+   ],
+   "longest_um": 117.2,
+   "soma_um": [
+    1408.7,
+    1251.4,
+    33.8
+   ],
+   "soma_vox": [
+    176084,
+    156426,
+    1024
+   ],
+   "layer": "Layer 5",
+   "count": 868,
+   "share_pct": 1.8,
+   "depth_um": {
+    "p10": 150.0,
+    "median": 1055.0,
+    "p90": 2173.0
+   },
+   "sampled_range_um": [
+    23.1,
+    605.5
+   ],
+   "population_in_block": 235,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%223949045115%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B176084.0%2C156426.0%2C1024.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  },
+  {
+   "class": "UNKNOWN",
+   "label": "Unknown",
+   "id": "74638255222",
+   "file": "meshes/types/74638255222.glb",
+   "faces": 32936,
+   "lod": 2,
+   "faces_by_lod": {
+    "2": 32936,
+    "3": 5695
+   },
+   "bytes": 607268,
+   "extent_um": [
+    85.0,
+    86.6,
+    47.4
+   ],
+   "longest_um": 86.6,
+   "soma_um": [
+    1289.4,
+    1218.2,
+    130.9
+   ],
+   "soma_vox": [
+    161174,
+    152269,
+    3968
+   ],
+   "layer": "Layer 5",
+   "count": 692,
+   "share_pct": 1.4,
+   "depth_um": {
+    "p10": 100.0,
+    "median": 1286.0,
+    "p90": 2199.0
+   },
+   "sampled_range_um": [
+    15.2,
+    401.4
+   ],
+   "population_in_block": 297,
+   "neuroglancer": "https://h01-dot-neuroglancer-demo.appspot.com/#!%7B%22layers%22%3A%5B%7B%22type%22%3A%22image%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/4nm_raw%22%2C%22name%22%3A%22EM%22%7D%2C%7B%22type%22%3A%22segmentation%22%2C%22source%22%3A%22precomputed%3A//gs%3A//h01-release/data/20210601/c3%22%2C%22segments%22%3A%5B%2274638255222%22%5D%2C%22name%22%3A%22c3%22%7D%5D%2C%22navigation%22%3A%7B%22pose%22%3A%7B%22position%22%3A%7B%22voxelSize%22%3A%5B8%2C8%2C33%5D%2C%22voxelCoordinates%22%3A%5B161174.0%2C152269.0%2C3968.0%5D%7D%7D%2C%22zoomFactor%22%3A8%7D%2C%22layout%22%3A%22xy-3d%22%7D",
+   "proofread": false
+  }
+ ]
+}
