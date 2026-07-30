@@ -6,6 +6,7 @@ every number kept attached to it.
 **Live:**
 - [A cubic millimetre of human brain](https://amyleesterling.github.io/human-brain/), H01 cell by cell
 - [The white matter, and a signal running through it](https://amyleesterling.github.io/human-brain/tracts.html), HCP tractography and the cortical surface
+- [The brain, from microseconds to decades](https://amyleesterling.github.io/human-brain/scales.html), every scale on one plane, with real recordings
 
 The first page is **H01**, the cubic millimetre of human temporal cortex imaged
 by serial section electron microscopy by the Lichtman laboratory at Harvard and
@@ -78,14 +79,38 @@ segment, in the correct ratio. A fixed slow-motion factor stretches the clock
 so there is something to watch, and the page states the factor: at 60 m/s a
 real crossing takes 2.24 ms, which is faster than one screen refresh.
 
-## Staged, not yet a page
+## Page three: every scale on one plane
 
-`data/scales-source.json` and `data/scale-anchors.json` are the beginning of a
-third page: the brain across every spatial and temporal scale, from an ion
-channel opening in microseconds to a cortex thinning over decades. Every entry
-is tagged `measured`, `cited` or `pending`, and `scale_anchors.py` produces the
-`measured` ones from the H01 data in this repo. Nothing is rendered from them
-yet.
+`scales.html` puts twenty things a brain does on two logarithmic axes, how big
+against how long, from an ion channel opening in ten microseconds to a cortex
+thinning over decades.
+
+Every box is tagged with where its numbers came from. **Measured** means a
+script in this repo produced it from data in this repo. **Cited** means it is a
+published range nobody here measured. The page never blurs the two, and six of
+the twenty are measured:
+
+- **A human action potential.** Whole cell current clamp from a human cortical
+  neuron, DANDI dandiset 000293, CC0. Threshold -36.6 mV, amplitude 51.7 mV,
+  half width 0.25 ms, rising at 309 V/s, all measured off the sweep.
+- **An alpha rhythm switching off.** Scalp EEG from one person with eyes closed
+  then open, PhysioNet, ODC-BY. Closing the eyes multiplies alpha over theta by
+  8.2 at channel Oz.
+- **Voltage inside a living hippocampus.** Depth electrodes, OpenNeuro
+  ds007095, CC0.
+- **Myelin across sixty years of adult life.** Myelin water fraction in 45
+  people aged 18 to 79, Faizy et al. 2018, CC BY 4.0. Parietal white matter
+  falls with age at r = -0.89; the corticospinal tract does not, at r = -0.09.
+- Plus the spatial anchors measured from H01 by `scale_anchors.py`.
+
+Two faults the scripts now assert against, both found by checking rather than
+by looking. The action potential's rate of rise was first computed against the
+wrong time spacing and came out as 300 million volts per second; the script now
+refuses to write a spike that is not tens of millivolts tall, under a
+millisecond wide and rising at hundreds of volts per second. And the
+hippocampal recording has one channel pinned against the amplifier rail that
+never goes positive, so the script picks the unclipped channel and prints the
+state of both.
 
 ## Rebuilding the data
 
@@ -104,6 +129,7 @@ python scripts/fetch_hcp.py tracts     # 588 MB download, cached in .cache/
 python scripts/fetch_hcp.py surface
 bash   scripts/draco.sh meshes/cortex
 python scripts/scale_anchors.py
+python scripts/fetch_signals.py
 ```
 
 Needs `cloud-volume`, `trimesh`, `pandas`, and `npx` for
