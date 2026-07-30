@@ -1,0 +1,4921 @@
+{
+ "source": "gs://h01-release/data/20210601/proofread_104",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "mesh_lod": 3,
+ "layer_bands": [
+  {
+   "layer": "Layer 1",
+   "top_um": -170.2,
+   "bottom_um": 2011.0,
+   "median_um": 183.0,
+   "count": 4595,
+   "reliable": false,
+   "note": "not drawn: 7 per cent of the cells carrying this label lie inside no layer mesh at all, and 16 per cent lie deeper than layer 4, so the band spans almost the whole cortex"
+  },
+  {
+   "layer": "Layer 2",
+   "top_um": 55.2,
+   "bottom_um": 346.5,
+   "median_um": 173.9,
+   "count": 6651
+  },
+  {
+   "layer": "Layer 3",
+   "top_um": 321.9,
+   "bottom_um": 770.4,
+   "median_um": 550.3,
+   "count": 6275
+  },
+  {
+   "layer": "Layer 4",
+   "top_um": 773.2,
+   "bottom_um": 1147.9,
+   "median_um": 938.0,
+   "count": 6745
+  },
+  {
+   "layer": "Layer 5",
+   "top_um": 1088.3,
+   "bottom_um": 1549.0,
+   "median_um": 1328.4,
+   "count": 6720
+  },
+  {
+   "layer": "Layer 6",
+   "top_um": 1561.2,
+   "bottom_um": 1916.7,
+   "median_um": 1718.3,
+   "count": 3947
+  },
+  {
+   "layer": "White matter",
+   "top_um": 1904.3,
+   "bottom_um": 2625.7,
+   "median_um": 2265.0,
+   "count": 13063
+  }
+ ],
+ "cortex_depth_um": 2625.7,
+ "fields": {
+  "NVx": "Volume (8x8x33nm voxels)",
+  "NSO": "Number of outgoing synapses",
+  "NSI": "Number of incoming synapses",
+  "NSIe": "Number of incoming excitatory synapses",
+  "NSIi": "Number of incoming inhibitory synapses",
+  "NDe": "Number of dendrite skeleton nodes",
+  "NAx": "Number of axon skeleton nodes",
+  "NSp": "Number of dendritic spine skeleton nodes",
+  "NCi": "Number of cilium skeleton nodes",
+  "NAis": "Number of axon initial segment skeleton nodes",
+  "NMy": "Number of myelinated axon skeleton nodes",
+  "Sp": "Spinyness (ratio of spines to dendrite skeleton nodes)"
+ },
+ "derived": {
+  "volume_um3": "NVx x 8x8x33 nm, the release's own voxel size",
+  "soma_um": "position of this cell's soma in c3/tables/somas.csv",
+  "soma_depth_um": "distance to the outward surface of the release's layer 1 region, a 0.31 mm2 patch of 1549 faces from gs://h01-release/data/20210601/layers"
+ },
+ "tag_vocabulary": [
+  "L1",
+  "L2",
+  "L3",
+  "L4",
+  "L5",
+  "L6",
+  "WM",
+  "layer-unclassified",
+  "unknown-type",
+  "pyramidal",
+  "neuron",
+  "interneuron",
+  "unclassified-neuron",
+  "astrocyte",
+  "glial",
+  "oligodendrocyte",
+  "microglia/opc",
+  "c-shaped",
+  "blood-vessel-cell",
+  "spiny-stellate",
+  "excitatory/spiny-with-atypical-tree",
+  "thin-apical-dendrite",
+  "bipolar",
+  "inverted-apical-dendrite",
+  "unusually-thin-dendrites",
+  "sparsely-spiny",
+  "lots-of-spines",
+  "possible-interneuron",
+  "web-like-interneuron",
+  "lot-of-axon",
+  "dark",
+  "grey"
+ ],
+ "cells": [
+  {
+   "id": "546925828",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1190035401,
+   "NSO": 36,
+   "NSI": 524,
+   "NSIe": 278,
+   "NSIi": 246,
+   "NDe": 1267,
+   "NAx": 473,
+   "NSp": 503,
+   "NCi": 2,
+   "NAis": 11,
+   "NMy": 2,
+   "Sp": 0.28418079096045196,
+   "soma_um": [
+    2519.3,
+    491.8,
+    33.8
+   ],
+   "soma_depth_um": 120.9,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/546925828.glb",
+   "faces": 21724,
+   "bounds_um": [
+    [
+     2431.4,
+     346.6,
+     0.1
+    ],
+    [
+     2661.7,
+     631.4,
+     153.3
+    ]
+   ],
+   "bytes": 38588,
+   "volume_um3": 2513.4
+  },
+  {
+   "id": "547114083",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1640916592,
+   "NSO": 8,
+   "NSI": 1525,
+   "NSIe": 815,
+   "NSIi": 710,
+   "NDe": 3273,
+   "NAx": 80,
+   "NSp": 1537,
+   "NCi": 1,
+   "NAis": 16,
+   "NMy": 0,
+   "Sp": 0.31954261954261953,
+   "soma_um": [
+    2543.1,
+    495.2,
+    29.6
+   ],
+   "soma_depth_um": 111.8,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/547114083.glb",
+   "faces": 39230,
+   "bounds_um": [
+    [
+     2406.3,
+     361.6,
+     0.1
+    ],
+    [
+     2854.8,
+     591.9,
+     174.4
+    ]
+   ],
+   "bytes": 65264,
+   "volume_um3": 3465.6
+  },
+  {
+   "id": "678539249",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 743673110,
+   "NSO": 8,
+   "NSI": 385,
+   "NSIe": 93,
+   "NSIi": 292,
+   "NDe": 370,
+   "NAx": 22,
+   "NSp": 41,
+   "NCi": 0,
+   "NAis": 24,
+   "NMy": 0,
+   "Sp": 0.09975669099756691,
+   "soma_um": [
+    2625.3,
+    444.8,
+    25.3
+   ],
+   "soma_depth_um": 60.6,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/678539249.glb",
+   "faces": 9749,
+   "bounds_um": [
+    [
+     2557.7,
+     353.2,
+     0.1
+    ],
+    [
+     2700.2,
+     493.4,
+     134.0
+    ]
+   ],
+   "bytes": 182196,
+   "volume_um3": 1570.6
+  },
+  {
+   "id": "751294744",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2424659627,
+   "NSO": 10,
+   "NSI": 1054,
+   "NSIe": 551,
+   "NSIi": 503,
+   "NDe": 2391,
+   "NAx": 31,
+   "NSp": 1147,
+   "NCi": 3,
+   "NAis": 25,
+   "NMy": 0,
+   "Sp": 0.32419446014697567,
+   "soma_um": [
+    2448.0,
+    500.6,
+    29.6
+   ],
+   "soma_depth_um": 171.0,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/751294744.glb",
+   "faces": 61416,
+   "bounds_um": [
+    [
+     2261.8,
+     357.2,
+     0.1
+    ],
+    [
+     2640.1,
+     749.1,
+     174.6
+    ]
+   ],
+   "bytes": 1140644,
+   "volume_um3": 5120.9
+  },
+  {
+   "id": "620880207",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 3404362371,
+   "NSO": 135,
+   "NSI": 3547,
+   "NSIe": 1423,
+   "NSIi": 2124,
+   "NDe": 7304,
+   "NAx": 186,
+   "NSp": 3580,
+   "NCi": 1,
+   "NAis": 6,
+   "NMy": 0,
+   "Sp": 0.3289231900036751,
+   "soma_um": [
+    2719.3,
+    587.5,
+    29.6
+   ],
+   "soma_depth_um": 135.2,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/620880207.glb",
+   "faces": 113176,
+   "bounds_um": [
+    [
+     2582.8,
+     352.6,
+     0.1
+    ],
+    [
+     3004.9,
+     775.3,
+     174.6
+    ]
+   ],
+   "bytes": 2119056,
+   "volume_um3": 7190.0
+  },
+  {
+   "id": "810151953",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 874478261,
+   "NSO": 4,
+   "NSI": 388,
+   "NSIe": 138,
+   "NSIi": 250,
+   "NDe": 1039,
+   "NAx": 14,
+   "NSp": 367,
+   "NCi": 0,
+   "NAis": 19,
+   "NMy": 3,
+   "Sp": 0.26102418207681366,
+   "soma_um": [
+    2741.1,
+    621.5,
+    29.6
+   ],
+   "soma_depth_um": 131.6,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/810151953.glb",
+   "faces": 21300,
+   "bounds_um": [
+    [
+     2654.5,
+     397.8,
+     0.1
+    ],
+    [
+     2857.5,
+     696.9,
+     168.4
+    ]
+   ],
+   "bytes": 401276,
+   "volume_um3": 1846.9
+  },
+  {
+   "id": "883843993",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1763603223,
+   "NSO": 36,
+   "NSI": 1271,
+   "NSIe": 474,
+   "NSIi": 797,
+   "NDe": 3093,
+   "NAx": 50,
+   "NSp": 1404,
+   "NCi": 7,
+   "NAis": 34,
+   "NMy": 0,
+   "Sp": 0.3122081387591728,
+   "soma_um": [
+    2793.0,
+    656.3,
+    25.3
+   ],
+   "soma_depth_um": 109.9,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/883843993.glb",
+   "faces": 54613,
+   "bounds_um": [
+    [
+     2675.1,
+     357.8,
+     0.1
+    ],
+    [
+     3045.7,
+     833.2,
+     174.5
+    ]
+   ],
+   "bytes": 1017632,
+   "volume_um3": 3724.7
+  },
+  {
+   "id": "955432427",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 967096507,
+   "NSO": 47,
+   "NSI": 422,
+   "NSIe": 170,
+   "NSIi": 252,
+   "NDe": 1194,
+   "NAx": 540,
+   "NSp": 428,
+   "NCi": 4,
+   "NAis": 15,
+   "NMy": 0,
+   "Sp": 0.2638717632552404,
+   "soma_um": [
+    2619.2,
+    512.8,
+    25.3
+   ],
+   "soma_depth_um": 121.3,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/955432427.glb",
+   "faces": 18474,
+   "bounds_um": [
+    [
+     2492.4,
+     356.2,
+     0.1
+    ],
+    [
+     2678.2,
+     633.1,
+     59.9
+    ]
+   ],
+   "bytes": 345344,
+   "volume_um3": 2042.5
+  },
+  {
+   "id": "1072605926",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1335520138,
+   "NSO": 7,
+   "NSI": 908,
+   "NSIe": 378,
+   "NSIi": 530,
+   "NDe": 2338,
+   "NAx": 58,
+   "NSp": 1011,
+   "NCi": 4,
+   "NAis": 20,
+   "NMy": 1,
+   "Sp": 0.3018811585547925,
+   "soma_um": [
+    2770.1,
+    622.9,
+    29.6
+   ],
+   "soma_depth_um": 109.7,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1072605926.glb",
+   "faces": 36654,
+   "bounds_um": [
+    [
+     2708.4,
+     427.1,
+     0.1
+    ],
+    [
+     2934.0,
+     799.9,
+     174.6
+    ]
+   ],
+   "bytes": 63884,
+   "volume_um3": 2820.6
+  },
+  {
+   "id": "1465400601",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1786477416,
+   "NSO": 45,
+   "NSI": 1642,
+   "NSIe": 668,
+   "NSIi": 974,
+   "NDe": 4086,
+   "NAx": 60,
+   "NSp": 1751,
+   "NCi": 4,
+   "NAis": 13,
+   "NMy": 7,
+   "Sp": 0.29998286791159845,
+   "soma_um": [
+    2781.8,
+    662.7,
+    25.3
+   ],
+   "soma_depth_um": 122.4,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1465400601.glb",
+   "faces": 45114,
+   "bounds_um": [
+    [
+     2649.2,
+     455.8,
+     0.1
+    ],
+    [
+     3060.0,
+     884.4,
+     174.6
+    ]
+   ],
+   "bytes": 75660,
+   "volume_um3": 3773.0
+  },
+  {
+   "id": "1304599410",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2636707300,
+   "NSO": 6,
+   "NSI": 1404,
+   "NSIe": 749,
+   "NSIi": 655,
+   "NDe": 3505,
+   "NAx": 78,
+   "NSp": 1652,
+   "NCi": 5,
+   "NAis": 35,
+   "NMy": 4,
+   "Sp": 0.32034128369206905,
+   "soma_um": [
+    2574.3,
+    635.0,
+    33.8
+   ],
+   "soma_depth_um": 241.3,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1304599410.glb",
+   "faces": 76219,
+   "bounds_um": [
+    [
+     2386.1,
+     365.2,
+     0.1
+    ],
+    [
+     2807.4,
+     898.6,
+     174.6
+    ]
+   ],
+   "bytes": 122252,
+   "volume_um3": 5568.7
+  },
+  {
+   "id": "1684504313",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2527494346,
+   "NSO": 39,
+   "NSI": 1985,
+   "NSIe": 897,
+   "NSIi": 1088,
+   "NDe": 5010,
+   "NAx": 591,
+   "NSp": 2850,
+   "NCi": 16,
+   "NAis": 39,
+   "NMy": 0,
+   "Sp": 0.36259541984732824,
+   "soma_um": [
+    2670.5,
+    827.9,
+    29.6
+   ],
+   "soma_depth_um": 296.5,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1684504313.glb",
+   "faces": 86307,
+   "bounds_um": [
+    [
+     2501.2,
+     377.8,
+     0.1
+    ],
+    [
+     3016.6,
+     1093.4,
+     174.6
+    ]
+   ],
+   "bytes": 134144,
+   "volume_um3": 5338.1
+  },
+  {
+   "id": "810970127",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2375558179,
+   "NSO": 7,
+   "NSI": 1620,
+   "NSIe": 764,
+   "NSIi": 856,
+   "NDe": 3747,
+   "NAx": 138,
+   "NSp": 1309,
+   "NCi": 4,
+   "NAis": 35,
+   "NMy": 0,
+   "Sp": 0.2589003164556962,
+   "soma_um": [
+    2767.3,
+    739.7,
+    29.6
+   ],
+   "soma_depth_um": 175.5,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/810970127.glb",
+   "faces": 68608,
+   "bounds_um": [
+    [
+     2596.2,
+     353.9,
+     0.1
+    ],
+    [
+     2963.3,
+     919.1,
+     174.6
+    ]
+   ],
+   "bytes": 1280840,
+   "volume_um3": 5017.2
+  },
+  {
+   "id": "1787105373",
+   "tags": [
+    "L1",
+    "neuron",
+    "interneuron",
+    "web-like-interneuron"
+   ],
+   "layer": "L1",
+   "klass": "interneuron",
+   "NVx": 824548653,
+   "NSO": 19,
+   "NSI": 1222,
+   "NSIe": 209,
+   "NSIi": 1013,
+   "NDe": 1111,
+   "NAx": 72,
+   "NSp": 131,
+   "NCi": 4,
+   "NAis": 18,
+   "NMy": 0,
+   "Sp": 0.10547504025764895,
+   "soma_um": [
+    3068.3,
+    792.6,
+    33.8
+   ],
+   "soma_depth_um": 75.6,
+   "soma_layer": "Layer 1",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/1787105373.glb",
+   "faces": 14157,
+   "bounds_um": [
+    [
+     3037.8,
+     689.3,
+     0.1
+    ],
+    [
+     3148.2,
+     890.0,
+     60.3
+    ]
+   ],
+   "bytes": 25460,
+   "volume_um3": 1741.4
+  },
+  {
+   "id": "1874244336",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2106699932,
+   "NSO": 11,
+   "NSI": 1553,
+   "NSIe": 715,
+   "NSIi": 838,
+   "NDe": 3744,
+   "NAx": 87,
+   "NSp": 1749,
+   "NCi": 7,
+   "NAis": 33,
+   "NMy": 4,
+   "Sp": 0.318405243036592,
+   "soma_um": [
+    2900.5,
+    959.1,
+    33.8
+   ],
+   "soma_depth_um": 223.7,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1874244336.glb",
+   "faces": 129656,
+   "bounds_um": [
+    [
+     2744.5,
+     620.2,
+     0.1
+    ],
+    [
+     3256.6,
+     1199.4,
+     174.6
+    ]
+   ],
+   "bytes": 207376,
+   "volume_um3": 4449.4
+  },
+  {
+   "id": "1930502394",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 4878475746,
+   "NSO": 27,
+   "NSI": 4123,
+   "NSIe": 2318,
+   "NSIi": 1805,
+   "NDe": 8943,
+   "NAx": 183,
+   "NSp": 3617,
+   "NCi": 13,
+   "NAis": 54,
+   "NMy": 0,
+   "Sp": 0.28797770700636943,
+   "soma_um": [
+    2752.3,
+    897.5,
+    29.6
+   ],
+   "soma_depth_um": 283.9,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1930502394.glb",
+   "faces": 130033,
+   "bounds_um": [
+    [
+     2554.4,
+     509.8,
+     0.1
+    ],
+    [
+     3140.8,
+     1165.4,
+     174.6
+    ]
+   ],
+   "bytes": 208148,
+   "volume_um3": 10303.3
+  },
+  {
+   "id": "1669770671",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1536130742,
+   "NSO": 69,
+   "NSI": 1600,
+   "NSIe": 732,
+   "NSIi": 868,
+   "NDe": 3831,
+   "NAx": 533,
+   "NSp": 1347,
+   "NCi": 4,
+   "NAis": 20,
+   "NMy": 3,
+   "Sp": 0.26013904982618774,
+   "soma_um": [
+    2856.2,
+    868.4,
+    33.8
+   ],
+   "soma_depth_um": 184.7,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1669770671.glb",
+   "faces": 68967,
+   "bounds_um": [
+    [
+     2754.1,
+     556.5,
+     0.1
+    ],
+    [
+     3092.6,
+     1020.0,
+     174.6
+    ]
+   ],
+   "bytes": 115448,
+   "volume_um3": 3244.3
+  },
+  {
+   "id": "1830470325",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron",
+    "bipolar"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1180792086,
+   "NSO": 6,
+   "NSI": 614,
+   "NSIe": 236,
+   "NSIi": 378,
+   "NDe": 1449,
+   "NAx": 161,
+   "NSp": 507,
+   "NCi": 0,
+   "NAis": 16,
+   "NMy": 4,
+   "Sp": 0.25920245398773006,
+   "soma_um": [
+    2893.9,
+    793.4,
+    25.3
+   ],
+   "soma_depth_um": 109.5,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/1830470325.glb",
+   "faces": 26142,
+   "bounds_um": [
+    [
+     2797.4,
+     466.7,
+     0.1
+    ],
+    [
+     3085.3,
+     891.1,
+     174.6
+    ]
+   ],
+   "bytes": 45376,
+   "volume_um3": 2493.8
+  },
+  {
+   "id": "2047644309",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1616811388,
+   "NSO": 28,
+   "NSI": 882,
+   "NSIe": 421,
+   "NSIi": 461,
+   "NDe": 2321,
+   "NAx": 303,
+   "NSp": 1032,
+   "NCi": 6,
+   "NAis": 30,
+   "NMy": 3,
+   "Sp": 0.3077840739636147,
+   "soma_um": [
+    2718.2,
+    865.7,
+    29.6
+   ],
+   "soma_depth_um": 292.6,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2047644309.glb",
+   "faces": 54476,
+   "bounds_um": [
+    [
+     2568.7,
+     435.3,
+     0.1
+    ],
+    [
+     3044.5,
+     1004.2,
+     174.6
+    ]
+   ],
+   "bytes": 89312,
+   "volume_um3": 3414.7
+  },
+  {
+   "id": "2074305737",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1662317344,
+   "NSO": 2,
+   "NSI": 446,
+   "NSIe": 217,
+   "NSIi": 229,
+   "NDe": 1303,
+   "NAx": 223,
+   "NSp": 265,
+   "NCi": 3,
+   "NAis": 34,
+   "NMy": 0,
+   "Sp": 0.1690051020408163,
+   "soma_um": [
+    1948.2,
+    1029.3,
+    21.1
+   ],
+   "soma_depth_um": 898.0,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2074305737.glb",
+   "faces": 41150,
+   "bounds_um": [
+    [
+     1789.4,
+     367.0,
+     0.1
+    ],
+    [
+     2411.6,
+     1253.6,
+     174.6
+    ]
+   ],
+   "bytes": 61792,
+   "volume_um3": 3510.8
+  },
+  {
+   "id": "2103991145",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 3288664308,
+   "NSO": 35,
+   "NSI": 2303,
+   "NSIe": 1332,
+   "NSIi": 971,
+   "NDe": 4788,
+   "NAx": 114,
+   "NSp": 1177,
+   "NCi": 2,
+   "NAis": 34,
+   "NMy": 3,
+   "Sp": 0.19731768650461023,
+   "soma_um": [
+    2061.4,
+    959.9,
+    25.3
+   ],
+   "soma_depth_um": 770.6,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2103991145.glb",
+   "faces": 89305,
+   "bounds_um": [
+    [
+     1866.3,
+     368.3,
+     0.1
+    ],
+    [
+     2464.1,
+     1243.7,
+     174.6
+    ]
+   ],
+   "bytes": 130856,
+   "volume_um3": 6945.7
+  },
+  {
+   "id": "2252715458",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1234111011,
+   "NSO": 14,
+   "NSI": 1136,
+   "NSIe": 444,
+   "NSIi": 692,
+   "NDe": 2767,
+   "NAx": 155,
+   "NSp": 1409,
+   "NCi": 1,
+   "NAis": 14,
+   "NMy": 0,
+   "Sp": 0.33740421455938696,
+   "soma_um": [
+    3051.4,
+    1038.1,
+    25.3
+   ],
+   "soma_depth_um": 138.1,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2252715458.glb",
+   "faces": 48389,
+   "bounds_um": [
+    [
+     2962.6,
+     749.8,
+     0.1
+    ],
+    [
+     3246.2,
+     1176.3,
+     174.6
+    ]
+   ],
+   "bytes": 83292,
+   "volume_um3": 2606.4
+  },
+  {
+   "id": "2306214824",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1413896341,
+   "NSO": 7,
+   "NSI": 597,
+   "NSIe": 350,
+   "NSIi": 247,
+   "NDe": 1404,
+   "NAx": 93,
+   "NSp": 220,
+   "NCi": 0,
+   "NAis": 29,
+   "NMy": 0,
+   "Sp": 0.1354679802955665,
+   "soma_um": [
+    1820.6,
+    1107.1,
+    33.8
+   ],
+   "soma_depth_um": 1041.8,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2306214824.glb",
+   "faces": 33357,
+   "bounds_um": [
+    [
+     1683.6,
+     769.0,
+     0.1
+    ],
+    [
+     2065.9,
+     1352.3,
+     174.6
+    ]
+   ],
+   "bytes": 54296,
+   "volume_um3": 2986.1
+  },
+  {
+   "id": "2325998949",
+   "tags": [
+    "L1",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L1",
+   "klass": "interneuron",
+   "NVx": 806599394,
+   "NSO": 8,
+   "NSI": 1507,
+   "NSIe": 236,
+   "NSIi": 1271,
+   "NDe": 1069,
+   "NAx": 23,
+   "NSp": 177,
+   "NCi": 2,
+   "NAis": 14,
+   "NMy": 0,
+   "Sp": 0.1420545746388443,
+   "soma_um": [
+    3203.5,
+    848.6,
+    25.3
+   ],
+   "soma_depth_um": 107.8,
+   "soma_layer": "Layer 1",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2325998949.glb",
+   "faces": 15519,
+   "bounds_um": [
+    [
+     3154.9,
+     737.5,
+     0.3
+    ],
+    [
+     3285.8,
+     968.4,
+     90.8
+    ]
+   ],
+   "bytes": 28448,
+   "volume_um3": 1703.5
+  },
+  {
+   "id": "2104047922",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 1677240710,
+   "NSO": 34,
+   "NSI": 1070,
+   "NSIe": 582,
+   "NSIi": 488,
+   "NDe": 593,
+   "NAx": 325,
+   "NSp": 36,
+   "NCi": 3,
+   "NAis": 19,
+   "NMy": 3,
+   "Sp": 0.057233704292527825,
+   "soma_um": [
+    2376.5,
+    882.6,
+    25.3
+   ],
+   "soma_depth_um": 533.2,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2104047922.glb",
+   "faces": 28861,
+   "bounds_um": [
+    [
+     2147.1,
+     559.7,
+     0.1
+    ],
+    [
+     2719.8,
+     1097.7,
+     174.6
+    ]
+   ],
+   "bytes": 46680,
+   "volume_um3": 3542.3
+  },
+  {
+   "id": "2451406889",
+   "tags": [
+    "L4",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L4",
+   "klass": "interneuron",
+   "NVx": 464968797,
+   "NSO": 1,
+   "NSI": 126,
+   "NSIe": 25,
+   "NSIi": 101,
+   "NDe": 139,
+   "NAx": 148,
+   "NSp": 7,
+   "NCi": 0,
+   "NAis": 6,
+   "NMy": 0,
+   "Sp": 0.04794520547945205,
+   "soma_um": [
+    1813.6,
+    856.1,
+    29.6
+   ],
+   "soma_depth_um": 884.3,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2451406889.glb",
+   "faces": 6319,
+   "bounds_um": [
+    [
+     1698.4,
+     848.7,
+     0.4
+    ],
+    [
+     1837.1,
+     1024.9,
+     57.2
+    ]
+   ],
+   "bytes": 12544,
+   "volume_um3": 982.0
+  },
+  {
+   "id": "1900905433",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 1557280716,
+   "NSO": 47,
+   "NSI": 3512,
+   "NSIe": 1338,
+   "NSIi": 2174,
+   "NDe": 1201,
+   "NAx": 582,
+   "NSp": 74,
+   "NCi": 0,
+   "NAis": 37,
+   "NMy": 330,
+   "Sp": 0.05803921568627451,
+   "soma_um": [
+    2448.9,
+    902.0,
+    25.3
+   ],
+   "soma_depth_um": 506.9,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/1900905433.glb",
+   "faces": 73298,
+   "bounds_um": [
+    [
+     2124.4,
+     471.3,
+     0.1
+    ],
+    [
+     2959.1,
+     1310.3,
+     174.6
+    ]
+   ],
+   "bytes": 110448,
+   "volume_um3": 3289.0
+  },
+  {
+   "id": "2530864375",
+   "tags": [
+    "L1",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L1",
+   "klass": "interneuron",
+   "NVx": 422952948,
+   "NSO": 0,
+   "NSI": 252,
+   "NSIe": 49,
+   "NSIi": 203,
+   "NDe": 199,
+   "NAx": 5,
+   "NSp": 10,
+   "NCi": 0,
+   "NAis": 5,
+   "NMy": 0,
+   "Sp": 0.04784688995215311,
+   "soma_um": [
+    3441.3,
+    867.4,
+    25.3
+   ],
+   "soma_depth_um": 279.8,
+   "soma_layer": "Layer 1",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2530864375.glb",
+   "faces": 3388,
+   "bounds_um": [
+    [
+     3407.0,
+     834.6,
+     0.5
+    ],
+    [
+     3492.7,
+     964.0,
+     80.1
+    ]
+   ],
+   "bytes": 7476,
+   "volume_um3": 893.3
+  },
+  {
+   "id": "2001418787",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1184978822,
+   "NSO": 9,
+   "NSI": 236,
+   "NSIe": 112,
+   "NSIi": 124,
+   "NDe": 675,
+   "NAx": 337,
+   "NSp": 142,
+   "NCi": 9,
+   "NAis": 34,
+   "NMy": 0,
+   "Sp": 0.17380660954712362,
+   "soma_um": [
+    1915.5,
+    974.6,
+    29.6
+   ],
+   "soma_depth_um": 882.1,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2001418787.glb",
+   "faces": 24937,
+   "bounds_um": [
+    [
+     1798.3,
+     369.1,
+     0.1
+    ],
+    [
+     2319.4,
+     1167.4,
+     174.6
+    ]
+   ],
+   "bytes": 38696,
+   "volume_um3": 2502.7
+  },
+  {
+   "id": "2195261734",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2025876448,
+   "NSO": 42,
+   "NSI": 2181,
+   "NSIe": 866,
+   "NSIi": 1315,
+   "NDe": 5036,
+   "NAx": 120,
+   "NSp": 2646,
+   "NCi": 3,
+   "NAis": 22,
+   "NMy": 0,
+   "Sp": 0.34444155167925017,
+   "soma_um": [
+    3163.6,
+    1086.0,
+    25.3
+   ],
+   "soma_depth_um": 76.7,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2195261734.glb",
+   "faces": 68471,
+   "bounds_um": [
+    [
+     3041.7,
+     750.8,
+     0.3
+    ],
+    [
+     3323.1,
+     1222.1,
+     141.6
+    ]
+   ],
+   "bytes": 113796,
+   "volume_um3": 4278.7
+  },
+  {
+   "id": "2848552900",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2247787909,
+   "NSO": 34,
+   "NSI": 1980,
+   "NSIe": 1011,
+   "NSIi": 969,
+   "NDe": 3989,
+   "NAx": 203,
+   "NSp": 1247,
+   "NCi": 3,
+   "NAis": 29,
+   "NMy": 0,
+   "Sp": 0.2381588999236058,
+   "soma_um": [
+    2863.9,
+    998.8,
+    25.3
+   ],
+   "soma_depth_um": 275.1,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2848552900.glb",
+   "faces": 57398,
+   "bounds_um": [
+    [
+     2689.1,
+     705.8,
+     0.1
+    ],
+    [
+     3135.2,
+     1306.8,
+     174.6
+    ]
+   ],
+   "bytes": 92288,
+   "volume_um3": 4747.3
+  },
+  {
+   "id": "2888180252",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1490672976,
+   "NSO": 26,
+   "NSI": 477,
+   "NSIe": 260,
+   "NSIi": 217,
+   "NDe": 1273,
+   "NAx": 78,
+   "NSp": 322,
+   "NCi": 5,
+   "NAis": 25,
+   "NMy": 0,
+   "Sp": 0.20188087774294672,
+   "soma_um": [
+    1832.7,
+    1013.2,
+    33.8
+   ],
+   "soma_depth_um": 967.5,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2888180252.glb",
+   "faces": 30445,
+   "bounds_um": [
+    [
+     1760.7,
+     617.0,
+     0.1
+    ],
+    [
+     2112.6,
+     1215.6,
+     174.6
+    ]
+   ],
+   "bytes": 50304,
+   "volume_um3": 3148.3
+  },
+  {
+   "id": "2889815798",
+   "tags": [
+    "L4",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L4",
+   "klass": "interneuron",
+   "NVx": 2812602798,
+   "NSO": 13,
+   "NSI": 4029,
+   "NSIe": 2241,
+   "NSIi": 1788,
+   "NDe": 1861,
+   "NAx": 23,
+   "NSp": 48,
+   "NCi": 0,
+   "NAis": 91,
+   "NMy": 167,
+   "Sp": 0.025144054478784705,
+   "soma_um": [
+    2004.0,
+    1295.3,
+    33.8
+   ],
+   "soma_depth_um": 1075.3,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2889815798.glb",
+   "faces": 47038,
+   "bounds_um": [
+    [
+     1689.3,
+     955.9,
+     0.4
+    ],
+    [
+     2270.9,
+     1640.1,
+     174.6
+    ]
+   ],
+   "bytes": 72308,
+   "volume_um3": 5940.2
+  },
+  {
+   "id": "2820958695",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 911688707,
+   "NSO": 24,
+   "NSI": 811,
+   "NSIe": 307,
+   "NSIi": 504,
+   "NDe": 521,
+   "NAx": 178,
+   "NSp": 39,
+   "NCi": 0,
+   "NAis": 4,
+   "NMy": 0,
+   "Sp": 0.06964285714285715,
+   "soma_um": [
+    2977.2,
+    1010.3,
+    29.6
+   ],
+   "soma_depth_um": 187.8,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/2820958695.glb",
+   "faces": 16058,
+   "bounds_um": [
+    [
+     2894.1,
+     824.4,
+     0.3
+    ],
+    [
+     3224.6,
+     1126.8,
+     163.9
+    ]
+   ],
+   "bytes": 28524,
+   "volume_um3": 1925.5
+  },
+  {
+   "id": "2903686765",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1549741083,
+   "NSO": 4,
+   "NSI": 648,
+   "NSIe": 355,
+   "NSIi": 293,
+   "NDe": 1563,
+   "NAx": 229,
+   "NSp": 363,
+   "NCi": 3,
+   "NAis": 29,
+   "NMy": 0,
+   "Sp": 0.18847352024922118,
+   "soma_um": [
+    1952.6,
+    1109.4,
+    33.8
+   ],
+   "soma_depth_um": 955.1,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/2903686765.glb",
+   "faces": 38125,
+   "bounds_um": [
+    [
+     1757.0,
+     704.0,
+     0.1
+    ],
+    [
+     2234.0,
+     1314.0,
+     174.6
+    ]
+   ],
+   "bytes": 60684,
+   "volume_um3": 3273.1
+  },
+  {
+   "id": "3093748739",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 2950535902,
+   "NSO": 30,
+   "NSI": 882,
+   "NSIe": 488,
+   "NSIi": 394,
+   "NDe": 2582,
+   "NAx": 237,
+   "NSp": 470,
+   "NCi": 4,
+   "NAis": 32,
+   "NMy": 46,
+   "Sp": 0.15399737876802097,
+   "soma_um": [
+    2227.9,
+    1296.1,
+    21.1
+   ],
+   "soma_depth_um": 933.9,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3093748739.glb",
+   "faces": 45685,
+   "bounds_um": [
+    [
+     2045.2,
+     675.1,
+     0.1
+    ],
+    [
+     2769.2,
+     1593.3,
+     174.6
+    ]
+   ],
+   "bytes": 67388,
+   "volume_um3": 6231.5
+  },
+  {
+   "id": "3111823553",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1044016189,
+   "NSO": 9,
+   "NSI": 752,
+   "NSIe": 351,
+   "NSIi": 401,
+   "NDe": 1924,
+   "NAx": 199,
+   "NSp": 652,
+   "NCi": 4,
+   "NAis": 16,
+   "NMy": 0,
+   "Sp": 0.2531055900621118,
+   "soma_um": [
+    3109.1,
+    1104.4,
+    29.6
+   ],
+   "soma_depth_um": 132.1,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3111823553.glb",
+   "faces": 47386,
+   "bounds_um": [
+    [
+     2922.7,
+     822.7,
+     0.3
+    ],
+    [
+     3301.4,
+     1256.4,
+     164.2
+    ]
+   ],
+   "bytes": 81296,
+   "volume_um3": 2205.0
+  },
+  {
+   "id": "3139317430",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 2501434016,
+   "NSO": 36,
+   "NSI": 1179,
+   "NSIe": 624,
+   "NSIi": 555,
+   "NDe": 2495,
+   "NAx": 252,
+   "NSp": 531,
+   "NCi": 2,
+   "NAis": 58,
+   "NMy": 0,
+   "Sp": 0.17547918043621943,
+   "soma_um": [
+    2357.4,
+    1310.9,
+    25.3
+   ],
+   "soma_depth_um": 848.4,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3139317430.glb",
+   "faces": 52949,
+   "bounds_um": [
+    [
+     2131.3,
+     962.4,
+     0.1
+    ],
+    [
+     2730.4,
+     1622.0,
+     174.6
+    ]
+   ],
+   "bytes": 83012,
+   "volume_um3": 5283.0
+  },
+  {
+   "id": "3178243558",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 984804720,
+   "NSO": 16,
+   "NSI": 83,
+   "NSIe": 9,
+   "NSIi": 74,
+   "NDe": 205,
+   "NAx": 31,
+   "NSp": 16,
+   "NCi": 1,
+   "NAis": 14,
+   "NMy": 0,
+   "Sp": 0.07239819004524888,
+   "soma_um": [
+    1555.4,
+    1098.8,
+    33.8
+   ],
+   "soma_depth_um": 1233.8,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3178243558.glb",
+   "faces": 12272,
+   "bounds_um": [
+    [
+     1446.5,
+     815.9,
+     0.4
+    ],
+    [
+     1815.0,
+     1228.1,
+     174.6
+    ]
+   ],
+   "bytes": 21416,
+   "volume_um3": 2079.9
+  },
+  {
+   "id": "4039221194",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 22300781576,
+   "NSO": 497,
+   "NSI": 6177,
+   "NSIe": 3638,
+   "NSIi": 2539,
+   "NDe": 9257,
+   "NAx": 349,
+   "NSp": 2132,
+   "NCi": 13,
+   "NAis": 56,
+   "NMy": 305,
+   "Sp": 0.18719817367635438,
+   "soma_um": [
+    2008.4,
+    1329.8,
+    21.1
+   ],
+   "soma_depth_um": 1102.0,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4039221194.glb",
+   "faces": 85075,
+   "bounds_um": [
+    [
+     1768.9,
+     1142.3,
+     0.1
+    ],
+    [
+     2248.9,
+     1677.0,
+     174.6
+    ]
+   ],
+   "bytes": 137036,
+   "volume_um3": 47099.3
+  },
+  {
+   "id": "3329117097",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 5120557689,
+   "NSO": 32,
+   "NSI": 3749,
+   "NSIe": 2046,
+   "NSIi": 1703,
+   "NDe": 6919,
+   "NAx": 493,
+   "NSp": 1546,
+   "NCi": 8,
+   "NAis": 51,
+   "NMy": 88,
+   "Sp": 0.1826343768458358,
+   "soma_um": [
+    2556.3,
+    1316.4,
+    33.8
+   ],
+   "soma_depth_um": 703.2,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3329117097.glb",
+   "faces": 112267,
+   "bounds_um": [
+    [
+     2148.5,
+     727.5,
+     0.1
+    ],
+    [
+     3080.6,
+     1566.4,
+     174.6
+    ]
+   ],
+   "bytes": 162044,
+   "volume_um3": 10814.6
+  },
+  {
+   "id": "3383650350",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1572456765,
+   "NSO": 23,
+   "NSI": 578,
+   "NSIe": 373,
+   "NSIi": 205,
+   "NDe": 1666,
+   "NAx": 93,
+   "NSp": 285,
+   "NCi": 2,
+   "NAis": 42,
+   "NMy": 0,
+   "Sp": 0.14607893388006152,
+   "soma_um": [
+    1979.9,
+    1170.1,
+    29.6
+   ],
+   "soma_depth_um": 985.8,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3383650350.glb",
+   "faces": 28812,
+   "bounds_um": [
+    [
+     1798.1,
+     901.8,
+     0.1
+    ],
+    [
+     2219.0,
+     1428.1,
+     174.6
+    ]
+   ],
+   "bytes": 45664,
+   "volume_um3": 3321.0
+  },
+  {
+   "id": "3432315514",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1087188622,
+   "NSO": 17,
+   "NSI": 557,
+   "NSIe": 212,
+   "NSIi": 345,
+   "NDe": 1586,
+   "NAx": 140,
+   "NSp": 623,
+   "NCi": 3,
+   "NAis": 17,
+   "NMy": 0,
+   "Sp": 0.2820280669986419,
+   "soma_um": [
+    3158.4,
+    1129.9,
+    33.8
+   ],
+   "soma_depth_um": 101.8,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3432315514.glb",
+   "faces": 37467,
+   "bounds_um": [
+    [
+     3071.7,
+     936.8,
+     0.3
+    ],
+    [
+     3380.4,
+     1270.3,
+     141.6
+    ]
+   ],
+   "bytes": 65892,
+   "volume_um3": 2296.1
+  },
+  {
+   "id": "3470629528",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 8295578829,
+   "NSO": 59,
+   "NSI": 3117,
+   "NSIe": 1882,
+   "NSIi": 1235,
+   "NDe": 7407,
+   "NAx": 222,
+   "NSp": 1412,
+   "NCi": 0,
+   "NAis": 93,
+   "NMy": 41,
+   "Sp": 0.1601088558793514,
+   "soma_um": [
+    1764.7,
+    1270.6,
+    33.8
+   ],
+   "soma_depth_um": 1200.0,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3470629528.glb",
+   "faces": 92005,
+   "bounds_um": [
+    [
+     1526.7,
+     391.7,
+     0.1
+    ],
+    [
+     2307.3,
+     1548.4,
+     174.6
+    ]
+   ],
+   "bytes": 129788,
+   "volume_um3": 17520.3
+  },
+  {
+   "id": "3519995546",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 2506365635,
+   "NSO": 10,
+   "NSI": 2852,
+   "NSIe": 1076,
+   "NSIi": 1776,
+   "NDe": 6099,
+   "NAx": 85,
+   "NSp": 3327,
+   "NCi": 6,
+   "NAis": 28,
+   "NMy": 21,
+   "Sp": 0.352959898154042,
+   "soma_um": [
+    3122.4,
+    1235.7,
+    33.8
+   ],
+   "soma_depth_um": 192.3,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3519995546.glb",
+   "faces": 76187,
+   "bounds_um": [
+    [
+     2947.1,
+     999.2,
+     0.3
+    ],
+    [
+     3438.0,
+     1471.4,
+     146.1
+    ]
+   ],
+   "bytes": 124552,
+   "volume_um3": 5293.4
+  },
+  {
+   "id": "3571083397",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 3003167116,
+   "NSO": 7,
+   "NSI": 352,
+   "NSIe": 167,
+   "NSIi": 185,
+   "NDe": 962,
+   "NAx": 12,
+   "NSp": 108,
+   "NCi": 0,
+   "NAis": 26,
+   "NMy": 0,
+   "Sp": 0.10093457943925234,
+   "soma_um": [
+    1435.6,
+    1244.5,
+    33.8
+   ],
+   "soma_depth_um": 1417.4,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3571083397.glb",
+   "faces": 36232,
+   "bounds_um": [
+    [
+     1259.4,
+     761.3,
+     0.4
+    ],
+    [
+     1930.6,
+     1371.2,
+     170.5
+    ]
+   ],
+   "bytes": 57036,
+   "volume_um3": 6342.7
+  },
+  {
+   "id": "3751392341",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 787854921,
+   "NSO": 34,
+   "NSI": 431,
+   "NSIe": 104,
+   "NSIi": 327,
+   "NDe": 420,
+   "NAx": 44,
+   "NSp": 25,
+   "NCi": 3,
+   "NAis": 11,
+   "NMy": 0,
+   "Sp": 0.056179775280898875,
+   "soma_um": [
+    2915.2,
+    1150.0,
+    25.3
+   ],
+   "soma_depth_um": 313.4,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/3751392341.glb",
+   "faces": 7231,
+   "bounds_um": [
+    [
+     2699.4,
+     1099.3,
+     0.6
+    ],
+    [
+     2983.7,
+     1292.7,
+     82.9
+    ]
+   ],
+   "bytes": 13416,
+   "volume_um3": 1663.9
+  },
+  {
+   "id": "3761379470",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1396983296,
+   "NSO": 16,
+   "NSI": 316,
+   "NSIe": 152,
+   "NSIi": 164,
+   "NDe": 725,
+   "NAx": 107,
+   "NSp": 82,
+   "NCi": 0,
+   "NAis": 13,
+   "NMy": 0,
+   "Sp": 0.10161090458488228,
+   "soma_um": [
+    1851.8,
+    1186.5,
+    25.3
+   ],
+   "soma_depth_um": 1079.2,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3761379470.glb",
+   "faces": 15491,
+   "bounds_um": [
+    [
+     1693.7,
+     818.1,
+     0.1
+    ],
+    [
+     2121.2,
+     1232.2,
+     174.6
+    ]
+   ],
+   "bytes": 26788,
+   "volume_um3": 2950.4
+  },
+  {
+   "id": "3812058320",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1397568657,
+   "NSO": 24,
+   "NSI": 1286,
+   "NSIe": 363,
+   "NSIi": 923,
+   "NDe": 3241,
+   "NAx": 99,
+   "NSp": 1652,
+   "NCi": 6,
+   "NAis": 20,
+   "NMy": 2,
+   "Sp": 0.3376251788268956,
+   "soma_um": [
+    3330.8,
+    1323.8,
+    25.3
+   ],
+   "soma_depth_um": 86.3,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3812058320.glb",
+   "faces": 47787,
+   "bounds_um": [
+    [
+     3203.3,
+     1165.9,
+     0.7
+    ],
+    [
+     3519.6,
+     1492.8,
+     141.6
+    ]
+   ],
+   "bytes": 82436,
+   "volume_um3": 2951.7
+  },
+  {
+   "id": "3955003482",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 8823968245,
+   "NSO": 32,
+   "NSI": 6184,
+   "NSIe": 3812,
+   "NSIi": 2372,
+   "NDe": 9254,
+   "NAx": 524,
+   "NSp": 2844,
+   "NCi": 11,
+   "NAis": 34,
+   "NMy": 26,
+   "Sp": 0.23508017854190774,
+   "soma_um": [
+    2480.4,
+    1448.1,
+    29.6
+   ],
+   "soma_depth_um": 840.3,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3955003482.glb",
+   "faces": 188995,
+   "bounds_um": [
+    [
+     2181.5,
+     785.9,
+     0.1
+    ],
+    [
+     3270.3,
+     1732.2,
+     174.6
+    ]
+   ],
+   "bytes": 264160,
+   "volume_um3": 18636.2
+  },
+  {
+   "id": "3954491075",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1674455941,
+   "NSO": 18,
+   "NSI": 784,
+   "NSIe": 453,
+   "NSIi": 331,
+   "NDe": 1756,
+   "NAx": 58,
+   "NSp": 364,
+   "NCi": 1,
+   "NAis": 27,
+   "NMy": 6,
+   "Sp": 0.17169811320754716,
+   "soma_um": [
+    2318.3,
+    1562.6,
+    29.6
+   ],
+   "soma_depth_um": 1038.7,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3954491075.glb",
+   "faces": 33617,
+   "bounds_um": [
+    [
+     2181.7,
+     1210.6,
+     0.3
+    ],
+    [
+     2737.7,
+     1746.0,
+     174.6
+    ]
+   ],
+   "bytes": 54616,
+   "volume_um3": 3536.5
+  },
+  {
+   "id": "4010150634",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1447127614,
+   "NSO": 30,
+   "NSI": 299,
+   "NSIe": 117,
+   "NSIi": 182,
+   "NDe": 1057,
+   "NAx": 359,
+   "NSp": 54,
+   "NCi": 3,
+   "NAis": 23,
+   "NMy": 0,
+   "Sp": 0.048604860486048604,
+   "soma_um": [
+    2038.0,
+    1276.9,
+    25.3
+   ],
+   "soma_depth_um": 1041.5,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4010150634.glb",
+   "faces": 22318,
+   "bounds_um": [
+    [
+     1885.4,
+     720.4,
+     0.4
+    ],
+    [
+     2486.1,
+     1448.6,
+     174.6
+    ]
+   ],
+   "bytes": 34364,
+   "volume_um3": 3056.3
+  },
+  {
+   "id": "3680152874",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 765592735,
+   "NSO": 7,
+   "NSI": 553,
+   "NSIe": 252,
+   "NSIi": 301,
+   "NDe": 280,
+   "NAx": 108,
+   "NSp": 26,
+   "NCi": 0,
+   "NAis": 9,
+   "NMy": 0,
+   "Sp": 0.08496732026143791,
+   "soma_um": [
+    3168.9,
+    1224.9,
+    25.3
+   ],
+   "soma_depth_um": 145.0,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/3680152874.glb",
+   "faces": 12875,
+   "bounds_um": [
+    [
+     2937.8,
+     1080.2,
+     0.5
+    ],
+    [
+     3328.1,
+     1420.6,
+     123.1
+    ]
+   ],
+   "bytes": 22580,
+   "volume_um3": 1616.9
+  },
+  {
+   "id": "4125702786",
+   "tags": [
+    "L5",
+    "neuron",
+    "interneuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L5",
+   "klass": "interneuron",
+   "NVx": 1228476048,
+   "NSO": 19,
+   "NSI": 188,
+   "NSIe": 75,
+   "NSIi": 113,
+   "NDe": 789,
+   "NAx": 102,
+   "NSp": 32,
+   "NCi": 1,
+   "NAis": 2,
+   "NMy": 24,
+   "Sp": 0.0389768574908648,
+   "soma_um": [
+    1885.2,
+    1279.6,
+    25.3
+   ],
+   "soma_depth_um": 1130.1,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4125702786.glb",
+   "faces": 21785,
+   "bounds_um": [
+    [
+     1686.8,
+     1211.7,
+     0.5
+    ],
+    [
+     1974.1,
+     1420.7,
+     174.6
+    ]
+   ],
+   "bytes": 38896,
+   "volume_um3": 2594.5
+  },
+  {
+   "id": "4138580687",
+   "tags": [
+    "L5",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3321847094,
+   "NSO": 3,
+   "NSI": 919,
+   "NSIe": 480,
+   "NSIi": 439,
+   "NDe": 2449,
+   "NAx": 37,
+   "NSp": 338,
+   "NCi": 5,
+   "NAis": 23,
+   "NMy": 0,
+   "Sp": 0.12127735916756369,
+   "soma_um": [
+    1661.4,
+    1421.2,
+    29.6
+   ],
+   "soma_depth_um": 1381.2,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/4138580687.glb",
+   "faces": 35662,
+   "bounds_um": [
+    [
+     1438.3,
+     1226.8,
+     0.4
+    ],
+    [
+     1798.9,
+     1604.2,
+     174.6
+    ]
+   ],
+   "bytes": 60756,
+   "volume_um3": 7015.7
+  },
+  {
+   "id": "4188575291",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 3279354663,
+   "NSO": 48,
+   "NSI": 1837,
+   "NSIe": 876,
+   "NSIi": 961,
+   "NDe": 3867,
+   "NAx": 306,
+   "NSp": 1099,
+   "NCi": 5,
+   "NAis": 39,
+   "NMy": 40,
+   "Sp": 0.22130487313733388,
+   "soma_um": [
+    2800.4,
+    1361.2,
+    25.3
+   ],
+   "soma_depth_um": 527.7,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4188575291.glb",
+   "faces": 91129,
+   "bounds_um": [
+    [
+     2591.2,
+     772.3,
+     0.3
+    ],
+    [
+     3344.1,
+     1594.0,
+     174.6
+    ]
+   ],
+   "bytes": 136136,
+   "volume_um3": 6926.0
+  },
+  {
+   "id": "4260528559",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 679421248,
+   "NSO": 17,
+   "NSI": 600,
+   "NSIe": 264,
+   "NSIi": 336,
+   "NDe": 457,
+   "NAx": 68,
+   "NSp": 15,
+   "NCi": 0,
+   "NAis": 6,
+   "NMy": 0,
+   "Sp": 0.03177966101694915,
+   "soma_um": [
+    2735.6,
+    1291.7,
+    33.8
+   ],
+   "soma_depth_um": 542.0,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4260528559.glb",
+   "faces": 12887,
+   "bounds_um": [
+    [
+     2466.4,
+     1256.2,
+     0.3
+    ],
+    [
+     2821.3,
+     1479.0,
+     79.4
+    ]
+   ],
+   "bytes": 22592,
+   "volume_um3": 1434.9
+  },
+  {
+   "id": "4365276903",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1003428575,
+   "NSO": 14,
+   "NSI": 948,
+   "NSIe": 349,
+   "NSIi": 599,
+   "NDe": 2397,
+   "NAx": 176,
+   "NSp": 981,
+   "NCi": 24,
+   "NAis": 12,
+   "NMy": 2,
+   "Sp": 0.29040852575488457,
+   "soma_um": [
+    3320.7,
+    1487.4,
+    33.8
+   ],
+   "soma_depth_um": 147.9,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4365276903.glb",
+   "faces": 31853,
+   "bounds_um": [
+    [
+     3219.9,
+     1307.5,
+     1.2
+    ],
+    [
+     3527.8,
+     1651.1,
+     141.6
+    ]
+   ],
+   "bytes": 55668,
+   "volume_um3": 2119.2
+  },
+  {
+   "id": "4420044370",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 642519995,
+   "NSO": 11,
+   "NSI": 370,
+   "NSIe": 165,
+   "NSIi": 205,
+   "NDe": 317,
+   "NAx": 20,
+   "NSp": 8,
+   "NCi": 2,
+   "NAis": 3,
+   "NMy": 0,
+   "Sp": 0.024615384615384615,
+   "soma_um": [
+    2607.9,
+    1392.8,
+    25.3
+   ],
+   "soma_depth_um": 704.9,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4420044370.glb",
+   "faces": 8441,
+   "bounds_um": [
+    [
+     2601.9,
+     1282.0,
+     0.3
+    ],
+    [
+     2819.1,
+     1428.1,
+     174.6
+    ]
+   ],
+   "bytes": 15532,
+   "volume_um3": 1357.0
+  },
+  {
+   "id": "4197933517",
+   "tags": [
+    "L5",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3300919296,
+   "NSO": 18,
+   "NSI": 861,
+   "NSIe": 439,
+   "NSIi": 422,
+   "NDe": 2211,
+   "NAx": 34,
+   "NSp": 257,
+   "NCi": 0,
+   "NAis": 4,
+   "NMy": 26,
+   "Sp": 0.10413290113452188,
+   "soma_um": [
+    1752.1,
+    1339.5,
+    29.6
+   ],
+   "soma_depth_um": 1260.1,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/4197933517.glb",
+   "faces": 37737,
+   "bounds_um": [
+    [
+     1620.7,
+     957.9,
+     0.4
+    ],
+    [
+     2049.0,
+     1496.1,
+     174.6
+    ]
+   ],
+   "bytes": 62688,
+   "volume_um3": 6971.5
+  },
+  {
+   "id": "4554213569",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1818294999,
+   "NSO": 20,
+   "NSI": 1489,
+   "NSIe": 487,
+   "NSIi": 1002,
+   "NDe": 3521,
+   "NAx": 52,
+   "NSp": 1747,
+   "NCi": 3,
+   "NAis": 15,
+   "NMy": 13,
+   "Sp": 0.3316249050873197,
+   "soma_um": [
+    3340.4,
+    1396.6,
+    29.6
+   ],
+   "soma_depth_um": 72.0,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4554213569.glb",
+   "faces": 44456,
+   "bounds_um": [
+    [
+     3224.5,
+     1070.9,
+     1.2
+    ],
+    [
+     3522.6,
+     1597.5,
+     141.6
+    ]
+   ],
+   "bytes": 71388,
+   "volume_um3": 3840.2
+  },
+  {
+   "id": "4437316933",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1267424348,
+   "NSO": 22,
+   "NSI": 1174,
+   "NSIe": 318,
+   "NSIi": 856,
+   "NDe": 2654,
+   "NAx": 45,
+   "NSp": 1157,
+   "NCi": 1,
+   "NAis": 19,
+   "NMy": 2,
+   "Sp": 0.3035948569929152,
+   "soma_um": [
+    3348.8,
+    1430.6,
+    25.3
+   ],
+   "soma_depth_um": 85.5,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4437316933.glb",
+   "faces": 41305,
+   "bounds_um": [
+    [
+     3239.2,
+     1268.7,
+     0.8
+    ],
+    [
+     3589.9,
+     1573.4,
+     141.6
+    ]
+   ],
+   "bytes": 70096,
+   "volume_um3": 2676.8
+  },
+  {
+   "id": "4476359994",
+   "tags": [
+    "L5",
+    "neuron",
+    "interneuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L5",
+   "klass": "interneuron",
+   "NVx": 1271722794,
+   "NSO": 5,
+   "NSI": 437,
+   "NSIe": 205,
+   "NSIi": 232,
+   "NDe": 539,
+   "NAx": 6,
+   "NSp": 24,
+   "NCi": 4,
+   "NAis": 32,
+   "NMy": 0,
+   "Sp": 0.04262877442273535,
+   "soma_um": [
+    2071.1,
+    1408.2,
+    33.8
+   ],
+   "soma_depth_um": 1121.4,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4476359994.glb",
+   "faces": 25369,
+   "bounds_um": [
+    [
+     2001.5,
+     1009.2,
+     0.1
+    ],
+    [
+     2399.3,
+     1523.7,
+     174.6
+    ]
+   ],
+   "bytes": 42336,
+   "volume_um3": 2685.9
+  },
+  {
+   "id": "3836078296",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1456061768,
+   "NSO": 6,
+   "NSI": 379,
+   "NSIe": 180,
+   "NSIi": 199,
+   "NDe": 761,
+   "NAx": 12,
+   "NSp": 184,
+   "NCi": 0,
+   "NAis": 14,
+   "NMy": 1,
+   "Sp": 0.19470899470899472,
+   "soma_um": [
+    2237.3,
+    1402.7,
+    25.3
+   ],
+   "soma_depth_um": 999.4,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3836078296.glb",
+   "faces": 37751,
+   "bounds_um": [
+    [
+     1978.5,
+     1052.7,
+     0.1
+    ],
+    [
+     2741.5,
+     1542.8,
+     174.6
+    ]
+   ],
+   "bytes": 58536,
+   "volume_um3": 3075.2
+  },
+  {
+   "id": "3503540481",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 8475433779,
+   "NSO": 42,
+   "NSI": 3479,
+   "NSIe": 1977,
+   "NSIi": 1502,
+   "NDe": 9119,
+   "NAx": 491,
+   "NSp": 1809,
+   "NCi": 8,
+   "NAis": 73,
+   "NMy": 50,
+   "Sp": 0.1655380673499268,
+   "soma_um": [
+    2217.0,
+    1510.2,
+    25.3
+   ],
+   "soma_depth_um": 1085.9,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/3503540481.glb",
+   "faces": 134627,
+   "bounds_um": [
+    [
+     1876.1,
+     802.7,
+     0.1
+    ],
+    [
+     3116.1,
+     1736.8,
+     174.6
+    ]
+   ],
+   "bytes": 181948,
+   "volume_um3": 17900.1
+  },
+  {
+   "id": "4522237537",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1584979668,
+   "NSO": 82,
+   "NSI": 772,
+   "NSIe": 383,
+   "NSIi": 389,
+   "NDe": 1572,
+   "NAx": 831,
+   "NSp": 259,
+   "NCi": 1,
+   "NAis": 51,
+   "NMy": 0,
+   "Sp": 0.14145275805570726,
+   "soma_um": [
+    2388.9,
+    1545.4,
+    25.3
+   ],
+   "soma_depth_um": 971.6,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4522237537.glb",
+   "faces": 43697,
+   "bounds_um": [
+    [
+     2262.3,
+     1318.5,
+     0.3
+    ],
+    [
+     2836.7,
+     1732.6,
+     174.6
+    ]
+   ],
+   "bytes": 70232,
+   "volume_um3": 3347.5
+  },
+  {
+   "id": "4535129012",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 2059930847,
+   "NSO": 22,
+   "NSI": 1696,
+   "NSIe": 857,
+   "NSIi": 839,
+   "NDe": 3863,
+   "NAx": 158,
+   "NSp": 995,
+   "NCi": 9,
+   "NAis": 38,
+   "NMy": 0,
+   "Sp": 0.2048167970358172,
+   "soma_um": [
+    2392.1,
+    1426.3,
+    29.6
+   ],
+   "soma_depth_um": 900.7,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4535129012.glb",
+   "faces": 55184,
+   "bounds_um": [
+    [
+     2132.7,
+     970.9,
+     0.1
+    ],
+    [
+     3026.3,
+     1565.6,
+     174.6
+    ]
+   ],
+   "bytes": 81832,
+   "volume_um3": 4350.6
+  },
+  {
+   "id": "4582188328",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 3320974390,
+   "NSO": 24,
+   "NSI": 2958,
+   "NSIe": 1568,
+   "NSIi": 1390,
+   "NDe": 6255,
+   "NAx": 282,
+   "NSp": 2789,
+   "NCi": 10,
+   "NAis": 51,
+   "NMy": 7,
+   "Sp": 0.3083812472357364,
+   "soma_um": [
+    3013.4,
+    1523.2,
+    29.6
+   ],
+   "soma_depth_um": 422.5,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4582188328.glb",
+   "faces": 112343,
+   "bounds_um": [
+    [
+     2771.2,
+     1198.4,
+     0.5
+    ],
+    [
+     3453.1,
+     1818.9,
+     174.6
+    ]
+   ],
+   "bytes": 175036,
+   "volume_um3": 7013.9
+  },
+  {
+   "id": "4467761196",
+   "tags": [
+    "L1",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L1",
+   "klass": "interneuron",
+   "NVx": 475717606,
+   "NSO": 5,
+   "NSI": 131,
+   "NSIe": 35,
+   "NSIi": 96,
+   "NDe": 133,
+   "NAx": 60,
+   "NSp": 3,
+   "NCi": 0,
+   "NAis": 1,
+   "NMy": 0,
+   "Sp": 0.022058823529411766,
+   "soma_um": [
+    3632.4,
+    1350.9,
+    29.6
+   ],
+   "soma_depth_um": 142.0,
+   "soma_layer": "Layer 1",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4467761196.glb",
+   "faces": 12742,
+   "bounds_um": [
+    [
+     3552.5,
+     1212.5,
+     2.0
+    ],
+    [
+     3680.8,
+     1490.8,
+     68.1
+    ]
+   ],
+   "bytes": 23604,
+   "volume_um3": 1004.7
+  },
+  {
+   "id": "4711641825",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 610435888,
+   "NSO": 16,
+   "NSI": 622,
+   "NSIe": 237,
+   "NSIi": 385,
+   "NDe": 502,
+   "NAx": 410,
+   "NSp": 46,
+   "NCi": 1,
+   "NAis": 6,
+   "NMy": 0,
+   "Sp": 0.08394160583941605,
+   "soma_um": [
+    2768.9,
+    1380.9,
+    25.3
+   ],
+   "soma_depth_um": 564.7,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4711641825.glb",
+   "faces": 12603,
+   "bounds_um": [
+    [
+     2480.3,
+     1331.9,
+     0.4
+    ],
+    [
+     2836.9,
+     1480.7,
+     108.6
+    ]
+   ],
+   "bytes": 22388,
+   "volume_um3": 1289.2
+  },
+  {
+   "id": "4711567524",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 5247140398,
+   "NSO": 125,
+   "NSI": 4944,
+   "NSIe": 2620,
+   "NSIi": 2324,
+   "NDe": 8649,
+   "NAx": 1134,
+   "NSp": 3362,
+   "NCi": 6,
+   "NAis": 32,
+   "NMy": 68,
+   "Sp": 0.27991008242444426,
+   "soma_um": [
+    2746.0,
+    1643.6,
+    29.6
+   ],
+   "soma_depth_um": 715.6,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4711567524.glb",
+   "faces": 148834,
+   "bounds_um": [
+    [
+     2255.7,
+     1335.5,
+     0.3
+    ],
+    [
+     3013.2,
+     1969.7,
+     174.6
+    ]
+   ],
+   "bytes": 225228,
+   "volume_um3": 11082.0
+  },
+  {
+   "id": "4157825456",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 8549324174,
+   "NSO": 79,
+   "NSI": 3740,
+   "NSIe": 2256,
+   "NSIi": 1484,
+   "NDe": 8853,
+   "NAx": 168,
+   "NSp": 1613,
+   "NCi": 4,
+   "NAis": 67,
+   "NMy": 3,
+   "Sp": 0.15411809669405693,
+   "soma_um": [
+    2129.3,
+    1509.1,
+    33.8
+   ],
+   "soma_depth_um": 1150.7,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4157825456.glb",
+   "faces": 142022,
+   "bounds_um": [
+    [
+     1718.5,
+     876.9,
+     0.1
+    ],
+    [
+     3085.0,
+     1839.6,
+     174.6
+    ]
+   ],
+   "bytes": 189540,
+   "volume_um3": 18056.2
+  },
+  {
+   "id": "4830551047",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 592572547,
+   "NSO": 13,
+   "NSI": 927,
+   "NSIe": 262,
+   "NSIi": 665,
+   "NDe": 529,
+   "NAx": 33,
+   "NSp": 53,
+   "NCi": 0,
+   "NAis": 14,
+   "NMy": 2,
+   "Sp": 0.09106529209621993,
+   "soma_um": [
+    3313.8,
+    1478.6,
+    29.6
+   ],
+   "soma_depth_um": 144.8,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4830551047.glb",
+   "faces": 17795,
+   "bounds_um": [
+    [
+     3091.5,
+     1252.3,
+     1.2
+    ],
+    [
+     3453.3,
+     1604.0,
+     135.6
+    ]
+   ],
+   "bytes": 31820,
+   "volume_um3": 1251.5
+  },
+  {
+   "id": "4873639924",
+   "tags": [
+    "L3",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L3",
+   "klass": "pyramidal",
+   "NVx": 8898931001,
+   "NSO": 40,
+   "NSI": 8198,
+   "NSIe": 4099,
+   "NSIi": 4099,
+   "NDe": 12444,
+   "NAx": 832,
+   "NSp": 4883,
+   "NCi": 10,
+   "NAis": 58,
+   "NMy": 194,
+   "Sp": 0.28181450914757317,
+   "soma_um": [
+    2878.5,
+    1635.9,
+    25.3
+   ],
+   "soma_depth_um": 592.0,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4873639924.glb",
+   "faces": 200467,
+   "bounds_um": [
+    [
+     2561.0,
+     1234.6,
+     0.4
+    ],
+    [
+     3489.5,
+     1938.8,
+     174.6
+    ]
+   ],
+   "bytes": 293644,
+   "volume_um3": 18794.5
+  },
+  {
+   "id": "4853956860",
+   "tags": [
+    "L5",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L5",
+   "klass": "interneuron",
+   "NVx": 1139667596,
+   "NSO": 9,
+   "NSI": 1707,
+   "NSIe": 950,
+   "NSIi": 757,
+   "NDe": 846,
+   "NAx": 147,
+   "NSp": 44,
+   "NCi": 1,
+   "NAis": 11,
+   "NMy": 5,
+   "Sp": 0.04943820224719101,
+   "soma_um": [
+    1981.1,
+    1474.2,
+    25.3
+   ],
+   "soma_depth_um": 1231.9,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/4853956860.glb",
+   "faces": 15200,
+   "bounds_um": [
+    [
+     1768.7,
+     1406.5,
+     0.7
+    ],
+    [
+     2141.3,
+     1640.3,
+     174.6
+    ]
+   ],
+   "bytes": 26400,
+   "volume_um3": 2407.0
+  },
+  {
+   "id": "5013648003",
+   "tags": [
+    "L5",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree"
+   ],
+   "layer": "L5",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 1959614865,
+   "NSO": 18,
+   "NSI": 636,
+   "NSIe": 313,
+   "NSIi": 323,
+   "NDe": 1546,
+   "NAx": 57,
+   "NSp": 217,
+   "NCi": 0,
+   "NAis": 60,
+   "NMy": 0,
+   "Sp": 0.12308564946114578,
+   "soma_um": [
+    1868.8,
+    1470.6,
+    25.3
+   ],
+   "soma_depth_um": 1296.1,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/5013648003.glb",
+   "faces": 31929,
+   "bounds_um": [
+    [
+     1568.1,
+     1327.6,
+     0.8
+    ],
+    [
+     2052.8,
+     1637.6,
+     174.6
+    ]
+   ],
+   "bytes": 53668,
+   "volume_um3": 4138.7
+  },
+  {
+   "id": "4607885827",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 2639637630,
+   "NSO": 47,
+   "NSI": 685,
+   "NSIe": 256,
+   "NSIi": 429,
+   "NDe": 1810,
+   "NAx": 108,
+   "NSp": 140,
+   "NCi": 2,
+   "NAis": 28,
+   "NMy": 14,
+   "Sp": 0.07179487179487179,
+   "soma_um": [
+    1987.2,
+    1575.3,
+    29.6
+   ],
+   "soma_depth_um": 1300.7,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4607885827.glb",
+   "faces": 32130,
+   "bounds_um": [
+    [
+     1814.8,
+     1041.5,
+     0.3
+    ],
+    [
+     2732.7,
+     1785.7,
+     174.6
+    ]
+   ],
+   "bytes": 47140,
+   "volume_um3": 5574.9
+  },
+  {
+   "id": "5060444657",
+   "tags": [
+    "L4",
+    "neuron",
+    "interneuron",
+    "web-like-interneuron",
+    "lot-of-axon"
+   ],
+   "layer": "L4",
+   "klass": "interneuron",
+   "NVx": 987202084,
+   "NSO": 18,
+   "NSI": 1481,
+   "NSIe": 573,
+   "NSIi": 908,
+   "NDe": 1234,
+   "NAx": 460,
+   "NSp": 94,
+   "NCi": 0,
+   "NAis": 29,
+   "NMy": 0,
+   "Sp": 0.07078313253012049,
+   "soma_um": [
+    2692.2,
+    1610.9,
+    29.6
+   ],
+   "soma_depth_um": 752.0,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/5060444657.glb",
+   "faces": 30396,
+   "bounds_um": [
+    [
+     2613.8,
+     1410.1,
+     0.4
+    ],
+    [
+     2832.1,
+     1712.3,
+     158.3
+    ]
+   ],
+   "bytes": 53236,
+   "volume_um3": 2085.0
+  },
+  {
+   "id": "5136107765",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 4185468831,
+   "NSO": 58,
+   "NSI": 3527,
+   "NSIe": 1249,
+   "NSIi": 2278,
+   "NDe": 5699,
+   "NAx": 129,
+   "NSp": 2505,
+   "NCi": 5,
+   "NAis": 31,
+   "NMy": 34,
+   "Sp": 0.3053388590931253,
+   "soma_um": [
+    3256.8,
+    1565.0,
+    29.6
+   ],
+   "soma_depth_um": 217.7,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5136107765.glb",
+   "faces": 114130,
+   "bounds_um": [
+    [
+     2668.2,
+     1326.5,
+     0.7
+    ],
+    [
+     3595.5,
+     1813.2,
+     168.3
+    ]
+   ],
+   "bytes": 170120,
+   "volume_um3": 8839.7
+  },
+  {
+   "id": "4932057570",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 979643101,
+   "NSO": 20,
+   "NSI": 292,
+   "NSIe": 57,
+   "NSIi": 235,
+   "NDe": 629,
+   "NAx": 183,
+   "NSp": 260,
+   "NCi": 2,
+   "NAis": 12,
+   "NMy": 0,
+   "Sp": 0.2924634420697413,
+   "soma_um": [
+    3351.0,
+    1530.9,
+    29.6
+   ],
+   "soma_depth_um": 118.2,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4932057570.glb",
+   "faces": 29131,
+   "bounds_um": [
+    [
+     3157.8,
+     1356.0,
+     1.2
+    ],
+    [
+     3475.4,
+     1659.8,
+     141.6
+    ]
+   ],
+   "bytes": 52084,
+   "volume_um3": 2069.0
+  },
+  {
+   "id": "5439194879",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1393060457,
+   "NSO": 18,
+   "NSI": 802,
+   "NSIe": 426,
+   "NSIi": 376,
+   "NDe": 2339,
+   "NAx": 611,
+   "NSp": 513,
+   "NCi": 5,
+   "NAis": 21,
+   "NMy": 5,
+   "Sp": 0.17987377279102384,
+   "soma_um": [
+    2546.0,
+    1622.2,
+    29.6
+   ],
+   "soma_depth_um": 881.1,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5439194879.glb",
+   "faces": 31363,
+   "bounds_um": [
+    [
+     2406.0,
+     1130.1,
+     0.5
+    ],
+    [
+     3308.1,
+     1739.1,
+     174.6
+    ]
+   ],
+   "bytes": 47080,
+   "volume_um3": 2942.1
+  },
+  {
+   "id": "5175880292",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 3904368510,
+   "NSO": 48,
+   "NSI": 958,
+   "NSIe": 487,
+   "NSIi": 471,
+   "NDe": 2875,
+   "NAx": 176,
+   "NSp": 442,
+   "NCi": 3,
+   "NAis": 67,
+   "NMy": 5,
+   "Sp": 0.13325293940307506,
+   "soma_um": [
+    2348.3,
+    1588.1,
+    25.3
+   ],
+   "soma_depth_um": 1029.7,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5175880292.glb",
+   "faces": 62065,
+   "bounds_um": [
+    [
+     1966.7,
+     1420.2,
+     0.3
+    ],
+    [
+     2529.5,
+     1981.5,
+     174.6
+    ]
+   ],
+   "bytes": 98276,
+   "volume_um3": 8246.0
+  },
+  {
+   "id": "5215113731",
+   "tags": [
+    "L6",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree"
+   ],
+   "layer": "L6",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3079016200,
+   "NSO": 0,
+   "NSI": 1260,
+   "NSIe": 631,
+   "NSIi": 629,
+   "NDe": 2379,
+   "NAx": 48,
+   "NSp": 651,
+   "NCi": 5,
+   "NAis": 6,
+   "NMy": 127,
+   "Sp": 0.21485148514851485,
+   "soma_um": [
+    1439.2,
+    1711.6,
+    21.1
+   ],
+   "soma_depth_um": 1746.2,
+   "soma_layer": "Layer 6",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/5215113731.glb",
+   "faces": 48117,
+   "bounds_um": [
+    [
+     1211.6,
+     1437.1,
+     0.4
+    ],
+    [
+     1628.9,
+     1949.4,
+     174.6
+    ]
+   ],
+   "bytes": 80224,
+   "volume_um3": 6502.9
+  },
+  {
+   "id": "5216806368",
+   "tags": [
+    "L6",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree",
+    "bipolar"
+   ],
+   "layer": "L6",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3867095513,
+   "NSO": 100,
+   "NSI": 2470,
+   "NSIe": 1527,
+   "NSIi": 943,
+   "NDe": 6510,
+   "NAx": 326,
+   "NSp": 884,
+   "NCi": 1,
+   "NAis": 77,
+   "NMy": 1,
+   "Sp": 0.11955639707871248,
+   "soma_um": [
+    1586.1,
+    1574.8,
+    29.6
+   ],
+   "soma_depth_um": 1547.2,
+   "soma_layer": "Layer 6",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/5216806368.glb",
+   "faces": 93608,
+   "bounds_um": [
+    [
+     1236.7,
+     1281.0,
+     0.4
+    ],
+    [
+     1941.2,
+     1943.4,
+     174.6
+    ]
+   ],
+   "bytes": 145644,
+   "volume_um3": 8167.3
+  },
+  {
+   "id": "5319188363",
+   "tags": [
+    "L6",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L6",
+   "klass": "pyramidal",
+   "NVx": 5016707710,
+   "NSO": 52,
+   "NSI": 1740,
+   "NSIe": 1024,
+   "NSIi": 716,
+   "NDe": 4312,
+   "NAx": 161,
+   "NSp": 1058,
+   "NCi": 9,
+   "NAis": 57,
+   "NMy": 1,
+   "Sp": 0.19702048417132215,
+   "soma_um": [
+    1685.6,
+    1736.8,
+    29.6
+   ],
+   "soma_depth_um": 1619.3,
+   "soma_layer": "Layer 6",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5319188363.glb",
+   "faces": 63945,
+   "bounds_um": [
+    [
+     1520.0,
+     1514.0,
+     0.1
+    ],
+    [
+     2070.1,
+     1867.8,
+     174.6
+    ]
+   ],
+   "bytes": 103100,
+   "volume_um3": 10595.3
+  },
+  {
+   "id": "5352961465",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 3275797481,
+   "NSO": 41,
+   "NSI": 2856,
+   "NSIe": 1412,
+   "NSIi": 1444,
+   "NDe": 5222,
+   "NAx": 449,
+   "NSp": 1520,
+   "NCi": 10,
+   "NAis": 33,
+   "NMy": 20,
+   "Sp": 0.2254523880154257,
+   "soma_um": [
+    2698.4,
+    1698.9,
+    21.1
+   ],
+   "soma_depth_um": 781.5,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5352961465.glb",
+   "faces": 107742,
+   "bounds_um": [
+    [
+     2452.3,
+     1318.5,
+     0.4
+    ],
+    [
+     3311.0,
+     1951.5,
+     174.6
+    ]
+   ],
+   "bytes": 159868,
+   "volume_um3": 6918.5
+  },
+  {
+   "id": "5355296383",
+   "tags": [
+    "L2",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L2",
+   "klass": "pyramidal",
+   "NVx": 1977166245,
+   "NSO": 10,
+   "NSI": 1749,
+   "NSIe": 598,
+   "NSIi": 1151,
+   "NDe": 3556,
+   "NAx": 159,
+   "NSp": 1445,
+   "NCi": 4,
+   "NAis": 25,
+   "NMy": 39,
+   "Sp": 0.28894221155768846,
+   "soma_um": [
+    3411.6,
+    1663.6,
+    25.3
+   ],
+   "soma_depth_um": 147.2,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5355296383.glb",
+   "faces": 50236,
+   "bounds_um": [
+    [
+     3310.7,
+     1454.7,
+     1.5
+    ],
+    [
+     3676.4,
+     1816.0,
+     126.2
+    ]
+   ],
+   "bytes": 85208,
+   "volume_um3": 4175.8
+  },
+  {
+   "id": "5015035926",
+   "tags": [
+    "L5",
+    "pyramidal",
+    "neuron",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "pyramidal",
+   "NVx": 7656460178,
+   "NSO": 142,
+   "NSI": 3347,
+   "NSIe": 2076,
+   "NSIi": 1271,
+   "NDe": 6764,
+   "NAx": 52,
+   "NSp": 1655,
+   "NCi": 2,
+   "NAis": 46,
+   "NMy": 6,
+   "Sp": 0.19657916617175436,
+   "soma_um": [
+    1802.8,
+    1718.5,
+    21.1
+   ],
+   "soma_depth_um": 1531.0,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5015035926.glb",
+   "faces": 134809,
+   "bounds_um": [
+    [
+     552.8,
+     1089.1,
+     0.1
+    ],
+    [
+     2685.2,
+     2063.3,
+     174.6
+    ]
+   ],
+   "bytes": 165664,
+   "volume_um3": 16170.4
+  },
+  {
+   "id": "5173982155",
+   "tags": [
+    "L5",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree"
+   ],
+   "layer": "L5",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 2905277704,
+   "NSO": 15,
+   "NSI": 978,
+   "NSIe": 579,
+   "NSIi": 399,
+   "NDe": 1972,
+   "NAx": 44,
+   "NSp": 479,
+   "NCi": 1,
+   "NAis": 53,
+   "NMy": 35,
+   "Sp": 0.19543043655650755,
+   "soma_um": [
+    1969.6,
+    1567.5,
+    21.1
+   ],
+   "soma_depth_um": 1307.3,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/5173982155.glb",
+   "faces": 44681,
+   "bounds_um": [
+    [
+     1804.0,
+     1416.7,
+     0.4
+    ],
+    [
+     2131.7,
+     1690.8,
+     174.6
+    ]
+   ],
+   "bytes": 77612,
+   "volume_um3": 6135.9
+  },
+  {
+   "id": "4641147055",
+   "tags": [
+    "L2",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree"
+   ],
+   "layer": "L2",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3025437956,
+   "NSO": 53,
+   "NSI": 3345,
+   "NSIe": 1165,
+   "NSIi": 2180,
+   "NDe": 7051,
+   "NAx": 687,
+   "NSp": 4454,
+   "NCi": 15,
+   "NAis": 40,
+   "NMy": 4,
+   "Sp": 0.3871360278139939,
+   "soma_um": [
+    3459.3,
+    1723.6,
+    25.3
+   ],
+   "soma_depth_um": 94.4,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/4641147055.glb",
+   "faces": 80639,
+   "bounds_um": [
+    [
+     3306.2,
+     1371.5,
+     1.8
+    ],
+    [
+     3592.8,
+     1865.1,
+     140.8
+    ]
+   ],
+   "bytes": 132912,
+   "volume_um3": 6389.7
+  },
+  {
+   "id": "4668874666",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 1827069543,
+   "NSO": 11,
+   "NSI": 766,
+   "NSIe": 414,
+   "NSIi": 352,
+   "NDe": 1753,
+   "NAx": 170,
+   "NSp": 334,
+   "NCi": 2,
+   "NAis": 53,
+   "NMy": 0,
+   "Sp": 0.16003833253473887,
+   "soma_um": [
+    2577.7,
+    1598.3,
+    29.6
+   ],
+   "soma_depth_um": 841.7,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/4668874666.glb",
+   "faces": 57302,
+   "bounds_um": [
+    [
+     2378.8,
+     1014.0,
+     0.4
+    ],
+    [
+     3368.5,
+     1795.3,
+     174.6
+    ]
+   ],
+   "bytes": 84320,
+   "volume_um3": 3858.8
+  },
+  {
+   "id": "5536146025",
+   "tags": [
+    "L6",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree"
+   ],
+   "layer": "L6",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 3311897355,
+   "NSO": 27,
+   "NSI": 1161,
+   "NSIe": 533,
+   "NSIi": 628,
+   "NDe": 3079,
+   "NAx": 249,
+   "NSp": 479,
+   "NCi": 1,
+   "NAis": 87,
+   "NMy": 5,
+   "Sp": 0.13462619449128724,
+   "soma_um": [
+    1555.4,
+    1609.5,
+    33.8
+   ],
+   "soma_depth_um": 1593.5,
+   "soma_layer": "Layer 6",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/5536146025.glb",
+   "faces": 58375,
+   "bounds_um": [
+    [
+     1178.4,
+     1239.2,
+     0.4
+    ],
+    [
+     2013.9,
+     1791.4,
+     174.6
+    ]
+   ],
+   "bytes": 87360,
+   "volume_um3": 6994.7
+  },
+  {
+   "id": "5654281423",
+   "tags": [
+    "L6",
+    "pyramidal",
+    "neuron",
+    "bipolar"
+   ],
+   "layer": "L6",
+   "klass": "pyramidal",
+   "NVx": 6363558247,
+   "NSO": 112,
+   "NSI": 3063,
+   "NSIe": 1788,
+   "NSIi": 1275,
+   "NDe": 6195,
+   "NAx": 287,
+   "NSp": 1705,
+   "NCi": 5,
+   "NAis": 52,
+   "NMy": 62,
+   "Sp": 0.2158227848101266,
+   "soma_um": [
+    1738.8,
+    1817.4,
+    29.6
+   ],
+   "soma_depth_um": 1646.3,
+   "soma_layer": "Layer 6",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5654281423.glb",
+   "faces": 100271,
+   "bounds_um": [
+    [
+     1521.3,
+     1571.0,
+     0.4
+    ],
+    [
+     2113.3,
+     2022.6,
+     174.6
+    ]
+   ],
+   "bytes": 159292,
+   "volume_um3": 13439.8
+  },
+  {
+   "id": "5061320552",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 2495900342,
+   "NSO": 82,
+   "NSI": 4990,
+   "NSIe": 3105,
+   "NSIi": 1885,
+   "NDe": 1891,
+   "NAx": 265,
+   "NSp": 110,
+   "NCi": 1,
+   "NAis": 10,
+   "NMy": 19,
+   "Sp": 0.054972513743128434,
+   "soma_um": [
+    2780.1,
+    1672.2,
+    29.6
+   ],
+   "soma_depth_um": 696.3,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/5061320552.glb",
+   "faces": 48548,
+   "bounds_um": [
+    [
+     2416.3,
+     1422.1,
+     0.4
+    ],
+    [
+     3035.4,
+     1841.3,
+     174.6
+    ]
+   ],
+   "bytes": 78008,
+   "volume_um3": 5271.3
+  },
+  {
+   "id": "5832764277",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 5318114002,
+   "NSO": 98,
+   "NSI": 3535,
+   "NSIe": 1865,
+   "NSIi": 1670,
+   "NDe": 6904,
+   "NAx": 245,
+   "NSp": 2193,
+   "NCi": 1,
+   "NAis": 49,
+   "NMy": 51,
+   "Sp": 0.24106848411564252,
+   "soma_um": [
+    2815.7,
+    1906.5,
+    38.0
+   ],
+   "soma_depth_um": 750.1,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5832764277.glb",
+   "faces": 142043,
+   "bounds_um": [
+    [
+     1761.0,
+     841.3,
+     0.7
+    ],
+    [
+     3509.4,
+     2041.3,
+     174.6
+    ]
+   ],
+   "bytes": 181600,
+   "volume_um3": 11231.9
+  },
+  {
+   "id": "5805562981",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron",
+    "sparsely-spiny"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 1043730959,
+   "NSO": 2,
+   "NSI": 1233,
+   "NSIe": 303,
+   "NSIi": 930,
+   "NDe": 944,
+   "NAx": 48,
+   "NSp": 227,
+   "NCi": 0,
+   "NAis": 8,
+   "NMy": 0,
+   "Sp": 0.19385140905209222,
+   "soma_um": [
+    3338.3,
+    1670.3,
+    25.3
+   ],
+   "soma_depth_um": 205.8,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/5805562981.glb",
+   "faces": 19681,
+   "bounds_um": [
+    [
+     3122.4,
+     1571.6,
+     1.3
+    ],
+    [
+     3441.5,
+     1779.1,
+     87.6
+    ]
+   ],
+   "bytes": 34260,
+   "volume_um3": 2204.4
+  },
+  {
+   "id": "5687162964",
+   "tags": [
+    "L4",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "L4",
+   "klass": "pyramidal",
+   "NVx": 2468410634,
+   "NSO": 46,
+   "NSI": 1428,
+   "NSIe": 529,
+   "NSIi": 899,
+   "NDe": 3165,
+   "NAx": 433,
+   "NSp": 812,
+   "NCi": 4,
+   "NAis": 32,
+   "NMy": 0,
+   "Sp": 0.20417400050289164,
+   "soma_um": [
+    2742.9,
+    1835.5,
+    29.6
+   ],
+   "soma_depth_um": 794.5,
+   "soma_layer": "Layer 4",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/5687162964.glb",
+   "faces": 50931,
+   "bounds_um": [
+    [
+     2617.9,
+     1620.0,
+     0.5
+    ],
+    [
+     3386.8,
+     2011.5,
+     174.6
+    ]
+   ],
+   "bytes": 79228,
+   "volume_um3": 5213.3
+  },
+  {
+   "id": "5965472721",
+   "tags": [
+    "L3",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L3",
+   "klass": "interneuron",
+   "NVx": 608463908,
+   "NSO": 11,
+   "NSI": 591,
+   "NSIe": 122,
+   "NSIi": 469,
+   "NDe": 461,
+   "NAx": 5,
+   "NSp": 63,
+   "NCi": 3,
+   "NAis": 6,
+   "NMy": 0,
+   "Sp": 0.12022900763358779,
+   "soma_um": [
+    3233.2,
+    1783.9,
+    25.3
+   ],
+   "soma_depth_um": 318.1,
+   "soma_layer": "Layer 3",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/5965472721.glb",
+   "faces": 12722,
+   "bounds_um": [
+    [
+     3085.6,
+     1535.9,
+     1.5
+    ],
+    [
+     3454.3,
+     1858.2,
+     141.6
+    ]
+   ],
+   "bytes": 237388,
+   "volume_um3": 1285.1
+  },
+  {
+   "id": "5584343344",
+   "tags": [
+    "L5",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L5",
+   "klass": "interneuron",
+   "NVx": 2873523954,
+   "NSO": 56,
+   "NSI": 2103,
+   "NSIe": 1206,
+   "NSIi": 897,
+   "NDe": 1910,
+   "NAx": 386,
+   "NSp": 67,
+   "NCi": 2,
+   "NAis": 34,
+   "NMy": 14,
+   "Sp": 0.03388973191704603,
+   "soma_um": [
+    2096.0,
+    1718.8,
+    29.6
+   ],
+   "soma_depth_um": 1310.3,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/5584343344.glb",
+   "faces": 62556,
+   "bounds_um": [
+    [
+     1728.4,
+     1178.0,
+     0.4
+    ],
+    [
+     3317.9,
+     1962.6,
+     174.6
+    ]
+   ],
+   "bytes": 82884,
+   "volume_um3": 6068.9
+  },
+  {
+   "id": "6126390733",
+   "tags": [
+    "L2",
+    "neuron",
+    "interneuron"
+   ],
+   "layer": "L2",
+   "klass": "interneuron",
+   "NVx": 647086089,
+   "NSO": 17,
+   "NSI": 691,
+   "NSIe": 192,
+   "NSIi": 499,
+   "NDe": 517,
+   "NAx": 20,
+   "NSp": 71,
+   "NCi": 3,
+   "NAis": 11,
+   "NMy": 0,
+   "Sp": 0.12074829931972789,
+   "soma_um": [
+    3421.9,
+    1716.8,
+    29.6
+   ],
+   "soma_depth_um": 132.4,
+   "soma_layer": "Layer 2",
+   "soma_celltype": "INTERNEURON",
+   "mesh": "meshes/cells/6126390733.glb",
+   "faces": 9808,
+   "bounds_um": [
+    [
+     3290.3,
+     1615.6,
+     2.4
+    ],
+    [
+     3518.3,
+     1809.0,
+     58.3
+    ]
+   ],
+   "bytes": 183400,
+   "volume_um3": 1366.6
+  },
+  {
+   "id": "6833911543",
+   "tags": [
+    "L5",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree",
+    "bipolar"
+   ],
+   "layer": "L5",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 1823866522,
+   "NSO": 4,
+   "NSI": 622,
+   "NSIe": 376,
+   "NSIi": 246,
+   "NDe": 1592,
+   "NAx": 55,
+   "NSp": 283,
+   "NCi": 1,
+   "NAis": 41,
+   "NMy": 0,
+   "Sp": 0.15093333333333334,
+   "soma_um": [
+    2289.0,
+    2012.6,
+    29.6
+   ],
+   "soma_depth_um": 1281.3,
+   "soma_layer": "Layer 5",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/6833911543.glb",
+   "faces": 35222,
+   "bounds_um": [
+    [
+     1960.4,
+     1818.8,
+     0.4
+    ],
+    [
+     2496.2,
+     2108.1,
+     174.6
+    ]
+   ],
+   "bytes": 659024,
+   "volume_um3": 3852.0
+  },
+  {
+   "id": "7052969349",
+   "tags": [
+    "WM",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "WM",
+   "klass": "pyramidal",
+   "NVx": 4315452943,
+   "NSO": 81,
+   "NSI": 1059,
+   "NSIe": 525,
+   "NSIi": 534,
+   "NDe": 2919,
+   "NAx": 132,
+   "NSp": 816,
+   "NCi": 7,
+   "NAis": 48,
+   "NMy": 13,
+   "Sp": 0.21847389558232932,
+   "soma_um": [
+    1450.9,
+    2073.0,
+    33.8
+   ],
+   "soma_depth_um": 2029.1,
+   "soma_layer": "White matter",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/7052969349.glb",
+   "faces": 55509,
+   "bounds_um": [
+    [
+     1153.1,
+     1952.2,
+     0.1
+    ],
+    [
+     2192.2,
+     2220.7,
+     174.6
+    ]
+   ],
+   "bytes": 1033808,
+   "volume_um3": 9114.2
+  },
+  {
+   "id": "7196644737",
+   "tags": [
+    "WM",
+    "neuron",
+    "excitatory/spiny-with-atypical-tree",
+    "bipolar"
+   ],
+   "layer": "WM",
+   "klass": "excitatory/spiny-with-atypical-tree",
+   "NVx": 2371122095,
+   "NSO": 7,
+   "NSI": 286,
+   "NSIe": 87,
+   "NSIi": 199,
+   "NDe": 834,
+   "NAx": 86,
+   "NSp": 179,
+   "NCi": 4,
+   "NAis": 15,
+   "NMy": 0,
+   "Sp": 0.17670286278381048,
+   "soma_um": [
+    1674.0,
+    2037.7,
+    25.3
+   ],
+   "soma_depth_um": 1839.2,
+   "soma_layer": "White matter",
+   "soma_celltype": "SPINY_ATYPICAL",
+   "mesh": "meshes/cells/7196644737.glb",
+   "faces": 36999,
+   "bounds_um": [
+    [
+     1439.2,
+     1925.0,
+     0.1
+    ],
+    [
+     1910.2,
+     2150.3,
+     174.6
+    ]
+   ],
+   "bytes": 693576,
+   "volume_um3": 5007.8
+  },
+  {
+   "id": "7893125555",
+   "tags": [
+    "WM",
+    "pyramidal",
+    "neuron"
+   ],
+   "layer": "WM",
+   "klass": "pyramidal",
+   "NVx": 4576323478,
+   "NSO": 57,
+   "NSI": 555,
+   "NSIe": 309,
+   "NSIi": 246,
+   "NDe": 1143,
+   "NAx": 96,
+   "NSp": 188,
+   "NCi": 3,
+   "NAis": 20,
+   "NMy": 22,
+   "Sp": 0.14124718256949662,
+   "soma_um": [
+    1274.0,
+    2198.0,
+    33.8
+   ],
+   "soma_depth_um": 2232.3,
+   "soma_layer": "White matter",
+   "soma_celltype": "PYRAMIDAL",
+   "mesh": "meshes/cells/7893125555.glb",
+   "faces": 41752,
+   "bounds_um": [
+    [
+     795.5,
+     2104.1,
+     0.1
+    ],
+    [
+     1426.6,
+     2287.9,
+     174.6
+    ]
+   ],
+   "bytes": 776792,
+   "volume_um3": 9665.2
+  }
+ ]
+}

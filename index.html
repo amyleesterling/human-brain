@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A cubic millimetre of human brain</title>
+<meta name="description" content="Every one of the 49,379 cell bodies in H01, the cubic millimetre of human temporal cortex imaged by electron microscopy, in the place the microscope found it. Plus the 104 proofread cells and the six cortical layers, all from the public release.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A cubic millimetre of human brain">
+<meta property="og:description" content="Every one of the 49,379 cell bodies in H01, the cubic millimetre of human temporal cortex imaged by electron microscopy, in the place the microscope found it.">
+<meta property="og:url" content="https://amyleesterling.github.io/human-brain/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A cubic millimetre of human brain">
+<meta name="twitter:description" content="Every one of the 49,379 cell bodies in H01, in the place the microscope found it.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- three is vendored into this repo rather than pulled from a CDN: the page is
+     a static file on GitHub Pages and should not stop working because someone
+     else's host went down or shipped a new major version under the same tag. -->
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}
+</script>
+<style>
+  :root {
+    --ink: #EFF2F7; --dim: #9AA2B1; --faint: #666E7C;
+    --ground: #07080B; --panel: #0F1218; --line: #1D222B;
+    --edge: #4A5568; --accent: #3E96F0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 17px/1.7 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px,5vw,32px) 90px; }
+  h1 { margin: 0 0 8px; font-size: clamp(23px,5.4vw,34px); font-weight: 500;
+       letter-spacing: -.015em; text-wrap: balance; }
+  h2 { margin: 52px 0 12px; font-size: 13px; font-weight: 500; letter-spacing: .12em;
+       text-transform: uppercase; color: var(--faint); }
+  h3 { margin: 30px 0 4px; font-size: 18px; font-weight: 500; }
+  p { margin: 0 0 15px; }
+  a { color: var(--accent); }
+  code { font: 400 .88em/1 ui-monospace, "Cascadia Mono", Consolas, monospace;
+         color: #b9c6d6; }
+  .lede { color: var(--dim); font-size: 15.5px; margin: 0; }
+  .cite { margin: 26px 0 0; padding: 16px 18px; background: var(--panel);
+          border-radius: 10px; font-size: 14.5px; color: var(--dim); line-height: 1.62; }
+  .cite .t { color: var(--ink); display: block; margin-bottom: 6px; }
+  .cite a { text-decoration: none; }
+  .cite a:hover { text-decoration: underline; }
+  .note { font-size: 14.5px; color: var(--dim); border-left: 2px solid var(--line);
+          padding: 2px 0 2px 16px; margin: 22px 0; }
+  .note b { color: var(--ink); font-weight: 500; }
+
+  /* ---- the stage ---------------------------------------------------------
+     The volume is the first thing on the page, full bleed, with the reading
+     panel floating in front of it. It is not a picture of the data: it is the
+     data, and the controls under it drive the same canvas. */
+  .stage { background: var(--ground); }
+  .stage .viewport { position: relative; }
+  .stage .canvas {
+    height: min(76vh, 760px); min-height: 380px; width: 100%;
+  }
+
+  /* ---- the floating screen ----------------------------------------------
+     A window hovering in front of the volume, not a bar welded to the top. It
+     has edges on all four sides, it lifts off with a shadow, and its top edge
+     is lit as though the surface were emitting. Carried across from the
+     MICrONS cortex page, where it was built for exactly this job. */
+  .heropanel {
+    position: absolute; z-index: 3; isolation: isolate;
+    top: clamp(14px, 3.6vw, 40px);
+    left: 50%; transform: translateX(-50%);
+    width: min(660px, calc(100% - 32px));
+    background: linear-gradient(178deg, rgba(13,26,45,.80), rgba(7,14,26,.86) 62%, rgba(6,12,22,.90));
+    border: 1px solid rgba(122,186,246,.26);
+    border-radius: 3px;
+    backdrop-filter: blur(9px) saturate(1.15);
+    -webkit-backdrop-filter: blur(9px) saturate(1.15);
+    box-shadow: 0 0 0 1px rgba(6,12,22,.55), 0 18px 54px rgba(0,0,0,.62),
+                0 0 40px rgba(62,150,240,.10);
+  }
+  .heropanel::before {
+    content: ""; position: absolute; left: 9%; right: 9%; top: -1px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(150,212,255,.85) 22%,
+      rgba(214,240,255,1) 50%, rgba(150,212,255,.85) 78%, transparent);
+    box-shadow: 0 0 11px rgba(120,196,255,.62);
+  }
+  .heropanel::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 3px;
+    background-image: repeating-linear-gradient(0deg,
+      rgba(158,210,255,.035) 0 1px, transparent 1px 3px);
+  }
+  .heropanel .inner { position: relative; z-index: 1;
+    padding: clamp(18px,2.7vw,28px) clamp(18px,3vw,32px) clamp(16px,2.4vw,24px); }
+  .heropanel i.tick {
+    position: absolute; width: 11px; height: 11px; pointer-events: none;
+    border: 0 solid rgba(150,208,252,.55);
+  }
+  .heropanel i.tl { top: 6px; left: 6px; border-top-width: 1px; border-left-width: 1px; }
+  .heropanel i.tr { top: 6px; right: 6px; border-top-width: 1px; border-right-width: 1px; }
+  .heropanel i.bl { bottom: 6px; left: 6px; border-bottom-width: 1px; border-left-width: 1px; }
+  .heropanel i.br { bottom: 6px; right: 6px; border-bottom-width: 1px; border-right-width: 1px; }
+
+  /* On a wide screen the panel moves out of the volume's way rather than
+     sitting on it. The block renders as a tall narrow wafer roughly a fifth of
+     the canvas wide, and a 660 px panel centred over a 1265 px canvas covered
+     nine tenths of it. Panel to the left, wafer to the right; column.js shifts
+     the camera's view window to match, so the two are laid out together rather
+     than one being drawn over the other. */
+  @media (min-width: 1000px) {
+    .heropanel {
+      left: clamp(24px, 5vw, 76px); transform: none;
+      top: 50%; margin-top: -0.5px; translate: 0 -50%;
+      width: min(520px, 46%);
+    }
+  }
+
+  /* On a phone the panel is 452 px tall against a 520 px canvas, so floating
+     it leaves a sliver of volume behind a wall of text. Below this width it
+     stops floating and sits under the canvas instead. The canvas keeps its own
+     height, and .stage never had one, so nothing overflows when the child
+     stops being absolutely positioned. */
+  @media (max-width: 760px) {
+    .heropanel {
+      position: static; transform: none; width: auto;
+      border-left: 0; border-right: 0; border-radius: 0;
+      backdrop-filter: none; -webkit-backdrop-filter: none;
+      box-shadow: none;
+    }
+    .heropanel::before { left: 0; right: 0; }
+    .heropanel i.tick { display: none; }
+    .stage .canvas { height: min(56vh, 420px); }
+  }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 9px; margin: 0 0 12px;
+    font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: rgba(140,190,240,.9);
+  }
+  .eyebrow s { width: 5px; height: 5px; border-radius: 50%; flex: 0 0 auto;
+    background: rgb(120,205,255); box-shadow: 0 0 8px rgba(120,205,255,.9);
+    text-decoration: none; }
+  .eyebrow u { flex: 1 1 auto; height: 5px; text-decoration: none;
+    background-image: repeating-linear-gradient(90deg,
+      rgba(140,196,246,.42) 0 1px, transparent 1px 7px); }
+
+  /* the headline figures, read off the files rather than typed in */
+  .stats { display: flex; flex-wrap: wrap; gap: 4px 26px; margin: 16px 0 0;
+           padding: 14px 0 0; border-top: 1px solid rgba(122,186,246,.16); }
+  .stats div { min-width: 84px; }
+  .stats dt { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+              color: rgba(154,190,226,.72); margin: 0 0 2px; }
+  .stats dd { margin: 0; font-size: clamp(15px,2.2vw,19px); font-weight: 500;
+              letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .stats dd u { text-decoration: none; font-size: 11.5px; font-weight: 400;
+                color: var(--dim); letter-spacing: 0; }
+  /* micrometres must not be shouted into MM, which is off by a thousand */
+  .stats dd u, .f dd u, .ramp-lab, .lad-lab { text-transform: none; }
+
+  /* ---- the control strip ------------------------------------------------- */
+  .controls { border-top: 1px solid var(--line); background: #090B10; }
+  .controls .in { max-width: 1040px; margin: 0 auto;
+                  padding: 16px clamp(16px,5vw,32px) 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tabs button {
+    appearance: none; background: transparent; color: var(--dim);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 14px; font: inherit; font-size: 13.5px; cursor: pointer;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+  .tabs button:hover { color: var(--ink); border-color: var(--edge); }
+  .tabs button[aria-selected="true"] {
+    color: #cfe6ff; border-color: rgba(122,186,246,.55);
+    background: rgba(62,150,240,.10);
+  }
+  .readout { margin: 14px 0 0; font-size: 13.5px; color: var(--dim);
+             font-variant-numeric: tabular-nums; }
+  .readout b { color: var(--ink); font-weight: 500; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; }
+  .legend .lg {
+    appearance: none; display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+    color: var(--dim); font: inherit; font-size: 12.5px; padding: 5px 10px;
+    cursor: pointer; transition: border-color .15s, color .15s, background .15s;
+  }
+  .legend .lg:hover { color: var(--ink); border-color: var(--edge); }
+  .legend .lg[aria-pressed="true"] {
+    color: var(--ink); border-color: rgba(122,186,246,.55);
+    background: rgba(62,150,240,.10);
+  }
+  .legend .lg s { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto;
+                  text-decoration: none; }
+  .legend .lg em { font-style: normal; color: var(--faint);
+                   font-variant-numeric: tabular-nums; }
+  .legend .lg[aria-pressed="true"] em { color: var(--dim); }
+  .legend .lg-all { color: var(--faint); }
+
+  /* the continuous depth scale, which needs a bar rather than swatches */
+  .ramp { width: min(560px, 100%); margin: 14px 0 0; }
+  .ramp-bar { height: 9px; border-radius: 2px; }
+  .ramp-ticks { position: relative; height: 17px; }
+  .ramp-ticks i { position: absolute; top: 0; width: 1px; height: 6px;
+                  background: rgba(154,190,226,.5); }
+  .ramp-ticks i u { position: absolute; top: 7px; left: 50%;
+                    transform: translateX(-50%); text-decoration: none;
+                    font-size: 10px; color: var(--faint); letter-spacing: .06em; }
+  .ramp-lab { display: flex; justify-content: space-between; margin-top: 4px;
+              font-size: 11.5px; color: var(--faint); }
+
+  /* ---- the cell panel ---------------------------------------------------- */
+  .panel { margin: 28px 0 0; border: 1px solid var(--line); border-radius: 12px;
+           background: #0A0C11; overflow: hidden; }
+  .panel .stagebox { position: relative; }
+  .panel .canvas { height: min(52vh, 460px); min-height: 300px; }
+  .panel .status {
+    position: absolute; left: 14px; top: 12px; font-size: 12px; color: var(--faint);
+    letter-spacing: .06em; text-transform: uppercase; pointer-events: none;
+  }
+  .loadnow {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    appearance: none; background: rgba(62,150,240,.10); color: #cfe6ff;
+    border: 1px solid rgba(122,186,246,.5); border-radius: 999px;
+    padding: 9px 20px; font: inherit; font-size: 14px; cursor: pointer;
+  }
+  .loadnow:hover { background: rgba(62,150,240,.2); }
+  .cellrail {
+    display: flex; gap: 5px; overflow-x: auto; padding: 12px 14px;
+    border-top: 1px solid var(--line); scrollbar-width: thin;
+  }
+  .cellrail button {
+    appearance: none; flex: 0 0 auto; display: flex; align-items: center; gap: 7px;
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+    color: var(--dim); font: inherit; font-size: 12.5px; padding: 5px 11px;
+    cursor: pointer; white-space: nowrap;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .cellrail button s { width: 8px; height: 8px; border-radius: 50%;
+                       background: var(--cc); text-decoration: none; flex: 0 0 auto; }
+  .cellrail button b { font-weight: 500; color: var(--ink); }
+  .cellrail button:hover { color: var(--ink); border-color: var(--edge); }
+  .cellrail button[aria-selected="true"] {
+    color: var(--ink); border-color: color-mix(in srgb, var(--cc) 60%, transparent);
+    background: color-mix(in srgb, var(--cc) 12%, transparent);
+  }
+  .cellinfo { padding: 18px clamp(14px,3vw,22px) 22px; border-top: 1px solid var(--line); }
+  .pill { display: inline-block; font-size: 12px; padding: 3px 9px; border-radius: 999px;
+          border: 1px solid color-mix(in srgb, var(--cc, #4aa6ff) 55%, transparent);
+          color: var(--ink); background: color-mix(in srgb, var(--cc, #4aa6ff) 14%, transparent); }
+  .pill-q { --cc: #8b94a3; }
+  .notes { font-size: 13px; color: var(--dim); }
+  .segid { margin-top: 8px; font-size: 12.5px; color: var(--faint); }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+           gap: 2px 22px; margin: 16px 0 0; }
+  .facts .f { display: flex; justify-content: space-between; gap: 12px;
+              padding: 5px 0; border-bottom: 1px solid #12151C; font-size: 13.5px; }
+  .facts dt { color: var(--dim); margin: 0; }
+  .facts dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  .facts dd u { text-decoration: none; color: var(--faint); font-size: 11.5px; }
+  .facts dd em { font-style: normal; color: var(--faint); font-size: 12px; }
+
+  /* the depth ladder: where this cell's soma sits in the cortex */
+  .lad { margin: 18px 0 0; }
+  .lad-rail { position: relative; height: 12px; border-radius: 2px;
+              background: #10141B; overflow: visible; }
+  .lad-rail i { position: absolute; top: 0; height: 12px;
+                border-left: 1px solid rgba(122,186,246,.28); }
+  .lad-rail i u { position: absolute; top: 14px; left: 3px; text-decoration: none;
+                  font-size: 10px; color: var(--faint); letter-spacing: .06em; }
+  .lad-rail b {
+    position: absolute; top: -3px; width: 2px; height: 18px; background: var(--cc);
+    box-shadow: 0 0 9px var(--cc); border-radius: 1px;
+  }
+  .lad-lab { display: flex; justify-content: space-between; margin-top: 20px;
+             font-size: 11.5px; color: var(--faint); }
+  .lad-lab b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* the ladder is horizontal, so its marker travels in `left`, not `top` */
+  .lad-rail i, .lad-rail b { --unused: 0; }
+
+  .fallback { padding: 26px; color: var(--faint); font-size: 14px; }
+
+  table.plain { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 0; }
+  table.plain th { text-align: left; font-weight: 500; color: var(--faint);
+                   font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase;
+                   padding: 0 12px 8px 0; }
+  table.plain td { padding: 6px 12px 6px 0; border-top: 1px solid #12151C;
+                   font-variant-numeric: tabular-nums; }
+  table.plain td:first-child { color: var(--dim); }
+  .scroller { overflow-x: auto; }
+
+  footer { border-top: 1px solid var(--line); color: var(--faint); font-size: 13.5px;
+           padding: 26px 0 0; margin: 56px 0 0; }
+  footer a { color: var(--dim); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================================================================== -->
+<section class="stage" id="volume">
+  <!-- The panel is positioned against the canvas, not against the whole
+       stage. Anchoring it to the stage centred it over the canvas plus the
+       control strip below, and its lower half hung across the controls. -->
+  <div class="viewport">
+  <div class="canvas" data-mount></div>
+  <div class="heropanel">
+    <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+    <div class="inner">
+      <p class="eyebrow"><s></s><span>H01 &middot; human temporal cortex</span><u></u></p>
+      <h1>A cubic millimetre of human brain</h1>
+      <p class="lede">Every cell body the microscope found in one block of a
+        living person's cerebral cortex, in the place it found it. Drag to turn
+        it. Nothing here is arranged: the layers appear because that is where
+        the cells are.</p>
+      <dl class="stats" data-stats></dl>
+    </div>
+  </div>
+  </div>
+
+  <!-- The controls belong to the canvas above them, so they live inside the
+       same element. That is also what makes one IntersectionObserver enough:
+       scrolling the controls into view is scrolling the volume into view. -->
+  <div class="controls">
+    <div class="in">
+      <div class="tabs" role="tablist" aria-label="What the colour means" data-modes></div>
+      <div class="legend" data-legend></div>
+      <p class="readout" data-readout></p>
+      <p class="fallback" data-status></p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================================== -->
+<main class="wrap">
+
+  <div class="cite">
+    <span class="t">A petavoxel fragment of human cerebral cortex reconstructed at nanoscale resolution</span>
+    Shapson-Coe, Januszewski, Berger and 27 others, with Viren Jain and Jeff Lichtman.
+    <i>Science</i> <b>384</b>, eadk4858 (2024).
+    <a href="https://doi.org/10.1126/science.adk4858">doi.org/10.1126/science.adk4858</a><br>
+    Data: <a href="https://h01-release.storage.googleapis.com/landing.html">the H01 release</a>,
+    read from <code>gs://h01-release</code>. This page is not affiliated with that project.
+    It only reads what the project made public.
+  </div>
+
+  <h2>The sample</h2>
+  <p>A woman of forty five had epilepsy that medicine could not control. The
+    focus was in her hippocampus, and to reach it the surgeons had to remove
+    the piece of cortex sitting on top of it. That piece would otherwise have
+    been discarded. Instead it was fixed within minutes, stained with heavy
+    metals, set in resin, and cut into 5,019 slices averaging 33.9 nanometres
+    thick. Every slice was photographed by a multibeam electron microscope at
+    four nanometres per pixel.</p>
+  <p>The block came from the front of the middle temporal gyrus and runs the
+    full depth of the cortex, from the surface down into the white matter. A
+    neuropathologist examined it and found it normal. It is just over one cubic
+    millimetre, about the size of a grain of coarse sand, and photographing it
+    produced 1.4 petabytes.</p>
+  <p>That is the sample. What is on this page is what was reconstructed from
+    it: which is to say, roughly one part in a million of one human brain.</p>
+
+  <h2>Most of it is not neurons</h2>
+  <p>The release ships a table of every cell body in the volume. It has 49,379
+    rows. Sorted by what each cell is, the shape of a piece of human cortex
+    turns out to be mostly not what people picture.</p>
+
+  <div class="scroller"><table class="plain" data-counts>
+    <caption class="lede" style="text-align:left;padding-bottom:8px">
+      Counted from <code>c3/tables/somas.csv</code> in the release.
+    </caption>
+  </table></div>
+
+  <p class="note"><b>Why these groups and not others.</b> The table names eleven
+    classes and does not say which of them are neurons. The grouping used here
+    is the one that reproduces the paper's own figures from the table exactly,
+    to the individual cell: 16,087 neurons, 32,315 glia, and 10,531 of the
+    neurons spiny. The class that decides it is the C shaped cell. Counted as a
+    neuron the totals match nothing. Counted with the glia, all three of the
+    paper's numbers come out right. So the paper groups them with glia, and so
+    does this page.</p>
+
+  <p>Oligodendrocytes alone outnumber every neuron in the block. They make
+    myelin, and they are densest where the axons leave the cortex, which is why
+    filtering to them in the volume above draws the white matter for you.</p>
+
+  <h2>How deep is deep</h2>
+  <p>Depth in cortex is measured from the pial surface, and in this volume that
+    is harder than it sounds. The block is a tilted slab and the cortical
+    surface curves inside it, so depth cannot be read off any axis. Subtracting
+    the X coordinate spreads layer 1 across 2.7 millimetres. Projecting onto the
+    best straight line through the layers still spreads it across 2.6.</p>
+  <p>Depth here is instead the true distance from each cell to the outward
+    surface of the release's own layer 1 region, a patch of about a third of a
+    square millimetre. The check that this is right is that nobody fitted it:
+    measured that way, each layer's lower edge lands on the next layer's upper
+    edge to within a few tens of micrometres, all the way down.</p>
+
+  <div class="scroller"><table class="plain" data-bands></table></div>
+
+  <p class="note"><b>The one band not to trust is layer 1.</b> Testing all
+    49,379 labels against all seven of the release's layer meshes, every label's
+    best match is its own mesh, so the column is sound. But layer 1 is the
+    weakest: 78 per cent of the cells carrying it fall inside the layer 1 mesh,
+    against 85 to 99 per cent for the others, and 7 per cent fall inside no
+    layer mesh at all, out in the corners of the block. The label is doing some
+    duty as a catch-all. Its band is left off the ladders on this page rather
+    than drawn as though it were as good as the rest.</p>
+
+  <!-- ================================================================== -->
+  <h2>The hundred and four</h2>
+  <p>Almost every cell in the volume was reconstructed by machine and never
+    checked. A hundred and four were checked by hand: every branch followed,
+    every wrong merge cut, every missing piece added back. Those are the ones
+    below, with the numbers the release itself publishes for them.</p>
+
+  <section class="panel" id="cells">
+    <div class="stagebox">
+      <div class="canvas" data-mount></div>
+      <p class="status" data-status></p>
+      <!-- The meshes are fetched when the reader gets here rather than on
+           load. The button is not a fallback for a broken observer, it is the
+           affordance for a reader who wants them now, and it is also the only
+           way in where IntersectionObserver never delivers. -->
+      <button type="button" class="loadnow" data-load>Load the 104 cells</button>
+    </div>
+    <div class="cellrail" role="tablist" aria-label="Proofread cells" data-rail></div>
+    <div class="cellinfo">
+      <div data-blurb></div>
+      <dl class="facts" data-facts></dl>
+      <div data-ladder></div>
+    </div>
+  </section>
+
+  <p class="note">Each cell is drawn at the same height on screen whatever its
+    real size, so that a small one is still worth looking at. The true extent is
+    printed beside it. The mesh is level of detail 3 of the release's
+    multiresolution mesh, roughly 22 thousand faces where the full one is 2.7
+    million; the levels simplify the surface rather than prune the arbor, so
+    every branch is still there and the skin is smoother than the microscope
+    saw it.</p>
+
+  <h2>What is in the release and not on this page</h2>
+  <p>A great deal. The 1.4 petabytes of electron microscopy itself, browsable in
+    Neuroglancer. All 149,871,669 automatically detected synapses, of which
+    111,272,315 were called excitatory and 38,599,354 inhibitory. About 230
+    millimetres of blood vessel and the 8,000 or so cells that line and wrap it.
+    Every myelin sheath. The full <code>c3</code> segmentation, which is
+    millions of fragments rather than a hundred cells.</p>
+  <p>Everything on this page was pulled from that release with the two scripts
+    in <code>scripts/</code>, which say exactly where each number came from.
+    Nothing was smoothed, sampled or invented, and where the data did not
+    support a claim the claim was dropped rather than approximated.</p>
+
+  <footer>
+    <p>Built by <a href="https://x.com/amyneurons">Amy Sterling</a>.
+      Source: <a href="https://github.com/amyleesterling/human-brain">github.com/amyleesterling/human-brain</a>.
+      Sibling pages: <a href="https://amyleesterling.github.io/microns/">the MICrONS mouse cortex</a>,
+      <a href="https://amyleesterling.github.io/ca3/">CA3 renderings</a>,
+      <a href="https://whatisabrain.com">whatisabrain.com</a>.</p>
+    <p>The H01 data is the work of the Lichtman laboratory at Harvard and the
+      Connectomics team at Google, released publicly by them. Please cite their
+      paper, not this page.</p>
+  </footer>
+</main>
+
+<script type="module">
+  import { mountColumn } from "./js/column.js";
+  import { mountCells } from "./js/cells.js";
+  import { whenNear, fmt } from "./js/holo3d.js";
+
+  const volume = document.getElementById("volume");
+
+  mountColumn(volume).then(function () {
+    fillStats();
+    fillTables();
+  }).catch(function (e) {
+    const s = volume.querySelector("[data-status]");
+    if (s) s.textContent = "The volume did not load. " + e.message;
+    throw e;
+  });
+
+  const cellsEl = document.getElementById("cells");
+  const loadBtn = cellsEl.querySelector("[data-load]");
+  const go = whenNear(cellsEl, function () {
+    if (loadBtn) loadBtn.remove();
+    mountCells(cellsEl).catch(function (e) {
+      const s = cellsEl.querySelector("[data-status]");
+      if (s) s.textContent = "The cells did not load. " + e.message;
+      throw e;
+    });
+  });
+  if (loadBtn) loadBtn.addEventListener("click", go);
+
+  /* Every figure in the panel and in the two tables is read off the files the
+     page already loaded, so none of them can drift from the data. */
+  async function meta() {
+    if (!meta._p) meta._p = fetch("data/somas.json").then((r) => r.json());
+    return meta._p;
+  }
+
+  async function fillStats() {
+    const m = await meta();
+    const c = await fetch("data/cells.json").then((r) => r.json());
+    const lo = m.bounds_um[0], hi = m.bounds_um[1];
+    const dim = [0, 1, 2].map((i) => (hi[i] - lo[i]) / 1000);
+    const rows = [
+      ["cell bodies", fmt(m.count), ""],
+      ["neurons", fmt(m.neuron_count), `${Math.round(100 * m.neuron_count / m.count)}% of them`],
+      ["block", `${dim[0].toFixed(2)} &times; ${dim[1].toFixed(2)} &times; ${dim[2].toFixed(3)}`, "mm"],
+      ["cortex spanned", fmt(m.cortex_depth_um), "&micro;m deep"],
+      ["proofread by hand", fmt(c.cells.length), "cells"],
+    ];
+    document.querySelector("[data-stats]").innerHTML = rows.map(
+      ([k, v, u]) => `<div><dt>${k}</dt><dd>${v}${u ? ` <u>${u}</u>` : ""}</dd></div>`
+    ).join("");
+  }
+
+  async function fillTables() {
+    const m = await meta();
+    const NEU = new Set(m.neuronal), GLI = new Set(m.glial);
+    const LABEL = {
+      PYRAMIDAL: "Pyramidal cell", INTERNEURON: "Interneuron",
+      SPINY_STELLATE: "Spiny stellate cell", SPINY_ATYPICAL: "Spiny cell, atypical tree",
+      UNCLASSIFIED_NEURON: "Neuron, unclassified", OLIGO: "Oligodendrocyte",
+      ASTROCYTE: "Astrocyte", MG_OPC: "Microglia or OPC", C_SHAPED: "C shaped cell",
+      BLOOD_VESSEL_CELL: "Blood vessel cell", UNKNOWN: "Unknown",
+    };
+    const order = m.types.slice().sort((a, b) => m.counts.type[b] - m.counts.type[a]);
+    const group = (t) => NEU.has(t) ? "neuron" : GLI.has(t) ? "glia" : "other";
+    document.querySelector("[data-counts]").innerHTML =
+      `<thead><tr><th>Cell class</th><th>Count</th><th>Share</th><th>Group</th></tr></thead><tbody>` +
+      order.map((t) => {
+        const n = m.counts.type[t];
+        return `<tr><td>${LABEL[t] || t}</td><td>${fmt(n)}</td>` +
+          `<td>${(100 * n / m.count).toFixed(1)}%</td><td>${group(t)}</td></tr>`;
+      }).join("") +
+      `<tr><td><b>All cell bodies</b></td><td><b>${fmt(m.count)}</b></td>` +
+      `<td></td><td></td></tr></tbody>`;
+
+    document.querySelector("[data-bands]").innerHTML =
+      `<thead><tr><th>Layer</th><th>Top</th><th>Bottom</th><th>Median</th>` +
+      `<th>Cell bodies</th></tr></thead><tbody>` +
+      m.layer_bands.map((b) => {
+        const bad = b.reliable === false;
+        return `<tr><td>${b.layer}${bad ? " <u style='color:#8b94a3;text-decoration:none'>(not drawn)</u>" : ""}</td>` +
+          `<td>${bad ? "&mdash;" : fmt(b.top_um) + " &micro;m"}</td>` +
+          `<td>${bad ? "&mdash;" : fmt(b.bottom_um) + " &micro;m"}</td>` +
+          `<td>${bad ? "&mdash;" : fmt(b.median_um) + " &micro;m"}</td>` +
+          `<td>${fmt(b.count)}</td></tr>`;
+      }).join("") + `</tbody>`;
+  }
+</script>
+</body>
+</html>

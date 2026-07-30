@@ -1,0 +1,174 @@
+{
+ "source": "gs://h01-release/data/20210601/c3/tables/somas.csv",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "bin": "data/somas.bin",
+ "count": 49379,
+ "units": "micrometres",
+ "layout": [
+  {
+   "field": "xyz",
+   "type": "float32",
+   "components": 3,
+   "offset": 0
+  },
+  {
+   "field": "depth",
+   "type": "float32",
+   "offset": 592548
+  },
+  {
+   "field": "type",
+   "type": "uint8",
+   "offset": 790064
+  },
+  {
+   "field": "layer",
+   "type": "uint8",
+   "offset": 839443
+  }
+ ],
+ "types": [
+  "ASTROCYTE",
+  "BLOOD_VESSEL_CELL",
+  "C_SHAPED",
+  "INTERNEURON",
+  "MG_OPC",
+  "OLIGO",
+  "PYRAMIDAL",
+  "SPINY_ATYPICAL",
+  "SPINY_STELLATE",
+  "UNCLASSIFIED_NEURON",
+  "UNKNOWN"
+ ],
+ "neuronal": [
+  "INTERNEURON",
+  "PYRAMIDAL",
+  "SPINY_ATYPICAL",
+  "SPINY_STELLATE",
+  "UNCLASSIFIED_NEURON"
+ ],
+ "layers": [
+  "Layer 1",
+  "Layer 2",
+  "Layer 3",
+  "Layer 4",
+  "Layer 5",
+  "Layer 6",
+  "White matter",
+  "unclassified"
+ ],
+ "glial": [
+  "ASTROCYTE",
+  "C_SHAPED",
+  "MG_OPC",
+  "OLIGO"
+ ],
+ "counts": {
+  "type": {
+   "ASTROCYTE": 5474,
+   "BLOOD_VESSEL_CELL": 285,
+   "C_SHAPED": 166,
+   "INTERNEURON": 4688,
+   "MG_OPC": 6536,
+   "OLIGO": 20139,
+   "PYRAMIDAL": 8803,
+   "SPINY_ATYPICAL": 1535,
+   "SPINY_STELLATE": 193,
+   "UNCLASSIFIED_NEURON": 868,
+   "UNKNOWN": 692
+  },
+  "layer": {
+   "Layer 1": 4595,
+   "Layer 2": 6651,
+   "Layer 3": 6275,
+   "Layer 4": 6745,
+   "Layer 5": 6720,
+   "Layer 6": 3947,
+   "White matter": 13063,
+   "unclassified": 659
+  }
+ },
+ "neuron_count": 16087,
+ "glia_count": 32315,
+ "spiny_count": 10531,
+ "paper": {
+  "neurons": 16087,
+  "glia": 32315,
+  "spiny": 10531,
+  "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)"
+ },
+ "bounds_um": [
+  [
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   3864.3,
+   2361.7,
+   173.2
+  ]
+ ],
+ "depth_reference": "distance to the outward surface of the release's layer 1 region, a 0.31 mm2 patch of 1549 faces from gs://h01-release/data/20210601/layers",
+ "layer_bands": [
+  {
+   "layer": "Layer 1",
+   "top_um": -170.2,
+   "bottom_um": 2011.0,
+   "median_um": 183.0,
+   "count": 4595,
+   "reliable": false,
+   "note": "not drawn: 7 per cent of the cells carrying this label lie inside no layer mesh at all, and 16 per cent lie deeper than layer 4, so the band spans almost the whole cortex"
+  },
+  {
+   "layer": "Layer 2",
+   "top_um": 55.2,
+   "bottom_um": 346.5,
+   "median_um": 173.9,
+   "count": 6651
+  },
+  {
+   "layer": "Layer 3",
+   "top_um": 321.9,
+   "bottom_um": 770.4,
+   "median_um": 550.3,
+   "count": 6275
+  },
+  {
+   "layer": "Layer 4",
+   "top_um": 773.2,
+   "bottom_um": 1147.9,
+   "median_um": 938.0,
+   "count": 6745
+  },
+  {
+   "layer": "Layer 5",
+   "top_um": 1088.3,
+   "bottom_um": 1549.0,
+   "median_um": 1328.4,
+   "count": 6720
+  },
+  {
+   "layer": "Layer 6",
+   "top_um": 1561.2,
+   "bottom_um": 1916.7,
+   "median_um": 1718.3,
+   "count": 3947
+  },
+  {
+   "layer": "White matter",
+   "top_um": 1904.3,
+   "bottom_um": 2625.7,
+   "median_um": 2265.0,
+   "count": 13063
+  }
+ ],
+ "cortex_depth_um": 2625.7,
+ "band_seam_um": [
+  -24.6,
+  2.8,
+  -59.6,
+  12.2,
+  -12.4
+ ]
+}
