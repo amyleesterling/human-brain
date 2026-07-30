@@ -140,6 +140,23 @@
   .btrack span { position:relative; padding-left:6px; font-size:10.5px;
     color:var(--ink); }
 
+
+  /* ---- the head maps ----------------------------------------------------- */
+  .heads { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px; margin:14px 0 0; }
+  .headcard { margin:0; text-align:center; }
+  canvas.headcv { width:100%; height:auto; max-width:190px; display:block;
+    margin:0 auto; }
+  .headcard figcaption { margin-top:6px; font-size:11.5px; color:var(--dim);
+    line-height:1.45; }
+  .headcard figcaption b { color:var(--ink); font-weight:500;
+    text-transform:capitalize; }
+  .headcard figcaption u { display:block; text-decoration:none;
+    color:var(--faint); font-size:10.5px; }
+  .headcard figcaption span { display:block; color:var(--faint);
+    font-size:10.5px; margin-top:2px; }
+  .headcard figcaption span b { color:var(--dim); }
+
   .legend { display:flex; flex-wrap:wrap; gap:6px 18px; margin:12px 0 0;
     font-size:12px; color:var(--dim); }
   .legend .lk { display:inline-flex; align-items:center; gap:7px; }
@@ -205,6 +222,42 @@
     is eye movement and blinking rather than cortical delta. Low frequency
     power on a scalp electrode is the least trustworthy thing on this page, and
     the filter cannot tell an eyeball from a brain.</div>
+</main>
+
+
+<div class="wide">
+  <section class="waves" id="topo">
+    <div class="wtop">
+      <h2 style="margin:0">Where each rhythm sits</h2>
+      <div class="tabs" role="tablist" aria-label="Eye state" data-topostate></div>
+    </div>
+    <p class="whead" data-toponote></p>
+    <div class="heads" data-heads></div>
+  </section>
+</div>
+
+<main class="wrap">
+  <p class="lede" style="margin-top:18px">They do not all come from the same
+    place. Alpha is the back of the head, and dramatically so: with the eyes
+    closed it is <b>72%</b> of the power at PO8, over the occipital lobe, and
+    <b>15%</b> at T10 beside the ear. That is the visual cortex idling, and it
+    is why the eyes-closed trace on this page came from Oz.</p>
+
+  <div class="note"><b>Two of these five maps are mostly artefact, and it
+    matters.</b> Delta peaks at AF8, right above the eye, because that is where
+    a blink is loudest, not because the front of the head is asleep. Beta and
+    gamma peak at T8 and T10, over the temporalis muscle, because clenching a
+    jaw looks like fast activity to an electrode. A filter cannot tell muscle
+    from brain. Alpha's occipital peak is the one pattern here that is clean,
+    which is a fair picture of how much of EEG analysis is spent on this
+    problem.</div>
+
+  <div class="note"><b>This is a scalp map, not a source map.</b> Skull and
+    scalp blur everything, so a hot spot means the signal is strongest there on
+    the head, not that the cortex directly beneath it is generating it.
+    Recovering the generators is a whole inverse problem, and it is not one this
+    page has solved, which is why these are drawn as heads rather than painted
+    onto the cortical surface a page away.</div>
 </main>
 
 <main class="wrap">
@@ -291,6 +344,11 @@
 <script type="module">
   import { mountScales } from "./js/scales.js";
   import { mountWaves } from "./js/waves.js";
+  import { mountTopo } from "./js/topo.js";
+  mountTopo(document.getElementById("topo")).catch(function (e) {
+    document.getElementById("topo").querySelector("[data-toponote]").textContent =
+      "The head maps did not load. " + e.message;
+  });
   mountWaves(document.getElementById("waves")).catch(function (e) {
     document.getElementById("waves").querySelector("[data-head]").textContent =
       "The rhythms did not load. " + e.message;

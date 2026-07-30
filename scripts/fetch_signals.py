@@ -355,6 +355,103 @@ def get_bands():
     }
 
 
+# ------------------------------------------------------------ topography ----
+def get_topography():
+    """Where on the head each rhythm actually is, from all 64 electrodes.
+
+    The recording is a full 10-10 montage, not one channel, so the question
+    "do the different waves come from different places" is one this file can
+    answer rather than assert. Electrode positions are the standard 10-05
+    coordinates, which is a template head and not this person's, so what is
+    real here is the pattern across sites and not the millimetres.
+    """
+    import mne
+    from scipy.signal import welch
+
+    mon = mne.channels.make_standard_montage("standard_1005")
+    pos3 = {k.lower(): v for k, v in mon.get_positions()["ch_pos"].items()}
+
+    states = {}
+    chans = None
+    for state, url in EEG.items():
+        sig, fs, units, dur = read_edf(cached(url, f"eegmmidb_S001_{state}.edf"))
+        rows, missing = [], []
+        for k in sig:
+            if "annotation" in k.lower():
+                continue
+            lab = clean_label(k)
+            p3 = pos3.get(lab.lower())
+            if p3 is None:
+                missing.append(lab)
+                continue
+            f0 = fs[k]
+            x = sig[k][int(5 * f0):int(55 * f0)]
+            ff, pw = welch(x, f0, nperseg=int(4 * f0))
+            band = (ff >= 1) & (ff <= 45)
+            tot = float(np.trapezoid(pw[band], ff[band]))
+            share = {}
+            for name, lo, hi, _ in BANDS:
+                m = (ff >= lo) & (ff < hi)
+                share[name] = round(
+                    100 * float(np.trapezoid(pw[m], ff[m])) / tot, 2)
+            rows.append({"ch": lab, "xyz_mm": [round(float(v) * 1000, 1) for v in p3],
+                         "share": share})
+        if missing:
+            raise SystemExit(f"no standard position for {missing}")
+        rows.sort(key=lambda r: r["ch"])
+        if chans is None:
+            chans = [r["ch"] for r in rows]
+        else:
+            assert chans == [r["ch"] for r in rows], "montage differs between runs"
+        states[state] = rows
+        print(f"  eyes {state:6s} {len(rows)} electrodes placed")
+
+    # The classic round head view is an azimuthal projection seen from above:
+    # distance from the centre is the angle down from the vertex, and the angle
+    # around is the angle around the head. Electrodes below the equator land
+    # outside the drawn circle, which is where they physically are.
+    P = np.array([r["xyz_mm"] for r in states["closed"]], float)
+    centre = np.array([0.0, 0.0, 0.0])
+    v = P - centre
+    r = np.linalg.norm(v, axis=1)
+    theta = np.arccos(np.clip(v[:, 2] / r, -1, 1))     # down from +z
+    phi = np.arctan2(v[:, 1], v[:, 0])                  # around, +y is the nose
+    rad = theta / (np.pi / 2)
+    xy = np.column_stack([rad * np.cos(phi), rad * np.sin(phi)])
+    for i, row in enumerate(states["closed"]):
+        row["xy"] = [round(float(xy[i, 0]), 4), round(float(xy[i, 1]), 4)]
+    by = {r["ch"]: r["xy"] for r in states["closed"]}
+    for row in states["open"]:
+        row["xy"] = by[row["ch"]]
+
+    # Where each band is strongest, measured rather than remembered.
+    peaks = {}
+    for name, lo, hi, _ in BANDS:
+        best = max(states["closed"], key=lambda r: r["share"][name])
+        peaks[name] = {"channel": best["ch"], "share": best["share"][name]}
+        print(f"    {name:6s} peaks at {best['ch']:5s} "
+              f"{best['share'][name]:5.1f}% of that site's power")
+    # Alpha over the back of the head is the one result this has to reproduce.
+    assert peaks["alpha"]["channel"].lower() in {
+        "oz", "o1", "o2", "poz", "po3", "po4", "po7", "po8", "pz", "p8", "p7"}, peaks
+
+    return {
+        "id": "eeg-topography",
+        "title": "Where each rhythm sits on the head",
+        "licence": "ODC-BY 1.0",
+        "citation": "PhysioNet EEG Motor Movement/Imagery Database, subject 1, "
+                    "runs 1 and 2, all 64 channels. Electrode coordinates are "
+                    "the standard 10-05 template (MNE), not this person's head.",
+        "method": "Welch spectrum per electrode over 50 seconds; each band's "
+                  "share of that electrode's own 1 to 45 Hz power, so a site "
+                  "with a big signal cannot dominate every band.",
+        "bands": [{"name": n, "low_Hz": lo, "high_Hz": hi} for n, lo, hi, _ in BANDS],
+        "peaks": peaks,
+        "channels": chans,
+        "states": states,
+    }
+
+
 # ------------------------------------------------------------- myelin ----
 def get_myelin():
     """Myelin water fraction against age, 45 people from 18 to 79.
@@ -417,13 +514,15 @@ if __name__ == "__main__":
     seeg = get_seeg()
     print("the five rhythms")
     bands = get_bands()
+    print("topography")
+    topo = get_topography()
     print("myelin across the lifespan")
     mye = get_myelin()
     doc = {
         "about": "Real recordings and real measurements of real human brains. "
                  "Each carries its own source, licence and citation, because "
                  "they differ.",
-        "signals": {s["id"]: s for s in (ap, eeg, bands, seeg, mye)},
+        "signals": {s["id"]: s for s in (ap, eeg, bands, topo, seeg, mye)},
     }
     with open(p("data", "signals.json"), "w") as f:
         json.dump(doc, f, separators=(",", ":"))
