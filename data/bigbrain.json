@@ -1,0 +1,188 @@
+{
+ "about": "One coronal section of one human brain, cropped at four resolutions around the same point, so the zoom is a continuous push into a single real photograph.",
+ "citation": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
+ "licence": "CC BY-NC-SA 4.0",
+ "licence_note": "Noncommercial and share-alike. Usable here only because this page is not licensed to anyone.",
+ "source": "https://neuroglancer.humanbrainproject.eu/precomputed/BigBrainRelease.2015/8bit",
+ "specimen": "A 65 year old woman. One brain, embedded in paraffin and cut into 7,404 coronal sections at 20 micrometres, each stained for cell bodies and photographed.",
+ "volume_mm": [
+  139.1,
+  148.1,
+  120.9
+ ],
+ "sections": 7404,
+ "section_index": 3872,
+ "section_note": "Chosen from twelve candidates spread through the brain: it carries the lateral ventricles, the thalamus, the basal ganglia and the hippocampus.",
+ "anisotropy": "The sections are 20 micrometres apart, but the pixels within a section are 21.17. Quoting the section spacing as the image resolution understates every in-plane measurement by about six per cent.",
+ "resolution_note": "At 20 micrometres a cell body is about one pixel. You can see that cells are there and count them; you cannot trace a dendrite. That is the whole point of this rung, which sits between an MRI voxel and an electron micrograph.",
+ "levels": {
+  "mip3": {
+   "file": "images/bigbrain/mip3.jpg",
+   "um_per_px": 169.33,
+   "px": [
+    822,
+    714
+   ],
+   "width_mm": 139.19,
+   "height_mm": 120.9,
+   "width_m": 0.13919,
+   "whole_section": true,
+   "window": [
+    75,
+    246
+   ],
+   "range_used_pct": 67.1,
+   "bytes": 69681
+  },
+  "mip2": {
+   "file": "images/bigbrain/mip2.jpg",
+   "um_per_px": 84.67,
+   "px": [
+    1024,
+    1024
+   ],
+   "width_mm": 86.7,
+   "height_mm": 86.7,
+   "width_m": 0.0867,
+   "whole_section": false,
+   "window": [
+    60,
+    243
+   ],
+   "range_used_pct": 71.8,
+   "bytes": 165751
+  },
+  "mip1": {
+   "file": "images/bigbrain/mip1.jpg",
+   "um_per_px": 42.33,
+   "px": [
+    1024,
+    1024
+   ],
+   "width_mm": 43.35,
+   "height_mm": 43.35,
+   "width_m": 0.04335,
+   "whole_section": false,
+   "window": [
+    159,
+    237
+   ],
+   "range_used_pct": 30.6,
+   "bytes": 266168
+  },
+  "mip0": {
+   "file": "images/bigbrain/mip0.jpg",
+   "um_per_px": 21.17,
+   "px": [
+    1024,
+    1024
+   ],
+   "width_mm": 21.67,
+   "height_mm": 21.67,
+   "width_m": 0.02167,
+   "whole_section": false,
+   "window": [
+    146,
+    233
+   ],
+   "range_used_pct": 34.1,
+   "bytes": 222695
+  }
+ },
+ "laminar": {
+  "depth_mm": [
+   0.05,
+   0.15,
+   0.25,
+   0.35,
+   0.45,
+   0.55,
+   0.65,
+   0.75,
+   0.85,
+   0.95,
+   1.05,
+   1.15,
+   1.25,
+   1.35,
+   1.45,
+   1.55,
+   1.65,
+   1.75,
+   1.85,
+   1.95,
+   2.05,
+   2.15,
+   2.25,
+   2.35,
+   2.45,
+   2.55,
+   2.65,
+   2.75,
+   2.85,
+   2.95,
+   3.05,
+   3.15,
+   3.25,
+   3.35,
+   3.45,
+   3.55,
+   3.65,
+   3.75,
+   3.85,
+   3.95
+  ],
+  "stain": [
+   0.3327,
+   0.3895,
+   0.4634,
+   0.4994,
+   0.5257,
+   0.5395,
+   0.5524,
+   0.5535,
+   0.56,
+   0.5598,
+   0.5572,
+   0.5518,
+   0.5535,
+   0.5525,
+   0.5557,
+   0.5546,
+   0.5478,
+   0.5341,
+   0.5227,
+   0.5086,
+   0.4974,
+   0.4857,
+   0.4839,
+   0.469,
+   0.4561,
+   0.4439,
+   0.4354,
+   0.4279,
+   0.4229,
+   0.4178,
+   0.4005,
+   0.3881,
+   0.39,
+   0.3809,
+   0.3675,
+   0.3729,
+   0.3793,
+   0.3593,
+   0.3511,
+   0.3568
+  ],
+  "surface": 0.3327,
+  "peak_depth_mm": 0.85,
+  "peak_stain": 0.56,
+  "deep_stain": 0.3568,
+  "peak_over_surface": 1.68,
+  "peak_over_deep": 1.57
+ },
+ "laminar_method": "Mean staining darkness against distance below the pial surface, measured from the image alone. The pial surface is the outer boundary of the tissue, so sulcal banks count as surface too.",
+ "laminar_control": "Cortex predicts a specific shape and the measurement has to reproduce it: pale at the surface where the molecular layer holds almost no cell bodies, darkest a millimetre down through the densely packed supragranular layers, falling away again into white matter. A flat or monotonic profile would mean the measurement was reading a staining gradient instead.",
+ "not_measured": "Cell counts. At 21 micrometres a human cortical cell body is between half a pixel and one and a half, so most cells are smaller than the sampling grid. Counting them here returned forty per square millimetre where histology says about two thousand, and returned more in white matter than in cortex, because isolated glia give crisper local contrast than somata packed together. The number was dropped rather than published.",
+ "limits": "One section of one brain. Paraffin sectioning distorts tissue, and the reconstruction corrects for that only approximately."
+}

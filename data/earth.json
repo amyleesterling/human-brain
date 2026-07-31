@@ -1,0 +1,124 @@
+{
+ "about": "The rungs above the brain, from a planet down to a street in Boston. All public domain government imagery.",
+ "centre": {
+  "lat": 42.3551,
+  "lon": -71.0657,
+  "place": "Boston Common"
+ },
+ "citation": "Blue Marble and city lights: NASA Earth Observatory / NASA Worldview (GIBS). Satellite frames: NASA GIBS, MODIS on Terra. Aerial: USGS National Agriculture Imagery Program, 1 m.",
+ "licence": "Public domain (NASA and USGS)",
+ "method": "Each frame is specified by the width in metres it should cover; the bounding box is derived from that using the WGS84 metres-per-degree at this latitude. The scale readout is therefore exact by construction.",
+ "control": "Every frame is checked to contain Boston and to be strictly smaller than the one above it. Frames that do not nest would still each look like a good photograph.",
+ "limits": "The satellite frames are single days with real weather. The aerial imagery is a different day again, and the night lights are a 2012 composite, so this is not one instant.",
+ "frames": {
+  "earth_day": {
+   "file": "images/earth/earth_day.jpg",
+   "px": [
+    4096,
+    2048
+   ],
+   "layer": "BlueMarble_ShadedRelief_Bathymetry",
+   "bytes": 939458,
+   "projection": "equirectangular, plate carree"
+  },
+  "earth_night": {
+   "file": "images/earth/earth_night.jpg",
+   "px": [
+    4096,
+    2048
+   ],
+   "layer": "VIIRS_CityLights_2012",
+   "bytes": 463765,
+   "projection": "equirectangular, plate carree"
+  },
+  "earth": {
+   "width_m": 12742000,
+   "name": "Earth",
+   "note": "12,742 kilometres across. The night side is real: VIIRS measured the light cities throw away upward."
+  },
+  "continent": {
+   "file": "images/earth/continent.jpg",
+   "width_m": 3000000,
+   "m_per_px": 2142.857,
+   "bbox": [
+    28.85134,
+    -89.2721,
+    55.85886,
+    -52.8593
+   ],
+   "px": [
+    1400,
+    1400
+   ],
+   "source": "NASA GIBS",
+   "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+   "date": "2024-09-20",
+   "cloud_fraction": 0.32,
+   "note": "Eastern North America. Cloud cover is real weather on a real day, not a clean plate.",
+   "bytes": 480809
+  },
+  "region": {
+   "file": "images/earth/region.jpg",
+   "width_m": 400000,
+   "m_per_px": 285.714,
+   "bbox": [
+    40.5546,
+    -73.49322,
+    44.1556,
+    -68.63818
+   ],
+   "px": [
+    1400,
+    1400
+   ],
+   "source": "NASA GIBS",
+   "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+   "date": "2023-05-27",
+   "cloud_fraction": 0.007,
+   "note": "New England, and the hook of Cape Cod.",
+   "bytes": 212883
+  },
+  "metro": {
+   "file": "images/earth/metro.jpg",
+   "width_m": 24000,
+   "m_per_px": 17.143,
+   "bbox": [
+    42.24707,
+    -71.21135,
+    42.46313,
+    -70.92005
+   ],
+   "px": [
+    1400,
+    1400
+   ],
+   "source": "USGS NAIP",
+   "layer": null,
+   "date": null,
+   "cloud_fraction": 0.04,
+   "note": "Boston: the harbour, the Charles, the grid of the Back Bay.",
+   "bytes": 496346
+  },
+  "street": {
+   "file": "images/earth/street.jpg",
+   "width_m": 420,
+   "m_per_px": 0.3,
+   "bbox": [
+    42.35321,
+    -71.06825,
+    42.35699,
+    -71.06315
+   ],
+   "px": [
+    1400,
+    1400
+   ],
+   "source": "USGS NAIP",
+   "layer": null,
+   "date": null,
+   "cloud_fraction": 0.035,
+   "note": "One metre per pixel. Individual buildings, individual trees, individual cars.",
+   "bytes": 359539
+  }
+ }
+}
