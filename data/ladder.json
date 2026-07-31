@@ -1,0 +1,128 @@
+{
+ "about": "One continuous push from a whole human cortex to a single synapse, every rung a real measurement from this repository.",
+ "why_separate_scenes": "A cortex is 0.17 m and a synaptic cleft is 2e-8 m. Float32 carries about seven significant digits, so one scene holding both would lose the synapse to rounding. Each stage is drawn in its own units with its true field of view carried in metres beside it.",
+ "orders_of_magnitude": 4.7,
+ "span": 49770,
+ "stages": [
+  {
+   "id": "brain",
+   "name": "A whole human brain",
+   "fov_m": 0.1513,
+   "note": "About a kilogram and a half, and the only organ that has to be explained to itself. 283 named structures from the Allen reference atlas.",
+   "source": "Borner K, et al. Human Reference Atlas. Nature Methods (2025). Geometry derives from the Allen Human Reference Atlas 3D, Ding et al.",
+   "limits": "This is an atlas, an idealised average brain, not a person's. It is also a surface model: the structures are boundaries, not tissue.",
+   "kind": "wholebrain",
+   "units_per_m": 1.0,
+   "meshes": [
+    {
+     "file": "meshes/wholebrain/shell.glb",
+     "colour": "#8C9CB0",
+     "role": "shell",
+     "opacity": 0.3
+    },
+    {
+     "file": "meshes/wholebrain/interior.glb",
+     "colour": "#C98A5E",
+     "role": "interior",
+     "opacity": 1.0
+    }
+   ],
+   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+  },
+  {
+   "id": "cortex",
+   "name": "A whole human cortex",
+   "fov_m": 0.16984,
+   "note": "Just the folded sheet now, about 2 mm thick, and spread flat roughly the area of a large dinner napkin. Two thirds of it is buried inside the folds.",
+   "source": "HCP S1200 group average, Van Essen et al., NeuroImage 80:62 (2013). MSMAll registered.",
+   "meshes": [
+    {
+     "file": "meshes/cortex/L.glb",
+     "colour": "#6E8CA8"
+    },
+    {
+     "file": "meshes/cortex/R.glb",
+     "colour": "#6E8CA8"
+    }
+   ],
+   "units_per_m": 1000.0,
+   "kind": "surface",
+   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+  },
+  {
+   "id": "tracts",
+   "name": "The cable underneath it",
+   "fov_m": 0.1784,
+   "note": "87 named bundles, averaged over 1,065 people. Everything the cortex says to itself goes through here.",
+   "source": "Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).",
+   "kind": "tracts",
+   "units_per_m": 1000.0,
+   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+  },
+  {
+   "id": "block",
+   "name": "One cubic millimetre",
+   "fov_m": 0.003864,
+   "note": "49,379 cell bodies, every one of them where the microscope found it. This much tissue took 1.4 petabytes to photograph.",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "kind": "block",
+   "units_per_m": 1000000.0,
+   "extent_um": [
+    3864.3,
+    2361.7,
+    173.2
+   ]
+  },
+  {
+   "id": "cell",
+   "name": "One neuron",
+   "fov_m": 0.0021324,
+   "note": "A layer 5 pyramidal cell, 3,347 synapses arriving on it, checked by hand.",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "kind": "cell",
+   "units_per_m": 1000000.0,
+   "mesh": "meshes/cells/5015035926.glb",
+   "extent_um": [
+    2132.4,
+    974.2,
+    174.5
+   ],
+   "segment": "5015035926",
+   "stats": {
+    "NSI": 3347,
+    "NSIe": 2076,
+    "NSIi": 1271,
+    "NSO": 142,
+    "Sp": 0.19657916617175436
+   }
+  },
+  {
+   "id": "synapse",
+   "name": "One synapse",
+   "fov_m": 3.04e-06,
+   "note": "An axon ending, and the dendrite it is talking to. The gap between them is about 20 nanometres wide.",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "kind": "synapse",
+   "units_per_m": 1000000.0,
+   "meshes": [
+    {
+     "file": "meshes/synapse/presynaptic.glb",
+     "colour": "#FFB24D",
+     "role": "presynaptic",
+     "volume_um3": 0.475
+    },
+    {
+     "file": "meshes/synapse/postsynaptic.glb",
+     "colour": "#3E96F0",
+     "role": "postsynaptic",
+     "volume_um3": 3.482
+    }
+   ],
+   "extent_um": [
+    3.04,
+    3.04,
+    3.04
+   ]
+  }
+ ]
+}

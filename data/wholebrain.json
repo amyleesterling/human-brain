@@ -1,0 +1,71 @@
+{
+ "about": "The whole human brain, from the HuBMAP Human Reference Atlas, which packages the Allen human reference atlas as glTF.",
+ "citation": "Borner K, et al. Human Reference Atlas. Nature Methods (2025). Geometry derives from the Allen Human Reference Atlas 3D, Ding et al.",
+ "licence": "CC BY 4.0",
+ "source": "https://raw.githubusercontent.com/hubmapconsortium/ccf-releases/main/v2.0/models/3d-vh-f-allen-brain.glb",
+ "units": "metres in the file; a human brain, so about 0.15 m long",
+ "extent_mm": [
+  125.3,
+  131.4,
+  151.3
+ ],
+ "extent_method": "0.5 to 99.5 percentile, not min and max: a raw bounding box is thrown off by the few stray vertices these meshes carry.",
+ "longest_mm": 151.3,
+ "limits": "This is an atlas, an idealised average brain, not a person's. It is also a surface model: the structures are boundaries, not tissue.",
+ "parts": {
+  "shell": {
+   "file": "meshes/wholebrain/shell.glb",
+   "faces": 159999,
+   "structures": 179,
+   "bytes": 2877448
+  },
+  "interior": {
+   "file": "meshes/wholebrain/interior.glb",
+   "faces": 135850,
+   "structures": 104,
+   "names": [
+    "Allen_amygdalohippocampal_area_L",
+    "Allen_amygdalohippocampal_area_R",
+    "Allen_amygdaloid_complex_L",
+    "Allen_amygdaloid_complex_R",
+    "Allen_anterior_amygdaloid_area_L",
+    "Allen_anterior_amygdaloid_area_R",
+    "Allen_anterior_horn_of_lateral_ventricle_L",
+    "Allen_anterior_horn_of_lateral_ventricle_R",
+    "Allen_anterior_nuclear_complex_of_thalamus_L",
+    "Allen_anterior_nuclear_complex_of_thalamus_R",
+    "Allen_anterior_parahippocampal_gyrus_L",
+    "Allen_anterior_parahippocampal_gyrus_R",
+    "Allen_atrium_of_lateral_ventricle_L",
+    "Allen_atrium_of_lateral_ventricle_R",
+    "Allen_basilar_part_of_pons_L",
+    "Allen_basilar_part_of_pons_R",
+    "Allen_body_of_caudate_L",
+    "Allen_body_of_caudate_R",
+    "Allen_body_of_hippocampus_L",
+    "Allen_body_of_hippocampus_R",
+    "Allen_body_of_lateral_ventricle_L",
+    "Allen_body_of_lateral_ventricle_R",
+    "Allen_central_canal_of_medulla_oblongata_L",
+    "Allen_central_canal_of_medulla_oblongata_R",
+    "Allen_centromedian_nucleus_of_thalamus_L",
+    "Allen_centromedian_nucleus_of_thalamus_R",
+    "Allen_cerebellar_deep_nuclei_L",
+    "Allen_cerebellar_deep_nuclei_R",
+    "Allen_cerebellar_vermis_L",
+    "Allen_cerebellar_vermis_R",
+    "Allen_claustrum_L",
+    "Allen_claustrum_R",
+    "Allen_corpus_callosum_L",
+    "Allen_corpus_callosum_R",
+    "Allen_external_segment_of_globus_pallidus_L",
+    "Allen_external_segment_of_globus_pallidus_R",
+    "Allen_fourth_ventricle_L",
+    "Allen_fourth_ventricle_R",
+    "Allen_head_of_caudate_L",
+    "Allen_head_of_caudate_R"
+   ],
+   "bytes": 3796916
+  }
+ }
+}

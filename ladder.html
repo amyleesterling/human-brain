@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From a cortex to a synapse</title>
+<meta name="description" content="One continuous push from a whole human cortex to a single synapse, five orders of magnitude, every rung a real measurement: HCP surfaces and tracts, the H01 cubic millimetre, one proofread neuron, one synapse from the electron microscopy.">
+<meta property="og:title" content="From a cortex to a synapse">
+<meta property="og:description" content="Five orders of magnitude of real human brain, in one move.">
+<meta property="og:url" content="https://amyleesterling.github.io/human-brain/ladder.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}
+</script>
+<style>
+  :root { --ink:#EFF2F7; --dim:#9AA2B1; --faint:#666E7C; --ground:#05060A;
+    --line:#1D222B; --edge:#4A5568; --accent:#3E96F0; }
+  * { box-sizing:border-box; scrollbar-color:#2A313D transparent; scrollbar-width:thin; }
+  ::-webkit-scrollbar { width:11px; height:11px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#252C38; border-radius:6px;
+    border:2px solid transparent; background-clip:content-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font:400 17px/1.7 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%; overflow-x:hidden; }
+  .wrap { max-width:820px; margin:0 auto; padding:clamp(24px,5vw,44px) clamp(16px,5vw,32px) 20px; }
+  h1 { margin:0 0 8px; font-size:clamp(22px,4.8vw,32px); font-weight:500;
+    letter-spacing:-.015em; text-wrap:balance; }
+  h2 { margin:46px 0 12px; font-size:13px; font-weight:500; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--faint); }
+  p { margin:0 0 15px; }
+  a { color:var(--accent); }
+  .lede { color:var(--dim); font-size:15.5px; }
+  .note { font-size:14.5px; color:var(--dim); border-left:2px solid var(--line);
+    padding:2px 0 2px 16px; margin:22px 0; }
+  .note b { color:var(--ink); font-weight:500; }
+  code { font:400 .88em/1 ui-monospace,Consolas,monospace; color:#b9c6d6; }
+
+  /* ---- the stage --------------------------------------------------------- */
+  .stage { position:relative; background:var(--ground); }
+  .stage .canvas { height:min(84vh,860px); min-height:420px; width:100%; }
+  @media (max-width:760px){ .stage .canvas { height:min(62vh,520px); } }
+
+  /* the scale rail, which is the whole navigation */
+  .rail { position:absolute; left:clamp(14px,3vw,34px); top:9%; bottom:9%;
+    width:2px; background:linear-gradient(180deg,
+      rgba(122,186,246,.05), rgba(122,186,246,.4), rgba(122,186,246,.05));
+    z-index:3; }
+  .rail > i { position:absolute; left:-4px; width:10px; height:10px;
+    border-radius:50%; background:#cfe6ff; box-shadow:0 0 12px rgba(140,200,255,.9);
+    top:var(--at,0%); transform:translateY(-50%); transition:top .12s linear; }
+  .rail button { position:absolute; left:0; transform:translateY(-50%);
+    appearance:none; background:none; border:0; padding:0 0 0 16px;
+    color:var(--faint); font:inherit; font-size:11.5px; text-align:left;
+    cursor:pointer; white-space:nowrap; line-height:1.25; }
+  .rail button s { position:absolute; left:-3px; top:50%; width:8px; height:8px;
+    margin-top:-4px; border-radius:50%; background:#1D222B;
+    border:1px solid #35404e; text-decoration:none; }
+  .rail button span { display:block; color:var(--dim); }
+  .rail button em { font-style:normal; font-variant-numeric:tabular-nums; }
+  .rail button:hover span, .rail button[aria-current="true"] span { color:var(--ink); }
+  .rail button[aria-current="true"] s { background:#cfe6ff; border-color:#cfe6ff; }
+
+  /* the readout */
+  .read { position:absolute; right:clamp(14px,3vw,34px); top:clamp(16px,4vw,38px);
+    z-index:3; text-align:right; }
+  .read b { display:block; font-size:clamp(26px,5vw,44px); font-weight:400;
+    letter-spacing:-.02em; font-variant-numeric:tabular-nums; color:#dbe9f8; }
+  .read u { display:block; text-decoration:none; font-size:10px;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--faint); }
+
+  .caption { position:absolute; left:50%; transform:translateX(-50%);
+    bottom:clamp(16px,4vw,34px); z-index:3; width:min(560px,calc(100% - 120px));
+    text-align:center; }
+  .caption h3 { margin:0 0 4px; font-size:clamp(16px,2.4vw,21px); font-weight:500; }
+  .caption p { margin:0; font-size:13.5px; color:var(--dim); }
+  .caption .src { margin-top:6px; font-size:11px; color:var(--faint); }
+
+  .ctl { position:absolute; right:clamp(14px,3vw,34px);
+    bottom:clamp(16px,4vw,34px); z-index:3; }
+  .ctl button { appearance:none; background:rgba(62,150,240,.12); color:#cfe6ff;
+    border:1px solid rgba(122,186,246,.5); border-radius:999px;
+    padding:6px 18px; font:inherit; font-size:13px; cursor:pointer; }
+  .ctl button:hover { background:rgba(62,150,240,.26); }
+  .hint { position:absolute; left:50%; transform:translateX(-50%);
+    top:clamp(14px,3vw,26px); z-index:3; font-size:11.5px; color:var(--faint);
+    letter-spacing:.06em; }
+  .status { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    z-index:4; color:var(--faint); font-size:14px; }
+
+  footer { border-top:1px solid var(--line); color:var(--faint); font-size:13.5px;
+    padding:26px 0 0; margin:46px 0 0; }
+  footer a { color:var(--dim); }
+  @media (prefers-reduced-motion:reduce){
+    * { animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="stage" id="ladder">
+  <div class="canvas" data-mount></div>
+  <div class="rail" data-rail></div>
+  <div class="read" data-read></div>
+  <div class="caption" data-note></div>
+  <p class="hint">scroll to move through the scales, drag to turn</p>
+  <div class="ctl"><button type="button" data-play>Pause</button></div>
+  <p class="status" data-status></p>
+</section>
+
+<main class="wrap">
+  <h1>From a cortex to a synapse</h1>
+  <p class="lede">Five orders of magnitude of one human brain, in a single move.
+    Every rung is a real measurement already on this site, and the number in the
+    corner is the true width of what you are looking at, not a caption.</p>
+
+  <h2>The six rungs</h2>
+  <p><b>A whole brain, 15 cm.</b> The Allen human reference atlas as packaged by
+    the HuBMAP Human Reference Atlas: 283 named structures, the outer surface
+    drawn as glass so the thalamus, hippocampus, brainstem and cerebellum inside
+    it are visible.</p>
+  <p><b>The cortex, 17 cm.</b> The Human Connectome Project's group-average
+    surface, built from MRI across more than a thousand people. Just the folded
+    sheet now, about 2 mm thick, and spread flat it would cover a large dinner
+    napkin. Two thirds of it is buried inside the folds.</p>
+  <p><b>The cable underneath, 18 cm.</b> 87 named white matter bundles from the
+    same project, averaged over 1,065 subjects. Everything the cortex says to
+    itself goes through here.</p>
+  <p><b>One cubic millimetre, 3.9 mm.</b> H01: a piece of a living woman's
+    temporal cortex, with all 49,379 of its cell bodies in the place the
+    microscope found them. Photographing this much tissue took 1.4 petabytes.</p>
+  <p><b>One neuron, 2.1 mm.</b> A layer 5 pyramidal cell from that block,
+    followed by hand through the whole volume, carrying 3,347 incoming
+    synapses.</p>
+  <p><b>One synapse, 3 µm.</b> An axon ending and the dendrite it is talking to,
+    pulled straight out of the electron microscopy. The gap between them is
+    about 20 nanometres.</p>
+
+  <div class="note"><b>The first three rungs are all the same size, and that is
+    not a mistake.</b> A brain measures 15 cm, its cortex 17 and its white
+    matter 18, because they are one organ looked at three ways rather than three
+    scales. The readout says 15, 17 and 18 centimetres in turn rather than
+    inventing a descent that is not there. The ladder only starts descending at
+    the fourth rung, and then it falls off a cliff.</div>
+
+  <h2>Why this is six scenes and not one</h2>
+  <p>A cortex is 0.2 metres. A synaptic cleft is 0.00000002 metres. That is
+    seven orders of magnitude, and a 32-bit float carries about seven
+    significant digits, so a single scene holding both ends would lose the
+    synapse to rounding error before it ever reached the screen.</p>
+  <p>So each rung is drawn normalised to its own size, and its true extent in
+    metres travels alongside it. The zoom you see is continuous; the arithmetic
+    behind it never spans more than one rung at a time. The readout is computed
+    from the real measurements, so it cannot drift away from the picture.</p>
+
+  <div class="note"><b>The jump from a cell to a synapse is the big one.</b>
+    Everything else on this page steps down by a factor of a few. That one steps
+    down by seven hundred, and there is no dishonest way to smooth it: a neuron
+    really is that much larger than the junctions covering it. The cell you just
+    left has 3,347 of them arriving on it, and this is one.</p>
+
+  <div class="note"><b>Nothing here is glossy.</b> These cells were submerged in
+    fluid, and submerged tissue has almost no refractive step at its surface, so
+    it should read as soft and translucent rather than as painted plastic with a
+    highlight. The rendering uses a real three-point light rig with high
+    roughness and no metalness, and keeps emission low, because pushing emission
+    up to make things visible is what flattens a picture and kills every shadow.</div>
+
+  <div class="note"><b>The colours are ordered, not decorative.</b> The cell
+    bodies in the cubic millimetre are tinted by their depth below the surface,
+    on a ramp of explicit stops that climbs in lightness from deep blue through
+    violet to gold. Walking a blue-to-gold ramp round a hue wheel instead would
+    pass through green, and green would appear in the picture carrying a meaning
+    neither end of the scale contains.</div>
+
+  <footer>
+    <p><a href="./">A cubic millimetre</a> &middot;
+      <a href="tracts.html">The white matter</a> &middot;
+      <a href="scales.html">Microseconds to decades</a> &middot;
+      <a href="retinotopy.html">Retinotopy</a> &middot;
+      Source: <a href="https://github.com/amyleesterling/human-brain">github.com/amyleesterling/human-brain</a>.
+      Built by <a href="https://x.com/amyneurons">Amy Sterling</a>.</p>
+    <p>Whole brain: HuBMAP Human Reference Atlas, Borner et al., Nature Methods
+      (2025), CC BY 4.0, geometry from the Allen Human Reference Atlas 3D. It is
+      an idealised average and a surface model, not a person and not tissue.
+      H01: Shapson-Coe et al., Science 384, eadk4858 (2024), CC BY 4.0.
+      Tractography: Yeh, Nat Commun 13, 4933 (2022), CC-BY-SA 4.0.
+      Surfaces: HCP S1200 group average, Van Essen et al., NeuroImage 80, 62 (2013).
+      Please cite them, not this page.</p>
+  </footer>
+</main>
+
+<script type="module">
+  import { mountLadder } from "./js/ladder.js?v=4";
+  const el = document.getElementById("ladder");
+  mountLadder(el).then(function (h) { window.__ladder = h; }).catch(function (e) {
+    const s = el.querySelector("[data-status]");
+    if (s) s.textContent = "The ladder did not load. " + e.message;
+    throw e;
+  });
+</script>
+</body>
+</html>
