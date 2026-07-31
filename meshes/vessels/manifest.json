@@ -1,0 +1,23 @@
+{
+ "source": "gs://h01-release/data/20210601/blood_vessels_segmented",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "note": "The paper reports about 230 mm of vessel and roughly 8,100 vessel-associated cells in this block. This is the segmented vasculature, merged into one mesh.",
+ "segments_in_release": 1479,
+ "segments_drawn": 1432,
+ "fragments_dropped": 45,
+ "no_mesh_manifest": [
+  1473,
+  1479
+ ],
+ "faces": 1339732,
+ "extent_um": [
+  3350.4,
+  2038.9,
+  173.7
+ ],
+ "file": "meshes/vessels/vessels.glb",
+ "tag_vocabulary": [
+  "thin",
+  "artery"
+ ]
+}

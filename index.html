@@ -401,6 +401,10 @@
       <div class="tabs" role="tablist" aria-label="What the colour means" data-modes></div>
       <div class="legend" data-legend></div>
       <p class="readout" data-readout></p>
+      <div class="legend" style="margin-top:10px">
+        <button type="button" class="lg" data-vessels aria-pressed="false"
+          style="--cc:#FF5C7A"><s style="background:#FF5C7A"></s>Blood vessels</button>
+      </div>
       <p class="fallback" data-status></p>
     </div>
   </div>
@@ -565,13 +569,23 @@
     a real human action potential, a real alpha rhythm and real myelin measured
     across sixty years of adult life.</p>
 
+  <h2>The plumbing</h2>
+  <p>Turn the blood vessels on in the volume at the top. The paper puts about
+    230 millimetres of vessel in this one block: a quarter of a metre of pipe in
+    a grain of sand, threaded between the cells so that nothing is ever far from
+    a supply. This is 1,432 segmented vessel objects, and they needed no
+    alignment at all, because the vasculature and the cell bodies were measured
+    in the same voxel frame.</p>
+  <p>It is also the physical reason functional MRI exists. That method does not
+    watch neurons, it watches blood arriving where it is needed, several seconds
+    late. This is the network it is watching.</p>
+
   <h2>What is in the release and not on this page</h2>
-  <p>A great deal. The 1.4 petabytes of electron microscopy itself, browsable in
-    Neuroglancer. All 149,871,669 automatically detected synapses, of which
-    111,272,315 were called excitatory and 38,599,354 inhibitory. About 230
-    millimetres of blood vessel and the 8,000 or so cells that line and wrap it.
-    Every myelin sheath. The full <code>c3</code> segmentation, which is
-    millions of fragments rather than a hundred cells.</p>
+  <p>Still a great deal. The 1.4 petabytes of electron microscopy itself,
+    browsable in Neuroglancer. All 149,871,669 automatically detected synapses,
+    of which 111,272,315 were called excitatory and 38,599,354 inhibitory. Every
+    myelin sheath. The full <code>c3</code> segmentation, which is millions of
+    fragments rather than a hundred cells.</p>
   <p>Everything on this page was pulled from that release with the two scripts
     in <code>scripts/</code>, which say exactly where each number came from.
     Nothing was smoothed, sampled or invented, and where the data did not

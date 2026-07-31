@@ -223,6 +223,63 @@ export async function mountColumn(el) {
     }, undefined, () => res(null));
   }))).then(() => { loop.once(); });
 
+  /* ---- the vasculature --------------------------------------------------
+     The paper puts about 230 millimetres of blood vessel in this one block.
+     It is in the same voxel frame as the cell bodies, so it needs no
+     registration at all: the cells and the plumbing that feeds them were
+     already in one coordinate system, and the only work is the same axis
+     remap the points get. Loaded only when asked for, because it is 1.9 MB
+     the reader may never want. */
+  let vessels = null, vesselsWanted = false;
+  const vesselEl = el.querySelector("[data-vessels]");
+
+  function placeVessels(geo) {
+    const p = geo.attributes.position;
+    const out = new Float32Array(p.count * 3);
+    for (let k = 0; k < p.count; k++) {
+      out[k * 3] = (p.getY(k) - mid[1]) / 1000;
+      out[k * 3 + 1] = (p.getX(k) - mid[0]) / 1000;
+      out[k * 3 + 2] = (p.getZ(k) - mid[2]) / 1000;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(out, 3));
+    g.setIndex(geo.index);
+    g.computeVertexNormals();
+    return g;
+  }
+
+  function toggleVessels(on) {
+    vesselsWanted = on;
+    if (vessels) { vessels.visible = on; loop.once(); return; }
+    if (!on) return;
+    if (vesselEl) vesselEl.textContent = "Loading the vessels";
+    loader.load("meshes/vessels/vessels.glb", (g) => {
+      const m = g.scene.getObjectByProperty("isMesh", true);
+      if (!m) return;
+      vessels = new THREE.Mesh(placeVessels(m.geometry),
+        new THREE.MeshBasicMaterial({
+          color: new THREE.Color("#FF5C7A"), transparent: true, opacity: 0.30,
+          side: THREE.FrontSide, depthWrite: false,
+          blending: THREE.AdditiveBlending,
+        }));
+      vessels.renderOrder = 2;
+      vessels.visible = vesselsWanted;
+      scene.add(vessels);
+      if (vesselEl) vesselEl.textContent = "Blood vessels";
+      loop.once();
+    }, undefined, () => {
+      if (vesselEl) vesselEl.textContent = "The vessels did not load";
+    });
+  }
+
+  if (vesselEl) {
+    vesselEl.addEventListener("click", () => {
+      const on = vesselEl.getAttribute("aria-pressed") !== "true";
+      vesselEl.setAttribute("aria-pressed", String(on));
+      toggleVessels(on);
+    });
+  }
+
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
