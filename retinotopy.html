@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The map of the world on the back of your head</title>
+<meta name="description" content="Visual space is physically laid out on the cortex. One person's own surface, with the patch of the visual field each point responds to, measured in a scanner. Click the cortex and see where it looks.">
+<meta property="og:title" content="The map of the world on the back of your head">
+<meta property="og:description" content="Visual space is physically laid out on the cortex. Click a point on the brain and see where in your view it looks.">
+<meta property="og:url" content="https://amyleesterling.github.io/human-brain/retinotopy.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}
+</script>
+<style>
+  :root {
+    --ink:#EFF2F7; --dim:#9AA2B1; --faint:#666E7C; --ground:#07080B;
+    --panel:#0F1218; --line:#1D222B; --edge:#4A5568; --accent:#3E96F0;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font:400 17px/1.7 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%; overflow-x:hidden; }
+  .wrap { max-width:820px; margin:0 auto; padding:clamp(26px,5vw,48px) clamp(16px,5vw,32px) 20px; }
+  .wide { max-width:1240px; margin:0 auto; padding:0 clamp(12px,3vw,28px); }
+  h1 { margin:0 0 8px; font-size:clamp(22px,4.8vw,32px); font-weight:500;
+    letter-spacing:-.015em; text-wrap:balance; }
+  h2 { margin:48px 0 12px; font-size:13px; font-weight:500; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--faint); }
+  p { margin:0 0 15px; }
+  a { color:var(--accent); }
+  code { font:400 .88em/1 ui-monospace,Consolas,monospace; color:#b9c6d6; }
+  .lede { color:var(--dim); font-size:15.5px; }
+  .note { font-size:14.5px; color:var(--dim); border-left:2px solid var(--line);
+    padding:2px 0 2px 16px; margin:22px 0; }
+  .note b { color:var(--ink); font-weight:500; }
+
+  .stage { display:grid; grid-template-columns:minmax(0,1fr) 292px; gap:18px;
+    align-items:start; margin:20px 0 0; }
+  @media (max-width:900px){ .stage { grid-template-columns:minmax(0,1fr); } }
+  .box { background:#090B10; border:1px solid var(--line); border-radius:12px;
+    overflow:hidden; }
+  .box .canvas { height:min(66vh,600px); min-height:340px; width:100%; }
+  .ctl { border-top:1px solid var(--line); padding:13px clamp(13px,3vw,18px) 15px; }
+  .row { display:flex; flex-wrap:wrap; align-items:center; gap:7px 12px; margin:0 0 9px; }
+  .lab { font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--faint); min-width:56px; }
+  .tabs { display:flex; flex-wrap:wrap; gap:6px; }
+  .tabs button { appearance:none; background:transparent; color:var(--dim);
+    border:1px solid var(--line); border-radius:999px; padding:5px 13px;
+    font:inherit; font-size:13px; cursor:pointer;
+    transition:color .15s,border-color .15s,background .15s; }
+  .tabs button:hover { color:var(--ink); border-color:var(--edge); }
+  .tabs button[aria-selected="true"] { color:#cfe6ff;
+    border-color:rgba(122,186,246,.55); background:rgba(62,150,240,.10); }
+  .rinfo { font-size:13px; color:var(--dim); margin:6px 0 0; }
+  .rinfo b { color:var(--ink); font-weight:500; }
+  .rinfo .pick { color:var(--faint); }
+  .rinfo .pick b { color:#9fd8ff; }
+
+  .side { background:#090B10; border:1px solid var(--line); border-radius:12px;
+    padding:16px; text-align:center; }
+  .side h3 { margin:0 0 4px; font-size:12px; font-weight:500; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--faint); }
+  .side p { font-size:12.5px; color:var(--dim); margin:10px 0 0; text-align:left; }
+  [data-field] canvas { width:100%; max-width:260px; height:auto; display:block;
+    margin:6px auto 0; }
+
+  footer { border-top:1px solid var(--line); color:var(--faint); font-size:13.5px;
+    padding:26px 0 0; margin:48px 0 0; }
+  footer a { color:var(--dim); }
+  @media (prefers-reduced-motion:reduce){
+    * { animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" style="padding-bottom:0">
+  <h1>The map of the world on the back of your head</h1>
+  <p class="lede">Everything in front of you right now is laid out, physically,
+    across a few square centimetres of cortex behind your ears. Neighbouring
+    parts of what you see sit on neighbouring parts of the tissue. This is one
+    real person's map, measured while a bar and a wedge swept across their
+    view. <b>Click the coloured cortex and the wheel shows you where that
+    piece of brain is looking.</b></p>
+</div>
+
+<div class="wide">
+  <section class="stage" id="retino">
+    <div class="box">
+      <div class="canvas" data-mount></div>
+      <p class="status" data-status style="padding:0 16px;color:var(--faint);font-size:13px">Loading the surface</p>
+      <div class="ctl">
+        <div class="row"><span class="lab">Colour</span>
+          <div class="tabs" role="tablist" aria-label="Map" data-rmode></div></div>
+        <div class="row"><span class="lab">Hemisphere</span>
+          <div class="tabs" role="tablist" aria-label="Hemisphere" data-rhemi></div></div>
+        <div class="row"><span class="lab">View</span>
+          <div class="tabs" role="tablist" aria-label="View" data-rview></div></div>
+        <p class="rinfo" data-rinfo></p>
+      </div>
+    </div>
+    <aside class="side">
+      <h3>What you are looking at</h3>
+      <div data-field></div>
+      <p>The dot in the middle is where the eyes are pointed. Rings are equal
+        steps out from it. The colours are the same ones on the cortex, so the
+        wheel and the brain are one map.</p>
+    </aside>
+  </section>
+</div>
+
+<main class="wrap">
+  <h2>Why this is the best thing the brain does in public</h2>
+  <p>Most of what a brain does is invisible from outside it. This is not.
+    Visual space is spread across the cortical surface in an orderly sheet, so
+    a patch of tissue you can point at answers to a patch of the world you can
+    point at. Two things next to each other in your view are next to each other
+    in your head.</p>
+  <p>Turn on <b>how far out</b> and you can see the other half of the
+    arrangement: the centre of gaze takes an enormous share of the cortex, and
+    the far periphery is squeezed into a thin rim. That is why you can read
+    this sentence only where you are looking, and why everything else is a
+    vague impression of shapes.</p>
+
+  <h2>How the map was measured, and how I checked it</h2>
+  <p>The subject lay in a scanner and watched a bar sweep across a blank field,
+    and a wedge rotate around it. Every point on the cortex has a time course,
+    and for each one a model asked which small patch of visual space best
+    explains when that point got busy. The answer is two numbers per vertex:
+    which direction from the centre of gaze, and how far out.</p>
+  <p>I did not take that on trust. A real retinotopic map has a property noise
+    does not: it is <b>smooth across the cortical sheet</b>, because
+    neighbouring vertices see neighbouring parts of the world. Measured on this
+    surface, neighbouring vertices differ about <b>thirty times less</b> than
+    randomly chosen pairs, and shuffling the values destroys that completely,
+    scoring 1.00 as it must. The build script runs that test on both
+    hemispheres, before and after the mesh was simplified for the web, and
+    refuses to write anything if it fails.</p>
+
+  <h2>Each half sees the opposite world</h2>
+  <p>Look at the two hemispheres separately. The left one is almost entirely
+    coloured for the <b>right</b> half of the visual field, and the right one
+    for the left. Measured on this subject: at a 25 per cent fit,
+    <b>95.8 per cent</b> of the left hemisphere's well-fitted cortex answers to
+    the right of where they were looking, and <b>97.7 per cent</b> of the right
+    hemisphere answers to the left. Raise the fit quality and it goes to 98 and
+    99 per cent.</p>
+  <p>That the numbers get <i>cleaner</i> as the fits get better is itself the
+    argument that these are real measurements rather than noise. Shuffling
+    which hemisphere each point belongs to gives 48.7 and 49.7 per cent, which
+    is chance, as it has to be. The build refuses to write the file if any of
+    that fails.</p>
+  <p>This is why a stroke on one side of the back of the head takes away one
+    side of the world rather than blurring all of it.</p>
+
+  <div class="note"><b>Most of the brain is grey here, on purpose.</b> Only
+    about 27,000 vertices per hemisphere have a receptive field the model can
+    fit at all. Everywhere else it explains almost nothing, and colouring that
+    would be colouring noise dressed up as a map. What is coloured is roughly
+    the back tenth of the brain, which is a fair picture of how much cortex is
+    given over to early vision.</div>
+
+  <div class="note"><b>Why polar angle uses a colour wheel.</b> Direction is
+    cyclic: straight up is one value whether you count clockwise or
+    anticlockwise to reach it. A normal left-to-right colour ramp would invent
+    a hard seam where the numbers wrap, and on a retinotopic map that fake seam
+    would land near the real boundaries between visual areas, which is the
+    worst possible place to put a lie.</div>
+
+  <div class="note"><b>Credit, with a caveat.</b> This dataset is released CC0
+    and its own description file lists its authors as a placeholder,
+    <code>TODO: First1 Last1</code>. There is no paper to cite and nobody
+    named to credit, which is not how it should be. It came from the NYU Center
+    for Brain Imaging, OpenNeuro <code>ds007283</code>, and the credit is
+    theirs.</div>
+
+  <footer>
+    <p><a href="./">A cubic millimetre</a> &middot;
+      <a href="tracts.html">The white matter</a> &middot;
+      <a href="scales.html">Microseconds to decades</a> &middot;
+      Source: <a href="https://github.com/amyleesterling/human-brain">github.com/amyleesterling/human-brain</a>.
+      Built by <a href="https://x.com/amyneurons">Amy Sterling</a>.</p>
+  </footer>
+</main>
+
+<script type="module">
+  import { mountRetino } from "./js/retino.js";
+  const el = document.getElementById("retino");
+  mountRetino(el).then(function (h) { window.__retino = h; }).catch(function (e) {
+    const s = el.querySelector("[data-status]");
+    if (s) s.textContent = "The map did not load. " + e.message;
+    throw e;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{
+ "about": "Population receptive field maps on one person's own inflated cortical surface. Each vertex carries the polar angle and eccentricity of the patch of visual space it responds to, and how much of its time course the model explains.",
+ "source": "https://s3.amazonaws.com/openneuro.org/ds007283 (sub-wlsubj016), OpenNeuro ds007283",
+ "licence": "CC0",
+ "attribution_note": "The dataset's own dataset_description.json lists its authors as a TODO placeholder, so there is no paper to cite and nobody named to credit. It is CC0 and the credit is owed to NYU CBI regardless.",
+ "subject": "sub-wlsubj016",
+ "vexpl_threshold": 0.1,
+ "angle_range_rad": [
+  -3.141592653589793,
+  3.141592653589793
+ ],
+ "eccen_range_deg": [
+  0,
+  40
+ ],
+ "decimated_to_faces": 120000,
+ "resampling": "maps carried onto the decimated mesh by nearest original vertex; the median move is printed on every build and asserted under 1.5 mm",
+ "check": {
+  "lh": {
+   "source_vertices": 244055,
+   "fit_above_threshold": 27622,
+   "smoothness": {
+    "eccen": {
+     "neighbour": 0.1324,
+     "random": 4.0178,
+     "ratio": 0.033,
+     "shuffled_ratio": 0.9945,
+     "ratio_after_decimation": 0.0658
+    },
+    "angle": {
+     "neighbour": 0.0512,
+     "random": 0.86,
+     "ratio": 0.0595,
+     "shuffled_ratio": 0.9999,
+     "ratio_after_decimation": 0.1274
+    }
+   }
+  },
+  "rh": {
+   "source_vertices": 242584,
+   "fit_above_threshold": 27736,
+   "smoothness": {
+    "eccen": {
+     "neighbour": 0.1318,
+     "random": 4.2231,
+     "ratio": 0.0312,
+     "shuffled_ratio": 0.9867,
+     "ratio_after_decimation": 0.06
+    },
+    "angle": {
+     "neighbour": 0.0534,
+     "random": 0.8278,
+     "ratio": 0.0645,
+     "shuffled_ratio": 0.9956,
+     "ratio_after_decimation": 0.1244
+    }
+   }
+  }
+ },
+ "contralateral": {
+  "lh": {
+   "0.10": {
+    "n": 5971,
+    "right_visual_field": 90.7
+   },
+   "0.25": {
+    "n": 3763,
+    "right_visual_field": 95.8
+   },
+   "0.40": {
+    "n": 2580,
+    "right_visual_field": 98.1
+   }
+  },
+  "rh": {
+   "0.10": {
+    "n": 6174,
+    "right_visual_field": 6.0
+   },
+   "0.25": {
+    "n": 3746,
+    "right_visual_field": 2.3
+   },
+   "0.40": {
+    "n": 2533,
+    "right_visual_field": 1.0
+   }
+  },
+  "shuffled_control_pct_right": [
+   48.7,
+   49.7
+  ]
+ },
+ "meshes": {
+  "lh": {
+   "file": "meshes/retino/lh.glb",
+   "vertices": 60002,
+   "faces": 120000,
+   "bytes": 2160820
+  },
+  "rh": {
+   "file": "meshes/retino/rh.glb",
+   "vertices": 60002,
+   "faces": 120000,
+   "bytes": 2160816
+  }
+ },
+ "bin": "data/retinotopy.bin",
+ "layout": [
+  {
+   "hemi": "lh",
+   "field": "angle",
+   "offset": 0,
+   "count": 60002,
+   "dtype": "uint16"
+  },
+  {
+   "hemi": "lh",
+   "field": "eccen",
+   "offset": 120004,
+   "count": 60002,
+   "dtype": "uint16"
+  },
+  {
+   "hemi": "lh",
+   "field": "vexpl",
+   "offset": 240008,
+   "count": 60002,
+   "dtype": "uint8"
+  },
+  {
+   "hemi": "rh",
+   "field": "angle",
+   "offset": 300010,
+   "count": 60002,
+   "dtype": "uint16"
+  },
+  {
+   "hemi": "rh",
+   "field": "eccen",
+   "offset": 420014,
+   "count": 60002,
+   "dtype": "uint16"
+  },
+  {
+   "hemi": "rh",
+   "field": "vexpl",
+   "offset": 540018,
+   "count": 60002,
+   "dtype": "uint8"
+  }
+ ]
+}
