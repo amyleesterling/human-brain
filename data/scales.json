@@ -360,6 +360,22 @@
    "blurb": "Physical rewiring. A branch grows a new bump, finds a partner, and a connection exists that did not. H01 counts spines on every proofread cell: a median of 0.185 spines per unit of dendrite, and 0.387 on the spiniest cell in the set."
   },
   {
+   "id": "sleep-prune",
+   "name": "The brain edits itself overnight",
+   "domain": "structural",
+   "space": [
+    5e-07,
+    0.1
+   ],
+   "time": [
+    18000.0,
+    29000.0
+   ],
+   "evidence": "cited",
+   "source": "Synapses strengthened during waking are broadly downscaled during sleep, and microglia do much of their pruning then. Tononi and Cirelli, Neuron 81:12 (2014); de Vivo et al., Science 355:507 (2017), which measured a spine reduction of about 18 per cent across a night in mouse cortex. The overnight step is measured in animals; the human number is not one this page has.",
+   "blurb": "Pruning is not only a decade-long trend, it is a nightly job. Across a night's sleep synapses that grew during the day are scaled back and some are removed outright, which is also when the day's memories are consolidated. The slow box further right is what is left over after twenty years of these nights."
+  },
+  {
    "id": "myelin",
    "name": "An axon gets insulated",
    "domain": "structural",
@@ -368,29 +384,29 @@
     0.001
    ],
    "time": [
-    1000000.0,
-    1000000000.0
+    2600000.0,
+    1260000000.0
    ],
    "evidence": "measured",
-   "source": "Measured, not cited: myelin water fraction in 45 people aged 18 to 79, Faizy et al., Sci Rep 8, 14991 (2018), CC BY 4.0. The correlations printed with it are computed here.",
+   "source": "A single axon is ensheathed over weeks. Across the brain the job is not finished until the third or fourth decade, latest in association cortex. Yakovlev and Lecours (1967); Miller et al., PNAS 109:16480 (2012). The adult decline is measured: myelin water fraction in 45 people aged 18 to 79, Faizy et al., Sci Rep 8, 14991 (2018), CC BY 4.0, and the correlations are computed here.",
    "blurb": "The slowest structural change with the fastest payoff: it is what lets an impulse cross a metre in milliseconds. It is also the one thing on the slow end of this map that is a measurement rather than a citation, and it does not do the same thing everywhere. Association white matter loses myelin steadily across adult life. The corticospinal tract, the one drawn running brainstem to motor cortex on the tract page, holds on to it.",
    "signal": "myelin-lifespan"
   },
   {
    "id": "pruning",
-   "name": "Connections are thrown away",
+   "name": "More synapses are lost than made",
    "domain": "developmental",
    "space": [
     2e-08,
     0.1
    ],
    "time": [
-    30000000.0,
-    600000000.0
+    63000000.0,
+    630000000.0
    ],
    "evidence": "cited",
-   "source": "Synaptic density in human cortex peaks in the first years and declines through adolescence. Huttenlocher and Dabholkar, J Comp Neurol 387:167 (1997).",
-   "blurb": "A child's cortex builds far more synapses than it keeps. Becoming yourself is substantially a process of deletion."
+   "source": "Synaptic density in human cortex peaks in the first years and declines through adolescence to adult levels in the early twenties. Huttenlocher and Dabholkar, J Comp Neurol 387:167 (1997). The range here is given as round years because the literature does not support anything sharper.",
+   "blurb": "A child's cortex builds far more synapses than it keeps, and from the first years to the early twenties the count comes down. This box is the net trend, not the act: it is the slow arithmetic of two decades of removals outpacing additions, and becoming yourself is substantially a process of deletion."
   },
   {
    "id": "aging",
