@@ -110,6 +110,25 @@ def main():
             "units_per_m": 1.0, "image": f["file"],
         })
 
+    body = json.load(open(p("data", "body.json"), encoding="utf-8"))
+    SKY.append({
+        "id": "person", "name": "A person", "kind": "body",
+        "fov_m": float(body["height_m"]),
+        "note": "One metre seventy two. The skin comes away, then the "
+                "skeleton, and what is left is where the scanner found the "
+                "brain, not where anyone put it.",
+        "source": body["citation"], "licence": body["licence"],
+        "units_per_m": 1.0,
+        "layers": [
+            {"file": body["layers"]["skin"]["file"],
+             "colour": body["layers"]["skin"]["colour"], "role": "skin"},
+            {"file": body["layers"]["skeleton"]["file"],
+             "colour": body["layers"]["skeleton"]["colour"], "role": "skeleton"},
+            {"file": body["layers"]["brain"]["file"],
+             "colour": body["layers"]["brain"]["colour"], "role": "brain"},
+        ],
+    })
+
     # BigBrain: the same section at four resolutions, so the descent through
     # it is one continuous push into one photograph.
     TISSUE = []
@@ -249,14 +268,16 @@ def main():
     assert all(a > b for a, b in zip(below, below[1:])), f"not descending: {below}"
     assert sky[-1] > max(org), "the street is not larger than the brain"
 
-    # The one gap this ladder does not fill, stated rather than hidden. A street
-    # is 420 m and a brain is 15 cm, so something 2,800 times has to happen in
-    # one step, and what belongs there is a person. Everything on this page is
-    # measured from a real subject, and there is no measured human body here
-    # yet, so the step is left visible instead of being papered over with a
-    # stock figure that would be the only invented object in the sequence.
-    gap = sky[-1] / max(org)
-    print(f"\n  the unfilled step: a street to a brain is {gap:,.0f}x")
+    # The gap that used to sit here was a street to a brain, a factor of 2,354
+    # in one step, and what belonged in it was a person. It is filled now, by
+    # an anatomical atlas rather than a stock figure, so the body is measured
+    # like everything else and the brain inside it is where the scanner put it.
+    # What remains is a street to a person, which is the largest jump above the
+    # tissue and is left alone rather than padded with frames that would add
+    # nothing but numbers.
+    print(f"\n  biggest step above the tissue: a street to a person, "
+          f"{sky[-2] / sky[-1]:,.0f}x")
+    print(f"  a person to a brain: {sky[-1] / max(org):,.0f}x")
 
     span = fovs[0] / fovs[-1]
     print(f"  top to bottom: {span:,.0f} times, "
@@ -267,13 +288,11 @@ def main():
         "about": "One continuous push from Earth to a single synapse in one "
                  "human brain, every rung a real measurement or a real "
                  "photograph.",
-        "unfilled_step":
-            "A street is 420 m and a brain is 15 cm, so one step has to cover "
-            "2,800 times, and what belongs there is a person. Every other rung "
-            "is measured from a real subject and there is no measured human "
-            "body here, so the step is left visible rather than filled with a "
-            "stock figure that would be the only invented object in the "
-            "sequence.",
+        "biggest_step":
+            "A street is 420 m and a person is 1.72 m, so one step still has "
+            "to cover 244 times. That is the largest jump above the tissue, "
+            "and it is left as it is rather than padded with frames that would "
+            "add nothing but numbers.",
         "why_separate_scenes":
             "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries "
             "about seven significant digits, so one scene holding both would "

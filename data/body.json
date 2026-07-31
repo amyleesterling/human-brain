@@ -1,0 +1,60 @@
+{
+ "about": "A human body from an anatomical atlas, used for the rung between a street and a brain. Skin, skeleton and brain come from one scan in one coordinate frame, so the brain is where the scanner found it rather than where I put it.",
+ "citation": "BodyParts3D, The Database Center for Life Science (DBCLS). Mitsuhashi N, et al. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res 37, D782 (2009).",
+ "licence": "CC BY-SA 2.1 Japan",
+ "source": "https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/partof_BP3D_4.0_obj_99.zip",
+ "height_m": 1.719,
+ "brain_extent_mm": [
+  138.8,
+  180.0,
+  166.0
+ ],
+ "brain_height_fraction": 0.9454,
+ "checks": {
+  "height_is_human": "1719 mm",
+  "brain_in_upper_head": "94.5% of body height",
+  "brain_inside_body_hull": "every vertex",
+  "point_above_head_outside_hull": "as it must be",
+  "skull_clears_brain": "5.8 mm, which is bone thickness"
+ },
+ "skull_gap_mm": 5.8,
+ "limits": "One adult, and an idealised one: the atlas is a cleaned reconstruction, not a photograph of a person. The skin surface is a boundary, not skin.",
+ "layers": {
+  "skin": {
+   "file": "meshes/body/skin.glb",
+   "colour": "#C89B7B",
+   "faces": 120000,
+   "faces_before": 203382,
+   "bytes": 2163640,
+   "extent_m": [
+    0.667,
+    0.2921,
+    1.7196
+   ]
+  },
+  "skeleton": {
+   "file": "meshes/body/skeleton.glb",
+   "colour": "#D8D2C4",
+   "faces": 189999,
+   "faces_before": 710464,
+   "bytes": 3601520,
+   "extent_m": [
+    0.333,
+    0.2318,
+    0.8852
+   ]
+  },
+  "brain": {
+   "file": "meshes/body/brain.glb",
+   "colour": "#E0876F",
+   "faces": 89999,
+   "faces_before": 322262,
+   "bytes": 1677672,
+   "extent_m": [
+    0.1394,
+    0.1809,
+    0.166
+   ]
+  }
+ }
+}

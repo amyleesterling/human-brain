@@ -45,6 +45,12 @@ function depthRamp(t) {
 /* The ladder now starts at 12,742 km, and the first version of this topped out
    at centimetres, so Earth was announced as "1274104174.7 cm across the view".
    Every rung above a metre was printing a number nobody can read. */
+/* Hermite ramp, so layers dissolve rather than switching off. */
+function smooth(a, b, x) {
+  const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
+
 function humanSize(m) {
   if (m >= 1e3) return `${Math.round(m / 1e3).toLocaleString("en")} km`;
   if (m >= 1) return `${m < 10 ? m.toFixed(1) : Math.round(m)} m`;
@@ -222,6 +228,26 @@ export async function mountLadder(el) {
           })
         : new THREE.MeshBasicMaterial({ map: t, transparent: true,
                                         side: THREE.DoubleSide })));
+    } else if (stage.kind === "body") {
+      /* Three layers from one scan in one frame, so the brain does not have to
+         be placed inside the head by eye. The reveal is driven by position on
+         the ladder rather than by a timer: as the scale descends through this
+         rung the skin goes first, then the skeleton, and the camera flies into
+         the head, so by the time the next rung takes over the brain is already
+         where the next rung's brain will be. */
+      for (const L of stage.layers) {
+        const geo = await load(L.file);
+        geo.computeVertexNormals();
+        const solid = L.role === "brain";
+        const m = new THREE.Mesh(geo, tissue(L.colour, {
+          roughness: L.role === "skeleton" ? 0.72 : 0.66,
+          emissive: solid ? 0.07 : 0.04,
+          depthWrite: true,
+        }));
+        m.userData.role = L.role;
+        g.add(m);
+      }
+      g.rotation.x = -Math.PI / 2;      // the atlas is Z-up, three.js is Y-up
     } else if (stage.kind === "wholebrain") {
       for (const m of stage.meshes) {
         const geo = await load(m.file);
@@ -325,6 +351,33 @@ export async function mountLadder(el) {
     }
 
     normalise(g);
+
+    if (stage.kind === "body") {
+      /* Where is the brain inside the normalised body, and how much would the
+         camera have to close in for it to fill the frame the way the next rung
+         does? Both measured off the built geometry rather than typed, because
+         a hand-typed offset would drift the moment the atlas or the decimation
+         changed. */
+      let brainMesh = null;
+      g.traverse((o) => { if (o.userData.role === "brain") brainMesh = o; });
+      /* Box3.setFromObject reads matrixWorld, and this group is not in the
+         scene yet, so without this the box comes back in the mesh's own
+         untransformed coordinates: the head pointed down +Z instead of +Y and
+         the zoom factor came out 11.06 instead of 9.56. Both numbers looked
+         entirely reasonable, which is the problem with them. */
+      g.updateMatrixWorld(true);
+      const box = new THREE.Box3().setFromObject(brainMesh);
+      const c = new THREE.Vector3(), s = new THREE.Vector3();
+      box.getCenter(c); box.getSize(s);
+      /* Store the world position at build scale. Uniform scale commutes with
+         the rotation, so at scale factor Z the brain centre sits at
+         brainWorld * Z, and the pan that keeps it centred is just minus that. */
+      g.userData.brainWorld = c.clone();
+      g.userData.brainZoom = 2.0 / Math.max(s.x, s.y, s.z);
+      console.info("[ladder] body: brain at", c.toArray().map((v) => +v.toFixed(3)),
+                   "needs", g.userData.brainZoom.toFixed(2), "x to fill the frame");
+    }
+
     g.visible = false;
     scene.add(g);
     built[stage.id] = g;
@@ -382,10 +435,21 @@ export async function mountLadder(el) {
       if (pr > bestP) { bestP = pr; best = i; }
       if (!g) return;
       g.visible = pr > 0.01;
+      /* The reveal. Within the person rung, `u` runs 0 to 1 as the scale
+         descends past it: the skin goes first, the skeleton follows, and the
+         brain is what is left standing. Driven by position on the ladder, not
+         by a clock, so scrubbing backwards puts the body back on. */
+      const u = s.kind === "body" ? Math.max(0, Math.min(1, z - i)) : 0;
+      const peel = { skin: 1 - smooth(0.02, 0.42, u),
+                     skeleton: 1 - smooth(0.40, 0.80, u),
+                     brain: 1 };
+
       g.traverse((o) => {
         if (!o.material) return;
+        const layer = o.userData.role ? peel[o.userData.role] : 1;
         const mats = Array.isArray(o.material) ? o.material : [o.material];
         mats.forEach((mm) => {
+          mm.visible = layer > 0.004;
           mm.transparent = true;
           const base = mm.userData.base == null
             ? (mm.userData.base = (mm.uniforms ? mm.uniforms.opacity.value
@@ -395,7 +459,7 @@ export async function mountLadder(el) {
              setting material.opacity on it does nothing at all: it would fade
              every other rung and stay solid itself. */
           if (mm.uniforms && mm.uniforms.opacity) mm.uniforms.opacity.value = base * pr;
-          else mm.opacity = base * pr;
+          else mm.opacity = base * pr * layer;
         });
       });
       /* One move per stage: as the scale passes a rung, that stage's camera
@@ -405,7 +469,21 @@ export async function mountLadder(el) {
          runs 0.82 to 1.12 as the scale descends through the rung: still a
          steady push in, never a reverse, and it cannot overflow the frame. */
       const t = Math.max(-1, Math.min(1, (z - i) / 1.0));
-      g.scale.setScalar(g.userData.baseScale * (0.97 - 0.15 * t));
+      if (s.kind === "body") {
+        /* The person rung does not get the gentle push the others do, because
+           it has somewhere specific to go. It closes in on the head by exactly
+           the factor that makes the brain fill the frame the way the next rung
+           does, so when the crossfade hands over, the atlas brain and the HD
+           brain are the same size in the same place and the join does not
+           jump. The pan is minus the brain's position times the current scale,
+           which keeps it dead centre the whole way in. */
+        const e = smooth(0, 1, u);
+        const Zf = 1 + (g.userData.brainZoom - 1) * e;
+        g.scale.setScalar(g.userData.baseScale * Zf);
+        g.position.copy(g.userData.brainWorld).multiplyScalar(-Zf * e);
+      } else {
+        g.scale.setScalar(g.userData.baseScale * (0.97 - 0.15 * t));
+      }
     });
 
     const s = db.stages[best];
@@ -440,7 +518,7 @@ export async function mountLadder(el) {
   new ResizeObserver(() => { if (fitRenderer(renderer, camera, mount)) loop.once(); })
     .observe(mount);
 
-  if (status) status.textContent = "Loading fifteen scales";
+  if (status) status.textContent = "Loading sixteen scales";
   for (const s of db.stages) {
     // eslint-disable-next-line no-await-in-loop
     const g = await build(s);

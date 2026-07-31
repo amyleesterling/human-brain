@@ -1,6 +1,6 @@
 {
  "about": "One continuous push from Earth to a single synapse in one human brain, every rung a real measurement or a real photograph.",
- "unfilled_step": "A street is 420 m and a brain is 15 cm, so one step has to cover 2,800 times, and what belongs there is a person. Every other rung is measured from a real subject and there is no measured human body here, so the step is left visible rather than filled with a stock figure that would be the only invented object in the sequence.",
+ "biggest_step": "A street is 420 m and a person is 1.72 m, so one step still has to cover 244 times. That is the largest jump above the tissue, and it is left as it is rather than padded with frames that would add nothing but numbers.",
  "why_separate_scenes": "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries about seven significant digits, so one scene holding both would lose the synapse to rounding. Each stage is drawn in its own units with its true field of view carried in metres beside it.",
  "orders_of_magnitude": 12.62,
  "span": 4191447368421,
@@ -57,6 +57,33 @@
    "source": "USGS NAIP, 0.3 m per pixel",
    "units_per_m": 1.0,
    "image": "images/earth/street.jpg"
+  },
+  {
+   "id": "person",
+   "name": "A person",
+   "kind": "body",
+   "fov_m": 1.719,
+   "note": "One metre seventy two. The skin comes away, then the skeleton, and what is left is where the scanner found the brain, not where anyone put it.",
+   "source": "BodyParts3D, The Database Center for Life Science (DBCLS). Mitsuhashi N, et al. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res 37, D782 (2009).",
+   "licence": "CC BY-SA 2.1 Japan",
+   "units_per_m": 1.0,
+   "layers": [
+    {
+     "file": "meshes/body/skin.glb",
+     "colour": "#C89B7B",
+     "role": "skin"
+    },
+    {
+     "file": "meshes/body/skeleton.glb",
+     "colour": "#D8D2C4",
+     "role": "skeleton"
+    },
+    {
+     "file": "meshes/body/brain.glb",
+     "colour": "#E0876F",
+     "role": "brain"
+    }
+   ]
   },
   {
    "id": "brain",

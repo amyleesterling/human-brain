@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>From Earth to a synapse</title>
-<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across fifteen rungs, every one a real photograph or a real measurement.">
+<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across sixteen rungs, every one a real photograph or a real measurement.">
 <meta property="og:title" content="From Earth to a synapse">
 <meta property="og:description" content="Twelve and a half orders of magnitude, from a planet to a synapse, in one move.">
 <meta property="og:url" content="https://amyleesterling.github.io/human-brain/ladder.html">
@@ -114,7 +114,7 @@
 <main class="wrap">
   <h1>From Earth to a synapse</h1>
   <p class="lede">Twelve and a half orders of magnitude, in a single move.
-    Fifteen rungs from a planet down to one junction between two cells in one
+    Sixteen rungs from a planet down to one junction between two cells in one
     human brain, and every one of them is a real photograph or a real
     measurement. The number in the corner is the true width of what you are
     looking at, not a caption.</p>
@@ -131,15 +131,33 @@
     rectangle.</p>
   <p><b>Boston, 24 km, and one block of it at 420 m.</b> USGS aerial survey. At
     the bottom of this stretch you can make out individual trees and individual
-    cars.</p>
+    cars. The step from there down to a person is 244 times, which is the
+    largest jump above the tissue, and it is left as it is rather than padded
+    with frames that would add nothing but numbers.</p>
 
-  <div class="note"><b>Then a step this page does not fill.</b> A street is
-    420 m and a brain is 15 cm, so something has to cover a factor of 2,400 in
-    one jump, and what belongs in that gap is a person. Every other rung here
-    is measured from a real subject, and there is no measured human body on
-    this site, so the step is left standing in the open. A stock 3D figure
-    would close it, and would be the only invented object in the whole
-    sequence.</div>
+  <h2>A person</h2>
+  <p><b>One metre seventy two.</b> Not a stock 3D character. This is
+    BodyParts3D, an anatomical atlas built by the Database Center for Life
+    Science, and the reason it is here rather than a nicer-looking figure is
+    that it ships the skin, the skeleton and the brain as separate meshes in
+    <i>one coordinate frame</i>. With a bought model I would have had to place
+    the brain inside the head by eye, and eye-placing the one thing this page
+    is about would have been the only invented object in the whole sequence.</p>
+  <p>As the scale descends past this rung the skin comes away, then the
+    skeleton, and the camera closes on the head. What is left is where the
+    scanner found the brain.</p>
+
+  <div class="note"><b>The check that the frames really are the same.</b> Two
+    meshes arriving in the same archive is not the same claim as two meshes
+    being in the same space, and a silent origin or unit mismatch would put the
+    brain somewhere in the chest with nothing on screen looking obviously
+    broken. So: the figure measures 1,719 mm, the brain sits at 94.5 per cent
+    of that height, every corner of the brain falls inside the body, and a
+    point a quarter of a body-height above the head does not, which is what
+    makes the previous test mean anything. The one that settles it is the
+    skull: the top of the skeleton clears the top of the brain by 5.8 mm. That
+    is the thickness of bone, and it only comes out right if all three meshes
+    are genuinely in one frame.</div>
 
   <h2>One organ, four ways</h2>
   <p><b>A whole brain, 15 cm.</b> The Allen human reference atlas as packaged by
@@ -197,7 +215,7 @@
     0.85 mm down through the densely packed layers, then falling away again
     into white matter.</div>
 
-  <h2>Why this is fifteen scenes and not one</h2>
+  <h2>Why this is sixteen scenes and not one</h2>
   <p>Earth is 1.3&times;10<sup>7</sup> metres across. A synaptic cleft is
     2&times;10<sup>-8</sup>. That is fifteen orders of magnitude, and a 32-bit
     float carries about seven significant digits, so a single scene holding both
@@ -232,10 +250,10 @@
     pass through green, and green would appear in the picture carrying a meaning
     neither end of the scale contains.</div>
 
-  <div class="note"><b>One thing here is not free to reuse.</b> BigBrain is
-    published under CC BY-NC-SA: noncommercial, and share-alike. Everything else
-    on this site is clear for any use, so if the four tissue rungs ever have to
-    come out, that is why.</div>
+  <div class="note"><b>Two things here are not free to reuse.</b> BigBrain is
+    CC BY-NC-SA, which is noncommercial and share-alike, and the body is
+    CC BY-SA, which is share-alike. Everything else on this site is clear for
+    any use, so if those rungs ever have to come out, that is why.</div>
 
   <footer>
     <p><a href="./">A cubic millimetre</a> &middot;
@@ -248,6 +266,8 @@
       NASA GIBS. Aerial imagery: USGS National Agriculture Imagery Program.
       Both public domain.
       BigBrain: Amunts et al., Science 340, 1472 (2013), CC BY-NC-SA 4.0.
+      Body: BodyParts3D, The Database Center for Life Science (DBCLS),
+      Mitsuhashi et al., Nucleic Acids Res 37, D782 (2009), CC BY-SA 2.1 Japan.
       Whole brain: HuBMAP Human Reference Atlas, Borner et al., Nature Methods
       (2025), CC BY 4.0, geometry from the Allen Human Reference Atlas 3D. It is
       an idealised average and a surface model, not a person and not tissue.
@@ -259,7 +279,7 @@
 </main>
 
 <script type="module">
-  import { mountLadder } from "./js/ladder.js?v=10";
+  import { mountLadder } from "./js/ladder.js?v=12";
   const el = document.getElementById("ladder");
   mountLadder(el).then(function (h) { window.__ladder = h; }).catch(function (e) {
     const s = el.querySelector("[data-status]");
