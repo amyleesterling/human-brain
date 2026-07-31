@@ -185,6 +185,11 @@
   .srcrow .tabs button { text-transform:capitalize; }
   .srcinfo { font-size:13.5px; color:var(--dim); margin:4px 0 0; }
   .srcinfo b { color:var(--ink); font-weight:500; }
+  .shufflebtn { appearance:none; background:rgba(62,150,240,.12); color:#cfe6ff;
+    border:1px solid rgba(122,186,246,.5); border-radius:999px;
+    padding:6px 18px; font:inherit; font-size:13px; cursor:pointer; }
+  .shufflebtn:hover { background:rgba(62,150,240,.24); }
+  .shufflebtn[aria-pressed="true"] { background:rgba(62,150,240,.3); }
   .srcscale { display:flex; align-items:center; gap:10px; margin:12px 0 0;
     font-size:11px; color:var(--faint); }
   .srcscale i { flex:1; height:9px; border-radius:2px; background:linear-gradient(
@@ -304,6 +309,8 @@
         <div class="tabs" role="tablist" aria-label="Band" data-band></div></div>
       <div class="srcrow"><span class="srclab">Eyes</span>
         <div class="tabs" role="tablist" aria-label="Eye state" data-srcstate></div></div>
+      <div class="srcrow"><span class="srclab">Watch it</span>
+        <button type="button" class="shufflebtn" data-play aria-pressed="false">Play the rhythm</button></div>
       <div class="srcrow"><span class="srclab">Surface</span>
         <div class="tabs" role="tablist" aria-label="Surface" data-surfkind></div></div>
       <div class="srcrow"><span class="srclab">View</span>
@@ -326,6 +333,29 @@
     concentrated in the lateral occipital cortex, the lingual gyrus and the
     cuneus, and it is <b>19.4 times</b> stronger than with the eyes open. The
     build script refuses to write the file unless all of that holds.</p>
+
+  <div class="note"><b>What you are looking at.</b> This is the cortex
+    <i>inflated</i>: the real thing is folded so tightly that two thirds of it
+    is buried inside sulci and invisible from outside, so it is blown up like a
+    balloon until the folds flatten out and you can see all of it at once. It
+    stops looking like a brain, which is the price. Switch to <b>folded</b> for
+    the real shape and watch most of the signal disappear into the creases. The
+    two hemispheres are also pushed apart in the inflated view, because
+    inflating them makes each one expand through where the other used to be.</div>
+
+  <div class="note"><b>Press play and it moves.</b> The colours above are
+    average power over fifty seconds, which is a still photograph of something
+    that is not still. Playing shows the actual band-filtered signal, frame by
+    frame, three seconds of it at a thirtieth of a second per frame. It runs at
+    an eighth of real speed, because ten cycles a second on a screen is a
+    flicker rather than a rhythm. Blue and orange are the two directions the
+    current swings, on a square root scale because cortical current is very
+    unevenly spread and a linear one leaves everything but the few strongest
+    sources sitting at the dark centre. No value ever crosses zero, which is
+    the one thing that would be a lie about an oscillation. Both eye states are
+    drawn on one scale so the collapse
+    when the eyes open is visible rather than normalised away: eyes open reach
+    28 per cent of the eyes closed amplitude.</div>
 
   <div class="note"><b>A better surface is not better data.</b> This is drawn
     on the full fsaverage cortex, <b>163,842 vertices</b> per hemisphere, but

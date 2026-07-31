@@ -56,6 +56,18 @@ const REGION = {
   fusiform: "fusiform gyrus", insula: "insula", paracentral: "paracentral lobule",
 };
 
+/* Signed, so it must diverge from zero. A sequential ramp on an oscillation
+ * shows two peaks for every real cycle, because it cannot tell -1 from +1. */
+const SWING = [[70, 130, 255], [30, 60, 130], [10, 12, 18],
+               [130, 55, 30], [255, 150, 60]];
+function swing(t) {
+  const u = (Math.max(-1, Math.min(1, t)) + 1) / 2 * (SWING.length - 1);
+  const i = Math.min(SWING.length - 2, Math.floor(u)), f = u - i;
+  const a = SWING[i], b = SWING[i + 1];
+  return [(a[0] + (b[0] - a[0]) * f) / 255, (a[1] + (b[1] - a[1]) * f) / 255,
+          (a[2] + (b[2] - a[2]) * f) / 255];
+}
+
 const VIEWS = {
   left: [-1, -0.06, 0.12], right: [1, -0.06, 0.12],
   back: [0.04, -1, 0.12], top: [0.02, -0.12, 1],
@@ -89,6 +101,10 @@ export async function mountSources(el) {
       srcOffset: L.source_offset, count: L.count };
   });
   let surfKind = "inflated";
+  /* The rhythm as it actually moves, not its average strength. Loaded lazily
+     because it is four megabytes and the still is useful on its own. */
+  let movie = null, movieBuf = null, playing = false, frame = 0, acc = 0;
+  const SLOW = 8;   // times slower than real, stated on the page
   const byKey = {};
   db.layout.forEach((L) => {
     byKey[`${L.band}|${L.state}`] = new Float32Array(buf, L.offset, L.count);
@@ -135,6 +151,10 @@ export async function mountSources(el) {
     const obj = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
       vertexColors: true, side: THREE.DoubleSide,
     }));
+    /* Inflating a hemisphere expands it past the midline, so the two
+       interpenetrate and read as one unrecognisable blob. Push them apart by
+       enough to clear, and say so rather than pretending this is anatomy. */
+    obj.position.x = (h === "lh" ? -1 : 1) * (surfKind === "inflated" ? 26 : 0);
     scene.add(obj);
     const k = hidx[`${h}|${surfKind}`];
     hemis[h] = { obj, geo, n: k.count, idx: k.idx, srcOffset: k.srcOffset };
@@ -161,7 +181,15 @@ export async function mountSources(el) {
     renderer.domElement.style.cursor = "grab";
   });
 
-  const loop = makeLoop(el, () => { controls.update(); renderer.render(scene, camera); });
+  const loop = makeLoop(el, (dt) => {
+    if (playing && movie) {
+      acc += dt;
+      const per = 1 / (movie.fps / SLOW);
+      if (acc >= per) { acc = 0; frame++; paintFrame(); }
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  });
   fitRenderer(renderer, camera, mount);
   new ResizeObserver(() => { if (fitRenderer(renderer, camera, mount)) loop.once(); })
     .observe(mount);
@@ -177,7 +205,42 @@ export async function mountSources(el) {
 
   let band = "alpha", state = "closed";
 
+  function paintFrame() {
+    const L = movie.layout.find((x) => x.state === state);
+    const n = L.sources, fr = frame % L.frames;
+    const raw = new Int8Array(movieBuf, L.offset + fr * n, n);
+    /* Both states share one scale, so the collapse when the eyes open is
+       something you can see rather than something normalised away. */
+    const rel = L.relative_amplitude;
+    order.forEach((h) => {
+      const H = hemis[h];
+      const col = H.geo.attributes.color.array;
+      for (let i = 0; i < H.n; i++) {
+        /* A square root on the magnitude, sign kept. Cortical current is
+           very unevenly distributed, so on a linear scale everything but the
+           few strongest sources sits at the dark centre of the diverging
+           ramp and the rhythm is invisible. This expands the middle without
+           ever moving a value across zero, which is the one thing that would
+           be a lie about an oscillation. */
+        const v = raw[H.srcOffset + H.idx[i]] / 127 * rel;
+        const c = swing(Math.sign(v) * Math.sqrt(Math.abs(v)));
+        col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2];
+      }
+      H.geo.attributes.color.needsUpdate = true;
+    });
+    if (infoEl) {
+      infoEl.innerHTML =
+        `<b>alpha</b>, 8 to 13 Hz, eyes <b>${state}</b>, playing at ` +
+        `<b>1/${SLOW}</b> real speed. Frame ${fr + 1} of ${L.frames}, ` +
+        `${(fr / movie.fps).toFixed(2)} s into a ${movie.seconds} second clip. ` +
+        `Blue and orange are the two directions the current swings; the eyes ` +
+        `open clip is drawn on the same scale, at ` +
+        `<b>${Math.round(rel * 100)}%</b> of the eyes closed amplitude.`;
+    }
+  }
+
   function paint() {
+    if (playing && movie) { paintFrame(); loop.once(); return; }
     const vals = byKey[`${band}|${state}`];
     /* Both eye states share one scale, per band, so switching between them is
        a comparison rather than two separately stretched pictures. The stored
@@ -249,9 +312,31 @@ export async function mountSources(el) {
       hemis[h].idx = m.idx;
       hemis[h].n = m.count;
       hemis[h].srcOffset = m.srcOffset;
+      hemis[h].obj.position.x = (h === "lh" ? -1 : 1) * (k === "inflated" ? 26 : 0);
     }
     paint();
   });
+
+  /* Play control. The movie is fetched on the first press, not on load. */
+  const playEl = el.querySelector("[data-play]");
+  if (playEl) {
+    playEl.addEventListener("click", async () => {
+      if (!movie) {
+        playEl.textContent = "Loading the rhythm";
+        playEl.disabled = true;
+        movie = await fetch("data/source-movie.json").then((r) => r.json());
+        movieBuf = await fetch(movie.bin).then((r) => r.arrayBuffer());
+        playEl.disabled = false;
+      }
+      playing = !playing;
+      playEl.textContent = playing ? "Pause" : "Play the rhythm";
+      playEl.setAttribute("aria-pressed", String(playing));
+      if (!playing) paint(); else { frame = 0; acc = 0; paintFrame(); }
+      loop.once();
+    });
+  }
+  /* Changing band or eye state while playing should not leave a stale frame. */
+  const _paint = paint;
 
   setView("back");
   paint();
