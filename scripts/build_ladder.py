@@ -78,6 +78,66 @@ def main():
     print(f"measured: cortex {cortex_mm:.0f} mm, tracts {tract_mm:.0f} mm, "
           f"atlas brain {whole['longest_mm']:.0f} mm")
 
+    earth = json.load(open(p("data", "earth.json"), encoding="utf-8"))
+    bb = json.load(open(p("data", "bigbrain.json"), encoding="utf-8"))
+    ef = earth["frames"]
+
+    SKY = [
+        {
+            "id": "earth", "name": "Earth", "kind": "globe",
+            "fov_m": float(ef["earth"]["width_m"]),
+            "note": "12,742 kilometres across. The lights on the night side "
+                    "are measured, not drawn: VIIRS records the light cities "
+                    "throw away upward.",
+            "source": earth["citation"], "units_per_m": 1.0,
+            "day": ef["earth_day"]["file"], "night": ef["earth_night"]["file"],
+            "lon": earth["centre"]["lon"], "lat": earth["centre"]["lat"],
+        },
+    ]
+    for key, name, note in (
+        ("continent", "Eastern North America", None),
+        ("region", "New England", None),
+        ("metro", "Boston", None),
+        ("street", "One block of it", None),
+    ):
+        f = ef[key]
+        SKY.append({
+            "id": key, "name": name, "kind": "plate",
+            "fov_m": float(f["width_m"]) ,
+            "note": note or f["note"],
+            "source": f"{f['source']}, {f['m_per_px']} m per pixel"
+                      + (f", {f['date']}" if f.get("date") else ""),
+            "units_per_m": 1.0, "image": f["file"],
+        })
+
+    # BigBrain: the same section at four resolutions, so the descent through
+    # it is one continuous push into one photograph.
+    TISSUE = []
+    for mip, name, note in (
+        (3, "One section of one brain",
+         "A 65 year old woman's brain, cut into 7,404 slices and stained for "
+         "cell bodies. Everything above this is a model built from MRI. This "
+         "is the tissue."),
+        (2, "Into the cortex",
+         "The folded sheet in cross section, with the white matter branching "
+         "underneath it like a tree."),
+        (1, "The ribbon",
+         "About three millimetres from the surface down to the white matter, "
+         "and that three millimetres is where almost all of the thinking "
+         "happens."),
+        (0, "Cells",
+         "21 micrometres per pixel. A cell body is about one pixel, so the "
+         "stipple is cells: enough to see how densely they are packed, not "
+         "enough to trace a single one."),
+    ):
+        lv = bb["levels"][f"mip{mip}"]
+        TISSUE.append({
+            "id": f"bb{mip}", "name": name, "kind": "plate",
+            "fov_m": float(lv["width_m"]), "note": note,
+            "source": bb["citation"], "units_per_m": 1.0,
+            "image": lv["file"], "licence": bb["licence"], "cutout": True,
+        })
+
     STAGES = [
         {
             "id": "brain",
@@ -162,31 +222,60 @@ def main():
         },
     ]
 
-    for s in STAGES:
-        print(f"  {s['id']:8s} field of view {s['fov_m']:.3e} m")
+    # ASSEMBLY. Four groups: the sky, then the one-organ-many-ways group, then
+    # the descent through real tissue, then the descent through one cell.
+    #
+    # The first BigBrain level belongs with the organ group rather than below
+    # it: a whole coronal section is 139 mm, which is the same 17 centimetres
+    # as the brain, the cortex and the cable. It is the fourth way of looking
+    # at the same object, and the first one that is tissue instead of a model.
+    ORGAN = STAGES[:3] + [TISSUE[0]]
+    ALL = SKY + ORGAN + TISSUE[1:] + STAGES[3:]
 
-    # The rungs must not go backwards. The top three are genuinely the same
-    # size, because a brain, its cortex and its cable all measure about 17 cm:
-    # that part of the ladder is one scale showing different content, and the
-    # page says so rather than faking a descent. Everything below must descend.
-    fovs = [s["fov_m"] for s in STAGES]
-    same = 3
-    top = fovs[:same]
-    assert max(top) / min(top) < 1.35, f"top rungs are not one scale: {top}"
-    for s in STAGES[:same]:
-        s["same_scale_group"] = "About 17 centimetres: one organ, three ways of "
-        s["same_scale_group"] += "looking at it."
-    rest = [max(top)] + fovs[same:]
-    assert all(a > b for a, b in zip(rest, rest[1:])), rest
+    for s in ALL:
+        print(f"  {s['id']:10s} {s['kind']:11s} field of view {s['fov_m']:.4e} m")
+
+    fovs = [s["fov_m"] for s in ALL]
+    sky = [s["fov_m"] for s in SKY]
+    assert all(a > b for a, b in zip(sky, sky[1:])), f"sky not descending: {sky}"
+
+    org = [s["fov_m"] for s in ORGAN]
+    assert max(org) / min(org) < 1.35, f"organ rungs are not one scale: {org}"
+    for s in ORGAN:
+        s["same_scale_group"] = ("About 15 centimetres: one organ, four ways of "
+                                 "looking at it, and only the last is tissue.")
+
+    below = [max(org)] + [s["fov_m"] for s in TISSUE[1:] + STAGES[3:]]
+    assert all(a > b for a, b in zip(below, below[1:])), f"not descending: {below}"
+    assert sky[-1] > max(org), "the street is not larger than the brain"
+
+    # The one gap this ladder does not fill, stated rather than hidden. A street
+    # is 420 m and a brain is 15 cm, so something 2,800 times has to happen in
+    # one step, and what belongs there is a person. Everything on this page is
+    # measured from a real subject, and there is no measured human body here
+    # yet, so the step is left visible instead of being papered over with a
+    # stock figure that would be the only invented object in the sequence.
+    gap = sky[-1] / max(org)
+    print(f"\n  the unfilled step: a street to a brain is {gap:,.0f}x")
+
     span = fovs[0] / fovs[-1]
-    print(f"\ntop to bottom: {span:,.0f} times, "
-          f"{np.log10(span):.1f} orders of magnitude")
+    print(f"  top to bottom: {span:,.0f} times, "
+          f"{np.log10(span):.1f} orders of magnitude, {len(ALL)} rungs")
+    STAGES = ALL
 
     doc = {
-        "about": "One continuous push from a whole human cortex to a single "
-                 "synapse, every rung a real measurement from this repository.",
+        "about": "One continuous push from Earth to a single synapse in one "
+                 "human brain, every rung a real measurement or a real "
+                 "photograph.",
+        "unfilled_step":
+            "A street is 420 m and a brain is 15 cm, so one step has to cover "
+            "2,800 times, and what belongs there is a person. Every other rung "
+            "is measured from a real subject and there is no measured human "
+            "body here, so the step is left visible rather than filled with a "
+            "stock figure that would be the only invented object in the "
+            "sequence.",
         "why_separate_scenes":
-            "A cortex is 0.17 m and a synaptic cleft is 2e-8 m. Float32 carries "
+            "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries "
             "about seven significant digits, so one scene holding both would "
             "lose the synapse to rounding. Each stage is drawn in its own units "
             "with its true field of view carried in metres beside it.",

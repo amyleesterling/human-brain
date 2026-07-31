@@ -1,9 +1,63 @@
 {
- "about": "One continuous push from a whole human cortex to a single synapse, every rung a real measurement from this repository.",
- "why_separate_scenes": "A cortex is 0.17 m and a synaptic cleft is 2e-8 m. Float32 carries about seven significant digits, so one scene holding both would lose the synapse to rounding. Each stage is drawn in its own units with its true field of view carried in metres beside it.",
- "orders_of_magnitude": 4.7,
- "span": 49770,
+ "about": "One continuous push from Earth to a single synapse in one human brain, every rung a real measurement or a real photograph.",
+ "unfilled_step": "A street is 420 m and a brain is 15 cm, so one step has to cover 2,800 times, and what belongs there is a person. Every other rung is measured from a real subject and there is no measured human body here, so the step is left visible rather than filled with a stock figure that would be the only invented object in the sequence.",
+ "why_separate_scenes": "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries about seven significant digits, so one scene holding both would lose the synapse to rounding. Each stage is drawn in its own units with its true field of view carried in metres beside it.",
+ "orders_of_magnitude": 12.62,
+ "span": 4191447368421,
  "stages": [
+  {
+   "id": "earth",
+   "name": "Earth",
+   "kind": "globe",
+   "fov_m": 12742000.0,
+   "note": "12,742 kilometres across. The lights on the night side are measured, not drawn: VIIRS records the light cities throw away upward.",
+   "source": "Blue Marble and city lights: NASA Earth Observatory / NASA Worldview (GIBS). Satellite frames: NASA GIBS, MODIS on Terra. Aerial: USGS National Agriculture Imagery Program, 1 m.",
+   "units_per_m": 1.0,
+   "day": "images/earth/earth_day.jpg",
+   "night": "images/earth/earth_night.jpg",
+   "lon": -71.0657,
+   "lat": 42.3551
+  },
+  {
+   "id": "continent",
+   "name": "Eastern North America",
+   "kind": "plate",
+   "fov_m": 3000000.0,
+   "note": "Eastern North America. Cloud cover is real weather on a real day, not a clean plate.",
+   "source": "NASA GIBS, 2142.857 m per pixel, 2024-09-20",
+   "units_per_m": 1.0,
+   "image": "images/earth/continent.jpg"
+  },
+  {
+   "id": "region",
+   "name": "New England",
+   "kind": "plate",
+   "fov_m": 400000.0,
+   "note": "New England, and the hook of Cape Cod.",
+   "source": "NASA GIBS, 285.714 m per pixel, 2023-05-27",
+   "units_per_m": 1.0,
+   "image": "images/earth/region.jpg"
+  },
+  {
+   "id": "metro",
+   "name": "Boston",
+   "kind": "plate",
+   "fov_m": 24000.0,
+   "note": "Boston: the harbour, the Charles, the grid of the Back Bay.",
+   "source": "USGS NAIP, 17.143 m per pixel",
+   "units_per_m": 1.0,
+   "image": "images/earth/metro.jpg"
+  },
+  {
+   "id": "street",
+   "name": "One block of it",
+   "kind": "plate",
+   "fov_m": 420.0,
+   "note": "One metre per pixel. Individual buildings, individual trees, individual cars.",
+   "source": "USGS NAIP, 0.3 m per pixel",
+   "units_per_m": 1.0,
+   "image": "images/earth/street.jpg"
+  },
   {
    "id": "brain",
    "name": "A whole human brain",
@@ -27,7 +81,7 @@
      "opacity": 1.0
     }
    ],
-   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
   },
   {
    "id": "cortex",
@@ -47,7 +101,7 @@
    ],
    "units_per_m": 1000.0,
    "kind": "surface",
-   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
   },
   {
    "id": "tracts",
@@ -57,7 +111,56 @@
    "source": "Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).",
    "kind": "tracts",
    "units_per_m": 1000.0,
-   "same_scale_group": "About 17 centimetres: one organ, three ways of looking at it."
+   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
+  },
+  {
+   "id": "bb3",
+   "name": "One section of one brain",
+   "kind": "plate",
+   "fov_m": 0.13919,
+   "note": "A 65 year old woman's brain, cut into 7,404 slices and stained for cell bodies. Everything above this is a model built from MRI. This is the tissue.",
+   "source": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
+   "units_per_m": 1.0,
+   "image": "images/bigbrain/mip3.jpg",
+   "licence": "CC BY-NC-SA 4.0",
+   "cutout": true,
+   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
+  },
+  {
+   "id": "bb2",
+   "name": "Into the cortex",
+   "kind": "plate",
+   "fov_m": 0.0867,
+   "note": "The folded sheet in cross section, with the white matter branching underneath it like a tree.",
+   "source": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
+   "units_per_m": 1.0,
+   "image": "images/bigbrain/mip2.jpg",
+   "licence": "CC BY-NC-SA 4.0",
+   "cutout": true
+  },
+  {
+   "id": "bb1",
+   "name": "The ribbon",
+   "kind": "plate",
+   "fov_m": 0.04335,
+   "note": "About three millimetres from the surface down to the white matter, and that three millimetres is where almost all of the thinking happens.",
+   "source": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
+   "units_per_m": 1.0,
+   "image": "images/bigbrain/mip1.jpg",
+   "licence": "CC BY-NC-SA 4.0",
+   "cutout": true
+  },
+  {
+   "id": "bb0",
+   "name": "Cells",
+   "kind": "plate",
+   "fov_m": 0.02167,
+   "note": "21 micrometres per pixel. A cell body is about one pixel, so the stipple is cells: enough to see how densely they are packed, not enough to trace a single one.",
+   "source": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
+   "units_per_m": 1.0,
+   "image": "images/bigbrain/mip0.jpg",
+   "licence": "CC BY-NC-SA 4.0",
+   "cutout": true
   },
   {
    "id": "block",

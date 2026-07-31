@@ -42,7 +42,12 @@ function depthRamp(t) {
   return lerpHex(DEPTH[i], DEPTH[i + 1], u - i);
 }
 
+/* The ladder now starts at 12,742 km, and the first version of this topped out
+   at centimetres, so Earth was announced as "1274104174.7 cm across the view".
+   Every rung above a metre was printing a number nobody can read. */
 function humanSize(m) {
+  if (m >= 1e3) return `${Math.round(m / 1e3).toLocaleString("en")} km`;
+  if (m >= 1) return `${m < 10 ? m.toFixed(1) : Math.round(m)} m`;
   if (m >= 0.01) return `${(m * 100).toFixed(1)} cm`;
   if (m >= 1e-3) return `${(m * 1000).toFixed(2)} mm`;
   if (m >= 1e-6) return `${(m * 1e6).toFixed(m < 1e-5 ? 2 : 0)} µm`;
@@ -128,7 +133,96 @@ export async function mountLadder(el) {
     if (built[stage.id]) return built[stage.id];
     const g = new THREE.Group();
 
-    if (stage.kind === "wholebrain") {
+    if (stage.kind === "globe") {
+      /* Day and night are two separate measurements, so they are two separate
+         textures mixed by which way the surface faces the sun, rather than one
+         painted composite. The terminator is therefore real geometry: the
+         lights come up exactly where the ground turns away from the light.
+         The gain is an exposure choice, the same kind of choice as the key
+         light on the tissue rungs. It needs to be a large number because the
+         face we are looking at is centred on Boston and is therefore mostly
+         North Atlantic, and ocean reflectance really is that dark: measured
+         off the framebuffer the planet came back at mean luminance 31 out of
+         255, which is a black disc with a rumour of blue in it. */
+      const tex = (f) => new Promise((res) => {
+        const t = new THREE.TextureLoader().load(f, () => res(t));
+        t.colorSpace = THREE.SRGBColorSpace;
+      });
+      const [day, night] = await Promise.all([tex(stage.day), tex(stage.night)]);
+      const mat = new THREE.ShaderMaterial({
+        uniforms: { day: { value: day }, night: { value: night },
+                    sun: { value: new THREE.Vector3(0.72, 0.34, 0.60) },
+                    opacity: { value: 1 } },
+        transparent: true,
+        vertexShader: `varying vec2 vUv; varying vec3 vN;
+          void main(){ vUv = uv; vN = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `uniform sampler2D day, night; uniform vec3 sun;
+          uniform float opacity; varying vec2 vUv; varying vec3 vN;
+          void main(){
+            float l = dot(normalize(vN), normalize(sun));
+            float t = smoothstep(-0.10, 0.24, l);
+            vec3 d = texture2D(day, vUv).rgb * (0.42 + 1.05 * max(l, 0.0));
+            vec3 n = texture2D(night, vUv).rgb * 1.45;
+            gl_FragColor = vec4(mix(n, d, t), opacity);
+            /* A texture tagged sRGB is decoded to linear when it is sampled,
+               but a raw ShaderMaterial never gets the encode back on the way
+               out: three.js only applies it through these chunks. Without
+               them every hand-written shader on the page was being published
+               with a gamma still on it, which is why the planet measured 31
+               out of 255 and no amount of gain fixed it. Chasing that with
+               brightness rather than finding it would have left the colours
+               wrong as well as the level. */
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment> }`,
+      });
+      const sph = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64), mat);
+      /* Turn Boston to the front. An equirectangular map on a three.js sphere
+         puts longitude 0 at -Z, so the meridian we want faces the camera at
+         -lon - 90 degrees. */
+      sph.rotation.y = THREE.MathUtils.degToRad(-stage.lon - 90);
+      g.add(sph);
+    } else if (stage.kind === "plate") {
+      /* A photograph already contains its own light. Running it through the
+         tissue rig would tint it with the key and the fill and make a
+         measurement look like a rendering, so these are unlit. */
+      const t = await new Promise((res) => {
+        const x = new THREE.TextureLoader().load(stage.image, () => res(x));
+        x.colorSpace = THREE.SRGBColorSpace;
+        x.anisotropy = 8;
+      });
+      /* The histology plates are photographs of a slide, and most of a slide is
+         empty paraffin, which is very nearly white. Drawn as-is they came back
+         with eight to fourteen per cent of the frame fully saturated: a white
+         slab on a black page, with the tissue a small dark island in it. So the
+         empty resin is dropped to transparent and the tissue floats on the
+         page's own ground. This is not a cosmetic dodge; the resin is literally
+         nothing, and drawing nothing as the brightest thing on screen is the
+         misleading version. The satellite frames do NOT get this, because up
+         there the bright pixels are clouds and clouds are the weather. */
+      const cut = !!stage.cutout;
+      g.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), cut
+        ? new THREE.ShaderMaterial({
+            uniforms: { map: { value: t }, opacity: { value: 1 } },
+            transparent: true, side: THREE.DoubleSide,
+            vertexShader: `varying vec2 vUv;
+              void main(){ vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+            fragmentShader: `uniform sampler2D map; uniform float opacity;
+              varying vec2 vUv;
+              void main(){ vec3 c = texture2D(map, vUv).rgb;
+                /* The alpha threshold is judged on the sRGB value a reader
+                   would see, not on the linear one, so undo the decode for
+                   the test only and leave the colour itself alone. */
+                vec3 srgb = pow(c, vec3(0.4545));
+                float lum = dot(srgb, vec3(0.299, 0.587, 0.114));
+                gl_FragColor = vec4(c, smoothstep(0.97, 0.80, lum) * opacity);
+                #include <tonemapping_fragment>
+                #include <colorspace_fragment> }`,
+          })
+        : new THREE.MeshBasicMaterial({ map: t, transparent: true,
+                                        side: THREE.DoubleSide })));
+    } else if (stage.kind === "wholebrain") {
       for (const m of stage.meshes) {
         const geo = await load(m.file);
         geo.computeVertexNormals();
@@ -262,6 +356,12 @@ export async function mountLadder(el) {
   function fovAt(u) {
     const i = Math.max(0, Math.min(N - 2, Math.floor(u)));
     const f = Math.max(0, Math.min(1, u - i));
+    /* Exactly on a rung, print the stored number rather than the round trip
+       through log space: 12,742,000 m came back as 12,741 km, and being one
+       kilometre out on the diameter of the Earth is the kind of thing that
+       reads as carelessness about every other figure on the page. */
+    if (f === 0) return db.stages[i].fov_m;
+    if (f === 1) return db.stages[i + 1].fov_m;
     return Math.pow(10, LOGF[i] + (LOGF[i + 1] - LOGF[i]) * f);
   }
 
@@ -287,8 +387,15 @@ export async function mountLadder(el) {
         const mats = Array.isArray(o.material) ? o.material : [o.material];
         mats.forEach((mm) => {
           mm.transparent = true;
-          mm.opacity = (mm.userData.base == null
-            ? (mm.userData.base = mm.opacity) : mm.userData.base) * pr;
+          const base = mm.userData.base == null
+            ? (mm.userData.base = (mm.uniforms ? mm.uniforms.opacity.value
+                                               : mm.opacity))
+            : mm.userData.base;
+          /* The globe is a ShaderMaterial, so its opacity is a uniform and
+             setting material.opacity on it does nothing at all: it would fade
+             every other rung and stay solid itself. */
+          if (mm.uniforms && mm.uniforms.opacity) mm.uniforms.opacity.value = base * pr;
+          else mm.opacity = base * pr;
         });
       });
       /* One move per stage: as the scale passes a rung, that stage's camera
@@ -333,7 +440,7 @@ export async function mountLadder(el) {
   new ResizeObserver(() => { if (fitRenderer(renderer, camera, mount)) loop.once(); })
     .observe(mount);
 
-  if (status) status.textContent = "Loading five scales";
+  if (status) status.textContent = "Loading fifteen scales";
   for (const s of db.stages) {
     // eslint-disable-next-line no-await-in-loop
     const g = await build(s);
