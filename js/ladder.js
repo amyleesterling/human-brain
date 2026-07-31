@@ -1,11 +1,16 @@
-/* One push from a whole human cortex to a single synapse.
+/* One push from Earth to a single synapse in one human brain.
  *
- * WHAT IS REAL. Every stage is a real measurement already on this site: the
- * Human Connectome Project's group-average cortex and its 87 white matter
- * bundles, the H01 cubic millimetre with all 49,379 of its cell bodies, one
- * hand-proofread layer 5 pyramidal cell, and one synapse pulled out of the
- * electron microscopy. The field of view printed at every moment is the real
- * size of the real object, not a caption.
+ * WHAT IS REAL. Every stage is a real photograph or a real measurement: NASA
+ * and USGS imagery down to a street in Boston, an anatomical atlas for the
+ * body, BigBrain for the tissue, the H01 cubic millimetre with all 49,379 of
+ * its cell bodies, one hand-proofread layer 5 pyramidal cell, and one synapse
+ * out of the electron microscopy. The field of view printed at every moment is
+ * the real size of the real object, not a caption.
+ *
+ * EVERY STEP ZOOMS IN. The build script asserts it. An earlier version put the
+ * cortical surface (17.0 cm) and the white matter (17.8) after the brain
+ * (15.1), so the middle of the zoom stopped dead and sat at one scale for
+ * three rungs. Both now live on their own pages instead.
  *
  * WHY THE STAGES ARE SEPARATE SCENES. A cortex is 0.2 m and a synaptic cleft is
  * 2e-8 m. Float32 carries about seven significant digits, so one scene holding
@@ -379,6 +384,12 @@ export async function mountLadder(el) {
     }
 
     g.visible = false;
+    /* Draw order matters here. The rung being zoomed INTO has to be painted
+       before the rung being left, so the outgoing one dissolves to reveal it
+       rather than being hidden behind it. Deeper rungs therefore get a lower
+       render order and go down first. */
+    const idx = db.stages.indexOf(stage);
+    g.traverse((o) => { o.renderOrder = -idx; });
     scene.add(g);
     built[stage.id] = g;
     return g;
@@ -393,13 +404,11 @@ export async function mountLadder(el) {
   controls.maxDistance = 20;
   renderer.domElement.style.cursor = "grab";
 
-  /* The parameter is position along the ladder, not log of the size. The top
-     three rungs are all about 17 cm, because a brain, its cortex and its cable
-     are the same object seen three ways, so a purely metric parameter would
-     stack them on top of one another and two of them would never be seen. The
-     readout still prints the real size, interpolated in log space between
-     neighbours, so it says 17 cm three times over rather than inventing a
-     descent that is not there. */
+  /* The parameter is position along the ladder, not log of the size, because
+     the steps run from 1.7x to 701x and a metric parameter would spend most of
+     the run inside the cell-to-synapse gap and flick through everything else.
+     The readout still prints the real size, interpolated in log space between
+     neighbours, so the number on screen is always the true width. */
   const N = db.stages.length;
   const LOGF = db.stages.map((s) => Math.log10(s.fov_m));
   const Z = db.stages.map((_, i) => i);          // rung positions
@@ -421,10 +430,32 @@ export async function mountLadder(el) {
   /* How present is a stage at the current scale? One at its own rung, fading
      out over roughly half a decade either side, so consecutive rungs dissolve
      into one another instead of cutting. */
+  /* Asymmetric on purpose. A rung is growing the whole time it is on screen,
+     so if it faded out at the same rate it fades in, it spends the end of its
+     life covering the entire frame at low opacity and hiding the rung arriving
+     behind it, then disappears all at once. Measured: at 0.7 past its own rung
+     the brain still filled 100 per cent of the frame, and one step later the
+     frame was 11 per cent full. That is a cut, not a zoom.
+
+     So: come in slowly from far away, leave quickly once oversize. */
+  /* Asymmetric, and both halves were tuned against the framebuffer rather than
+     by eye. A rung grows the whole time it is on screen, so a symmetric fade
+     leaves it covering the entire frame at low opacity, hiding whatever is
+     arriving behind it, and then dropping out all at once: measured, the frame
+     went from 100 per cent covered to 11 in one step, which is a cut.
+
+     Fading it out faster fixed that and broke something else. Halfway between
+     two rungs the outgoing one had gone and the incoming one was still small,
+     so mean frame brightness fell from 41 to 3.6 out of 255. Every transition
+     dipped through black.
+
+     So the incoming rung comes up early and holds, while it is still small and
+     far away, and the outgoing one dissolves over it. Nothing is asked to
+     carry the frame on its own. */
   function presence(i) {
-    const d = Math.abs(z - i);
-    const half = (i === 0 || i === N - 1) ? 1.0 : 0.78;
-    return Math.max(0, 1 - d / half);
+    const d = z - i;
+    if (d < 0) return 1 - smooth(0, i === 0 ? 1.9 : 1.60, -d);
+    return 1 - smooth(0, i === N - 1 ? 1.9 : 0.85, d);
   }
 
   function apply() {
@@ -462,13 +493,21 @@ export async function mountLadder(el) {
           else mm.opacity = base * pr * layer;
         });
       });
-      /* One move per stage: as the scale passes a rung, that stage's camera
-         pushes steadily in. It never reverses. */
-      /* One move per stage and a gentle one. The old push was plus or minus
-         55 per cent, which took an already tight frame past clipping. This
-         runs 0.82 to 1.12 as the scale descends through the rung: still a
-         steady push in, never a reverse, and it cannot overflow the frame. */
-      const t = Math.max(-1, Math.min(1, (z - i) / 1.0));
+      /* THE ZOOM. Each rung grows steadily as the ladder descends past it, so
+         the thing you are looking at swells and you fall through it into the
+         next one. Before its own rung it is small and growing; after it, it is
+         oversize and on its way out of frame. That is what makes this read as
+         one continuous push rather than a slideshow that cross-dissolves in
+         place, which is what it was.
+
+         The growth rate is a fixed factor per rung, NOT the true ratio between
+         neighbours. Those ratios run from 1.7x to 701x, and driving the visual
+         zoom with them would make the cell-to-synapse step a violent lurch and
+         the brain-to-cortex step barely move. The honest number is already on
+         screen in the readout, which is the channel that has to carry it; the
+         transition only has to be legible. */
+      const d = z - i;
+      const grow = Math.pow(4.6, d);
       if (s.kind === "body") {
         /* The person rung does not get the gentle push the others do, because
            it has somewhere specific to go. It closes in on the head by exactly
@@ -477,12 +516,20 @@ export async function mountLadder(el) {
            brain are the same size in the same place and the join does not
            jump. The pan is minus the brain's position times the current scale,
            which keeps it dead centre the whole way in. */
+        /* On the way IN it grows like every other rung. On the way THROUGH it
+           does something specific instead: it closes on the head by exactly
+           the factor that makes the brain fill the frame the way the next rung
+           does, so when the handover comes the atlas brain and the HD brain
+           are the same size in the same place and the join does not jump. The
+           pan is minus the brain's position times the current scale, which
+           holds it dead centre the whole way in. */
         const e = smooth(0, 1, u);
-        const Zf = 1 + (g.userData.brainZoom - 1) * e;
+        const Zf = (1 + (g.userData.brainZoom - 1) * e) * Math.min(1, grow);
         g.scale.setScalar(g.userData.baseScale * Zf);
         g.position.copy(g.userData.brainWorld).multiplyScalar(-Zf * e);
       } else {
-        g.scale.setScalar(g.userData.baseScale * (0.97 - 0.15 * t));
+        g.scale.setScalar(g.userData.baseScale * grow);
+        g.position.set(0, 0, 0);
       }
     });
 

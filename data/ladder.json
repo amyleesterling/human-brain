@@ -1,6 +1,6 @@
 {
  "about": "One continuous push from Earth to a single synapse in one human brain, every rung a real measurement or a real photograph.",
- "biggest_step": "A street is 420 m and a person is 1.72 m, so one step still has to cover 244 times. That is the largest jump above the tissue, and it is left as it is rather than padded with frames that would add nothing but numbers.",
+ "every_step_zooms_in": "Checked, not assumed: every rung is strictly smaller than the one above it. The cortical surface and the tractography were dropped from this page because at 17.0 and 17.8 cm they are LARGER than the 15.1 cm brain they come out of, so the zoom had to stop and sit still in the middle. They have their own pages.",
  "why_separate_scenes": "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries about seven significant digits, so one scene holding both would lose the synapse to rounding. Each stage is drawn in its own units with its true field of view carried in metres beside it.",
  "orders_of_magnitude": 12.62,
  "span": 4191447368421,
@@ -107,51 +107,7 @@
      "role": "interior",
      "opacity": 1.0
     }
-   ],
-   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
-  },
-  {
-   "id": "cortex",
-   "name": "A whole human cortex",
-   "fov_m": 0.16984,
-   "note": "Just the folded sheet now, about 2 mm thick, and spread flat roughly the area of a large dinner napkin. Two thirds of it is buried inside the folds.",
-   "source": "HCP S1200 group average, Van Essen et al., NeuroImage 80:62 (2013). MSMAll registered.",
-   "meshes": [
-    {
-     "file": "meshes/cortex/L.glb",
-     "colour": "#6E8CA8"
-    },
-    {
-     "file": "meshes/cortex/R.glb",
-     "colour": "#6E8CA8"
-    }
-   ],
-   "units_per_m": 1000.0,
-   "kind": "surface",
-   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
-  },
-  {
-   "id": "tracts",
-   "name": "The cable underneath it",
-   "fov_m": 0.1784,
-   "note": "87 named bundles, averaged over 1,065 people. Everything the cortex says to itself goes through here.",
-   "source": "Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).",
-   "kind": "tracts",
-   "units_per_m": 1000.0,
-   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
-  },
-  {
-   "id": "bb3",
-   "name": "One section of one brain",
-   "kind": "plate",
-   "fov_m": 0.13919,
-   "note": "A 65 year old woman's brain, cut into 7,404 slices and stained for cell bodies. Everything above this is a model built from MRI. This is the tissue.",
-   "source": "Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013).",
-   "units_per_m": 1.0,
-   "image": "images/bigbrain/mip3.jpg",
-   "licence": "CC BY-NC-SA 4.0",
-   "cutout": true,
-   "same_scale_group": "About 15 centimetres: one organ, four ways of looking at it, and only the last is tissue."
+   ]
   },
   {
    "id": "bb2",

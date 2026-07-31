@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>From Earth to a synapse</title>
-<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across sixteen rungs, every one a real photograph or a real measurement.">
+<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across thirteen rungs, every one a real photograph or a real measurement.">
 <meta property="og:title" content="From Earth to a synapse">
 <meta property="og:description" content="Twelve and a half orders of magnitude, from a planet to a synapse, in one move.">
 <meta property="og:url" content="https://amyleesterling.github.io/human-brain/ladder.html">
@@ -114,7 +114,7 @@
 <main class="wrap">
   <h1>From Earth to a synapse</h1>
   <p class="lede">Twelve and a half orders of magnitude, in a single move.
-    Sixteen rungs from a planet down to one junction between two cells in one
+    Thirteen rungs from a planet down to one junction between two cells in one
     human brain, and every one of them is a real photograph or a real
     measurement. The number in the corner is the true width of what you are
     looking at, not a caption.</p>
@@ -159,38 +159,33 @@
     is the thickness of bone, and it only comes out right if all three meshes
     are genuinely in one frame.</div>
 
-  <h2>One organ, four ways</h2>
-  <p><b>A whole brain, 15 cm.</b> The Allen human reference atlas as packaged by
-    the HuBMAP Human Reference Atlas: 283 named structures, the outer surface
-    drawn as glass so the thalamus, hippocampus, brainstem and cerebellum inside
-    it are visible.</p>
-  <p><b>The cortex, 17 cm.</b> The Human Connectome Project's group-average
-    surface, built from MRI across more than a thousand people. The folded
-    sheet, about 2 mm thick, and spread flat it would cover a large dinner
-    napkin. Two thirds of it is buried inside the folds.</p>
-  <p><b>The cable underneath, 18 cm.</b> 87 named white matter bundles from the
-    same project, averaged over 1,065 subjects. Everything the cortex says to
-    itself goes through here.</p>
-  <p><b>One section of one brain, 14 cm.</b> And here the ladder stops showing
-    models and starts showing tissue. BigBrain: a 65 year old woman's brain,
-    embedded in paraffin, cut into 7,404 slices at 20 micrometres, every slice
-    stained for cell bodies and photographed.</p>
+  <h2>The brain</h2>
+  <p><b>15.1 cm.</b> The Allen human reference atlas as packaged by the HuBMAP
+    Human Reference Atlas: 283 named structures, the outer surface drawn as
+    glass so the thalamus, hippocampus, brainstem and cerebellum inside it are
+    visible.</p>
 
-  <div class="note"><b>Those four rungs are all the same size, and that is not a
-    mistake.</b> A brain measures 15 cm, its cortex 17, its white matter 18 and
-    a slice through it 14, because they are one organ looked at four ways
-    rather than four scales. The readout says so in turn rather than inventing
-    a descent that is not there. What changes across those four is not size, it
-    is what kind of evidence you are looking at: the first three are
-    reconstructions from MRI, and the fourth is a photograph of the thing
-    itself.</div>
+  <div class="note"><b>Two rungs came off this page, and the reason is the
+    zoom.</b> It used to run brain, then cortical surface, then white matter,
+    then a whole slice. But a brain is 15.1 cm and its cortical surface is
+    17.0 and its white matter 17.8, so those are <i>larger</i> than the brain
+    they come out of. The zoom had to stop dead in the middle, sit at one scale
+    for three rungs while the content changed, and start again. The page
+    explained that at length, and the explanation was true, and the sequence
+    was still wrong: a ladder whose middle does not descend is not a zoom. The
+    white matter and the cortical surface have their own pages, where they are
+    the subject rather than a pause. The build script now refuses to write a
+    ladder in which any step fails to zoom in.</div>
 
-  <h2>Into the tissue</h2>
-  <p><b>8.7 cm, 4.3 cm, 2.2 cm.</b> The same photograph, twice as close each
-    time. The cortex in cross section, the white matter branching underneath it
-    like a tree, and then the ribbon itself: about three millimetres from the
-    outer surface down to the white matter, and that three millimetres is where
-    almost all of the thinking happens.</p>
+  <h2>A section of its cortex</h2>
+  <p><b>8.7 cm, 4.3 cm, 2.2 cm.</b> Straight from the brain into real tissue.
+    BigBrain: a 65 year old woman's brain, embedded in paraffin, cut into
+    7,404 slices at 20 micrometres, every slice stained for cell bodies and
+    photographed. This is one of those slices, three times, twice as close
+    each time. The cortex in cross section, the white matter branching
+    underneath it like a tree, and then the ribbon itself: about three
+    millimetres from the outer surface down to the white matter, and that
+    three millimetres is where almost all of the thinking happens.</p>
   <p><b>One cubic millimetre, 3.9 mm.</b> H01: a piece of a living woman's
     temporal cortex, with all 49,379 of its cell bodies in the place the
     microscope found them. Photographing this much tissue took 1.4 petabytes.</p>
@@ -215,14 +210,21 @@
     0.85 mm down through the densely packed layers, then falling away again
     into white matter.</div>
 
-  <h2>Why this is sixteen scenes and not one</h2>
+  <h2>Why this is thirteen scenes and not one</h2>
   <p>Earth is 1.3&times;10<sup>7</sup> metres across. A synaptic cleft is
     2&times;10<sup>-8</sup>. That is fifteen orders of magnitude, and a 32-bit
     float carries about seven significant digits, so a single scene holding both
     ends would lose the synapse to rounding error long before it reached the
     screen.</p>
   <p>So each rung is drawn normalised to its own size, and its true extent in
-    metres travels alongside it. The zoom you see is continuous; the arithmetic
+    metres travels alongside it. Each one grows steadily as the ladder descends
+    past it, so the thing you are looking at swells and you fall through it into
+    the next: before its own rung it is small and approaching, after it, it is
+    oversize and on its way out of frame. The growth rate is a fixed factor per
+    rung rather than the true ratio, because those ratios run from 1.7 to 701
+    and driving the picture with them would make one step a lurch and the next
+    barely move. The honest number is on screen in the readout, which is the
+    channel that has to carry it. The zoom you see is continuous; the arithmetic
     behind it never spans more than one rung at a time. The readout is computed
     from the real measurements, so it cannot drift away from the picture.</p>
 
@@ -272,14 +274,12 @@
       (2025), CC BY 4.0, geometry from the Allen Human Reference Atlas 3D. It is
       an idealised average and a surface model, not a person and not tissue.
       H01: Shapson-Coe et al., Science 384, eadk4858 (2024), CC BY 4.0.
-      Tractography: Yeh, Nat Commun 13, 4933 (2022), CC-BY-SA 4.0.
-      Surfaces: HCP S1200 group average, Van Essen et al., NeuroImage 80, 62 (2013).
       Please cite them, not this page.</p>
   </footer>
 </main>
 
 <script type="module">
-  import { mountLadder } from "./js/ladder.js?v=12";
+  import { mountLadder } from "./js/ladder.js?v=15";
   const el = document.getElementById("ladder");
   mountLadder(el).then(function (h) { window.__ladder = h; }).catch(function (e) {
     const s = el.querySelector("[data-status]");

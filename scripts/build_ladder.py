@@ -241,46 +241,39 @@ def main():
         },
     ]
 
-    # ASSEMBLY. Four groups: the sky, then the one-organ-many-ways group, then
-    # the descent through real tissue, then the descent through one cell.
+    # ASSEMBLY. EVERY STEP MUST ZOOM IN, which sounds obvious and was not true
+    # of the earlier version. A brain is 15.1 cm, its cortical surface 17.0 and
+    # its white matter 17.8, so those two rungs were LARGER than the brain they
+    # came out of and the zoom had to stop, sit still through three rungs of
+    # the same size, and start again. The page explained that at length. The
+    # explanation was honest and the sequence was still wrong: a ladder whose
+    # middle does not descend is not a zoom.
     #
-    # The first BigBrain level belongs with the organ group rather than below
-    # it: a whole coronal section is 139 mm, which is the same 17 centimetres
-    # as the brain, the cortex and the cable. It is the fourth way of looking
-    # at the same object, and the first one that is tissue instead of a model.
-    ORGAN = STAGES[:3] + [TISSUE[0]]
-    ALL = SKY + ORGAN + TISSUE[1:] + STAGES[3:]
+    # So the cortical surface and the tractography are gone from this page, and
+    # so is the whole-brain BigBrain section at 13.9 cm, which was another rung
+    # the same size as the brain. They all still have their own pages. What is
+    # left runs brain, then straight into a section of its cortex, which is the
+    # move that was wanted in the first place.
+    drop = {"cortex", "tracts"}
+    KEEP = [s for s in STAGES if s["id"] not in drop]
+    ALL = SKY + KEEP[:1] + TISSUE[1:] + KEEP[1:]
 
     for s in ALL:
         print(f"  {s['id']:10s} {s['kind']:11s} field of view {s['fov_m']:.4e} m")
 
     fovs = [s["fov_m"] for s in ALL]
-    sky = [s["fov_m"] for s in SKY]
-    assert all(a > b for a, b in zip(sky, sky[1:])), f"sky not descending: {sky}"
+    # One assert now, and it is the only one this page needs: the whole thing
+    # descends, end to end, with no plateau anywhere in it.
+    bad = [(ALL[i]["id"], ALL[i + 1]["id"], a, b)
+           for i, (a, b) in enumerate(zip(fovs, fovs[1:])) if a <= b]
+    assert not bad, f"these steps do not zoom in: {bad}"
 
-    org = [s["fov_m"] for s in ORGAN]
-    assert max(org) / min(org) < 1.35, f"organ rungs are not one scale: {org}"
-    for s in ORGAN:
-        s["same_scale_group"] = ("About 15 centimetres: one organ, four ways of "
-                                 "looking at it, and only the last is tissue.")
-
-    below = [max(org)] + [s["fov_m"] for s in TISSUE[1:] + STAGES[3:]]
-    assert all(a > b for a, b in zip(below, below[1:])), f"not descending: {below}"
-    assert sky[-1] > max(org), "the street is not larger than the brain"
-
-    # The gap that used to sit here was a street to a brain, a factor of 2,354
-    # in one step, and what belonged in it was a person. It is filled now, by
-    # an anatomical atlas rather than a stock figure, so the body is measured
-    # like everything else and the brain inside it is where the scanner put it.
-    # What remains is a street to a person, which is the largest jump above the
-    # tissue and is left alone rather than padded with frames that would add
-    # nothing but numbers.
-    print(f"\n  biggest step above the tissue: a street to a person, "
-          f"{sky[-2] / sky[-1]:,.0f}x")
-    print(f"  a person to a brain: {sky[-1] / max(org):,.0f}x")
+    print("\n  every step, as a zoom factor:")
+    for i, (a, b) in enumerate(zip(fovs, fovs[1:])):
+        print(f"    {ALL[i]['id']:10s} -> {ALL[i+1]['id']:10s} {a/b:9,.1f}x")
 
     span = fovs[0] / fovs[-1]
-    print(f"  top to bottom: {span:,.0f} times, "
+    print(f"\n  top to bottom: {span:,.0f} times, "
           f"{np.log10(span):.1f} orders of magnitude, {len(ALL)} rungs")
     STAGES = ALL
 
@@ -288,11 +281,12 @@ def main():
         "about": "One continuous push from Earth to a single synapse in one "
                  "human brain, every rung a real measurement or a real "
                  "photograph.",
-        "biggest_step":
-            "A street is 420 m and a person is 1.72 m, so one step still has "
-            "to cover 244 times. That is the largest jump above the tissue, "
-            "and it is left as it is rather than padded with frames that would "
-            "add nothing but numbers.",
+        "every_step_zooms_in":
+            "Checked, not assumed: every rung is strictly smaller than the one "
+            "above it. The cortical surface and the tractography were dropped "
+            "from this page because at 17.0 and 17.8 cm they are LARGER than "
+            "the 15.1 cm brain they come out of, so the zoom had to stop and "
+            "sit still in the middle. They have their own pages.",
         "why_separate_scenes":
             "Earth is 1.3e7 m and a synaptic cleft is 2e-8 m. Float32 carries "
             "about seven significant digits, so one scene holding both would "
