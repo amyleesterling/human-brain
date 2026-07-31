@@ -146,6 +146,12 @@
   <p>As the scale descends past this rung the skin comes away, then the
     skeleton, and the camera closes on the head. What is left is where the
     scanner found the brain.</p>
+  <p>The atlas figure is anatomical, which is to say undressed, so there is a
+    winking emoji over it until a clothed model arrives. Its position is not
+    eyeballed either: it is placed on the atlas's own genital-system mesh, dead
+    centre and at 50.0 per cent of body height, and it leaves when the skin
+    does, because after that there is a skeleton on screen and nothing left to
+    cover.</p>
 
   <div class="note"><b>The check that the frames really are the same.</b> Two
     meshes arriving in the same archive is not the same claim as two meshes
@@ -279,7 +285,7 @@
 </main>
 
 <script type="module">
-  import { mountLadder } from "./js/ladder.js?v=15";
+  import { mountLadder } from "./js/ladder.js?v=16";
   const el = document.getElementById("ladder");
   mountLadder(el).then(function (h) { window.__ladder = h; }).catch(function (e) {
     const s = el.querySelector("[data-status]");

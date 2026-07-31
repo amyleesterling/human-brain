@@ -154,6 +154,36 @@ def main():
         f"the skull sits {gap_mm:.1f} mm above the brain, which is not the "
         f"thickness of a skull; the meshes are misaligned")
 
+    # ---- the fig leaf ------------------------------------------------------
+    # Amy wants a clothed figure and the atlas ships an anatomical one, so
+    # until a dressed model arrives there is a winking emoji over the relevant
+    # part. Its position is measured off the atlas rather than eyeballed,
+    # because a hand-typed offset would be wrong the moment the mesh or the
+    # decimation changed, and a censor bar that has drifted off the thing it is
+    # censoring is worse than none.
+    gen = []
+    for _name, fj in by_concept.get("FMA7160", []):
+        if fj in inzip:
+            with z.open(inzip[fj]) as fh:
+                m = trimesh.load(io.BytesIO(fh.read()), file_type="obj",
+                                 process=False)
+            if isinstance(m, trimesh.Scene):
+                m = trimesh.util.concatenate(list(m.geometry.values()))
+            gen.append(m)
+    assert gen, "the genital system is not in this atlas, so nothing to cover"
+    genital = trimesh.util.concatenate(gen) if len(gen) > 1 else gen[0]
+    gc = genital.bounds.mean(axis=0)
+    gsize = float(np.max(genital.bounds[1] - genital.bounds[0]))
+    gfrac = (gc[up] - lo[up]) / height_mm
+    print(f"\n  fig leaf: centre {np.round(gc, 1)} mm, {gsize:.0f} mm across, "
+          f"at {100*gfrac:.1f}% of body height")
+    # Sanity, and it is a real check: this has to sit near the middle of the
+    # figure. If the frames were mismatched it would land at an ankle or above
+    # the head and the sticker would be nowhere near what it is covering.
+    assert 0.40 < gfrac < 0.60, (
+        f"the genital system is at {100*gfrac:.0f}% of body height, which is "
+        f"not the middle of a person; the meshes are misaligned")
+
     # ---- export ------------------------------------------------------------
     # Centre on the body and rotate so the long axis is up, then export in
     # metres so the ladder can use the numbers directly.
@@ -208,6 +238,17 @@ def main():
             "skull_clears_brain": f"{gap_mm:.1f} mm, which is bone thickness",
         },
         "skull_gap_mm": round(gap_mm, 1),
+        "fig_leaf": {
+            "why": "Amy wants a clothed figure; the atlas ships an anatomical "
+                   "one. Until a dressed model arrives, a winking emoji sits "
+                   "here. Measured off the atlas rather than eyeballed, so it "
+                   "cannot drift off the thing it is covering.",
+            "concept": "FMA7160, genital system",
+            "centre_m": [round(float((gc[i] - centre[i]) / 1000.0), 4)
+                         for i in range(3)],
+            "size_m": round(gsize / 1000.0, 4),
+            "height_fraction": round(float(gfrac), 4),
+        },
         "limits": "One adult, and an idealised one: the atlas is a cleaned "
                   "reconstruction, not a photograph of a person. The skin "
                   "surface is a boundary, not skin.",

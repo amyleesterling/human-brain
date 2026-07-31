@@ -50,6 +50,21 @@ function depthRamp(t) {
 /* The ladder now starts at 12,742 km, and the first version of this topped out
    at centimetres, so Earth was announced as "1274104174.7 cm across the view".
    Every rung above a metre was printing a number nobody can read. */
+/* An emoji drawn to a canvas, so no image file has to ship for it. */
+function emojiTexture(ch, px = 256) {
+  const cv = document.createElement("canvas");
+  cv.width = px; cv.height = px;
+  const x = cv.getContext("2d");
+  x.font = `${Math.round(px * 0.76)}px "Segoe UI Emoji","Apple Color Emoji",` +
+           `"Noto Color Emoji",sans-serif`;
+  x.textAlign = "center";
+  x.textBaseline = "middle";
+  x.fillText(ch, px / 2, px * 0.54);
+  const t = new THREE.CanvasTexture(cv);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
 /* Hermite ramp, so layers dissolve rather than switching off. */
 function smooth(a, b, x) {
   const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
@@ -251,6 +266,23 @@ export async function mountLadder(el) {
         }));
         m.userData.role = L.role;
         g.add(m);
+      }
+      /* A fig leaf, until a clothed model arrives. Placed from the atlas's own
+         genital-system mesh rather than by eye, so it cannot drift off the
+         thing it is covering when the geometry or the decimation changes, and
+         it goes when the skin does, because after that there is nothing to
+         cover. depthTest off so it stays in front of the body it is on. */
+      if (stage.figLeaf) {
+        const sp = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: emojiTexture("😉"), transparent: true,
+          depthTest: false, depthWrite: false,
+        }));
+        sp.position.fromArray(stage.figLeaf.centre_m);
+        const w = stage.figLeaf.size_m * 4.2;   // the structure is 34 mm; a
+        // sticker exactly the size of what it covers does not cover it
+        sp.scale.set(w, w, w);
+        sp.userData.role = "figleaf";
+        g.add(sp);
       }
       g.rotation.x = -Math.PI / 2;      // the atlas is Z-up, three.js is Y-up
     } else if (stage.kind === "wholebrain") {
@@ -471,9 +503,13 @@ export async function mountLadder(el) {
          brain is what is left standing. Driven by position on the ladder, not
          by a clock, so scrubbing backwards puts the body back on. */
       const u = s.kind === "body" ? Math.max(0, Math.min(1, z - i)) : 0;
-      const peel = { skin: 1 - smooth(0.02, 0.42, u),
+      const skin = 1 - smooth(0.02, 0.42, u);
+      const peel = { skin,
                      skeleton: 1 - smooth(0.40, 0.80, u),
-                     brain: 1 };
+                     brain: 1,
+                     /* Goes with the skin. Once that is off there is a
+                        skeleton on screen and nothing left to cover. */
+                     figleaf: skin };
 
       g.traverse((o) => {
         if (!o.material) return;

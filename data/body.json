@@ -18,6 +18,17 @@
   "skull_clears_brain": "5.8 mm, which is bone thickness"
  },
  "skull_gap_mm": 5.8,
+ "fig_leaf": {
+  "why": "Amy wants a clothed figure; the atlas ships an anatomical one. Until a dressed model arrives, a winking emoji sits here. Measured off the atlas rather than eyeballed, so it cannot drift off the thing it is covering.",
+  "concept": "FMA7160, genital system",
+  "centre_m": [
+   -0.0,
+   0.0203,
+   0.0006
+  ],
+  "size_m": 0.0343,
+  "height_fraction": 0.5004
+ },
  "limits": "One adult, and an idealised one: the atlas is a cleaned reconstruction, not a photograph of a person. The skin surface is a boundary, not skin.",
  "layers": {
   "skin": {

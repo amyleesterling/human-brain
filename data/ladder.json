@@ -67,6 +67,17 @@
    "source": "BodyParts3D, The Database Center for Life Science (DBCLS). Mitsuhashi N, et al. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res 37, D782 (2009).",
    "licence": "CC BY-SA 2.1 Japan",
    "units_per_m": 1.0,
+   "figLeaf": {
+    "why": "Amy wants a clothed figure; the atlas ships an anatomical one. Until a dressed model arrives, a winking emoji sits here. Measured off the atlas rather than eyeballed, so it cannot drift off the thing it is covering.",
+    "concept": "FMA7160, genital system",
+    "centre_m": [
+     -0.0,
+     0.0203,
+     0.0006
+    ],
+    "size_m": 0.0343,
+    "height_fraction": 0.5004
+   },
    "layers": [
     {
      "file": "meshes/body/skin.glb",

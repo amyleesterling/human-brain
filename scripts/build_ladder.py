@@ -119,6 +119,7 @@ def main():
                 "brain, not where anyone put it.",
         "source": body["citation"], "licence": body["licence"],
         "units_per_m": 1.0,
+        "figLeaf": body["fig_leaf"],
         "layers": [
             {"file": body["layers"]["skin"]["file"],
              "colour": body["layers"]["skin"]["colour"], "role": "skin"},
