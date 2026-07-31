@@ -72,6 +72,23 @@ export async function mountSources(el) {
 
   const db = await fetch("data/sources.json").then((r) => r.json());
   const buf = await fetch(db.bin).then((r) => r.arrayBuffer());
+  /* The inverse was solved on 10,242 points per hemisphere, which is the right
+     density for an ill-posed problem and a coarse thing to look at. These are
+     the full 163,842 vertex fsaverage surfaces, plus, for each vertex, which
+     source is nearest to it on the sphere. Sixteen times the surface, exactly
+     the same data underneath, and the page says so. */
+  const hi = await fetch("data/hires.json").then((r) => r.json());
+  const hibuf = await fetch(hi.bin).then((r) => r.arrayBuffer());
+  /* One index array per (hemisphere, surface). The inflated and folded meshes
+     are compressed separately and Draco gives them different vertex orders, so
+     they cannot share one. */
+  const hidx = {};
+  hi.layout.forEach((L) => {
+    hidx[`${L.hemi}|${L.kind}`] = {
+      idx: new Uint16Array(hibuf, L.offset, L.count),
+      srcOffset: L.source_offset, count: L.count };
+  });
+  let surfKind = "inflated";
   const byKey = {};
   db.layout.forEach((L) => {
     byKey[`${L.band}|${L.state}`] = new Float32Array(buf, L.offset, L.count);
@@ -98,28 +115,30 @@ export async function mountSources(el) {
   loader.setDRACOLoader(draco);
 
   const hemis = {};
-  let offset = 0;
-  const order = ["l", "r"];
-  for (const h of order) {
-    const m = db.meshes[h];
-    // eslint-disable-next-line no-await-in-loop
+  const order = ["lh", "rh"];
+  const cache = {};
+  async function loadSurf(h, kind) {
+    const k = `${h}-${kind}`;
+    if (cache[k]) return cache[k];
+    const m = hi.meshes[k];
     const g = await new Promise((res, rej) =>
       loader.load(m.file, res, undefined, rej));
-    const mesh = g.scene.getObjectByProperty("isMesh", true);
-    const geo = mesh.geometry;
+    const geo = g.scene.getObjectByProperty("isMesh", true).geometry;
     geo.computeVertexNormals();
     const col = new Float32Array(geo.attributes.position.count * 3);
     geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    cache[k] = geo;
+    return geo;
+  }
+  for (const h of order) {
+    const geo = await loadSurf(h, surfKind);
     const obj = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
       vertexColors: true, side: THREE.DoubleSide,
     }));
     scene.add(obj);
-    /* The two hemispheres are one flat array of sources, left then right, so
-       each hemisphere has to know where its slice starts. */
-    hemis[h] = { obj, geo, col, start: offset, n: m.vertices };
-    offset += m.vertices;
+    const k = hidx[`${h}|${surfKind}`];
+    hemis[h] = { obj, geo, n: k.count, idx: k.idx, srcOffset: k.srcOffset };
   }
-  if (offset !== db.sources) throw new Error(`sources ${offset} vs ${db.sources}`);
 
   const centre = new THREE.Vector3();
   const box = new THREE.Box3();
@@ -169,9 +188,13 @@ export async function mountSources(el) {
       rec.states.closed.max, rec.states.open.max);
     order.forEach((h) => {
       const H = hemis[h];
+      const col = H.geo.attributes.color.array;
+      /* Every full-resolution vertex takes its nearest source's value. This
+         is nearest neighbour and nothing else: no smoothing is invented and
+         the patches are the size of the source space's own resolution. */
       for (let i = 0; i < H.n; i++) {
-        const c = ramp(vals[H.start + i] * scale);
-        H.col[i * 3] = c[0]; H.col[i * 3 + 1] = c[1]; H.col[i * 3 + 2] = c[2];
+        const c = ramp(vals[H.srcOffset + H.idx[i]] * scale);
+        col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2];
       }
       H.geo.attributes.color.needsUpdate = true;
     });
@@ -214,6 +237,21 @@ export async function mountSources(el) {
        () => state, (k) => { state = k; paint(); });
   tabs(viewEl, [["back", "Back"], ["left", "Left"], ["right", "Right"],
                 ["top", "Top"]], () => "back", (k) => setView(k));
+  const kindEl = el.querySelector("[data-surfkind]");
+  tabs(kindEl, [["inflated", "Inflated"], ["white", "Folded"]],
+       () => surfKind, async (k) => {
+    surfKind = k;
+    for (const h of order) {
+      const geo = await loadSurf(h, k);
+      const m = hidx[`${h}|${k}`];
+      hemis[h].obj.geometry = geo;
+      hemis[h].geo = geo;
+      hemis[h].idx = m.idx;
+      hemis[h].n = m.count;
+      hemis[h].srcOffset = m.srcOffset;
+    }
+    paint();
+  });
 
   setView("back");
   paint();

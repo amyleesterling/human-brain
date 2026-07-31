@@ -14,7 +14,7 @@
   40
  ],
  "decimated_to_faces": 120000,
- "resampling": "maps carried onto the decimated mesh by nearest original vertex; the median move is printed on every build and asserted under 1.5 mm",
+ "resampling": "Values are sampled from the full resolution surface at each COMPRESSED vertex's position, after Draco. Draco reorders vertices, so anything indexed by vertex number before compression is painted on the wrong place; deriving the values from the compressed mesh makes the order irrelevant.",
  "check": {
   "lh": {
    "source_vertices": 244055,
@@ -149,5 +149,6 @@
    "count": 60002,
    "dtype": "uint8"
   }
- ]
+ ],
+ "built_from_compressed_mesh": true
 }

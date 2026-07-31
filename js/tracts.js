@@ -242,7 +242,12 @@ export async function mountTracts(el) {
   const cortex = new THREE.Group();
   scene.add(cortex);
   const hemis = {};
-  const NV = surfMeta.surface.vertices_per_hemisphere;
+  /* Each hemisphere is compressed separately, so they can end up with
+     different vertex counts and each label block records its own. */
+  const NVS = Array.isArray(surfMeta.surface.vertices_per_hemisphere)
+    ? surfMeta.surface.vertices_per_hemisphere
+    : [surfMeta.surface.vertices_per_hemisphere,
+       surfMeta.surface.vertices_per_hemisphere];
   let labelBuf = null;
 
   /* Lambert, not Basic. An unlit surface is a flat silhouette: the gyri and
@@ -363,9 +368,12 @@ export async function mountTracts(el) {
         mesh.material.needsUpdate = true;
         return;
       }
-      const lab = new Uint16Array(labelBuf, set.offset + hi * NV * 2, NV);
-      const c = new Float32Array(NV * 3);
-      for (let i = 0; i < NV; i++) {
+      const counts = set.counts || NVS;
+      const before = hi === 0 ? 0 : counts[0];
+      const n = counts[hi];
+      const lab = new Uint16Array(labelBuf, set.offset + before * 2, n);
+      const c = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) {
         const v = lab[i];
         /* Label 0 is the medial wall, which is not a network and must not be
            given a colour as though it were one. */

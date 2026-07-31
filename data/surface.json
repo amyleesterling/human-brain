@@ -2,7 +2,10 @@
  "surface": {
   "source": "https://raw.githubusercontent.com/rmldj/hcp-utils/master/hcp_utils/data/S1200.[LR].midthickness_MSMAll.32k_fs_LR.surf.gii",
   "citation": "HCP S1200 group average, Van Essen et al., NeuroImage 80:62 (2013). MSMAll registered.",
-  "vertices_per_hemisphere": 32492,
+  "vertices_per_hemisphere": [
+   32492,
+   32492
+  ],
   "mesh": {
    "L": "meshes/cortex/L.glb",
    "R": "meshes/cortex/R.glb"
@@ -27,7 +30,11 @@
     "6": "7Networks_6",
     "7": "7Networks_7"
    },
-   "n_regions": 8
+   "n_regions": 8,
+   "counts": [
+    32492,
+    32492
+   ]
   },
   "yeo17": {
    "description": "Resting state networks, 17",
@@ -54,7 +61,11 @@
     "16": "17Networks_16",
     "17": "17Networks_17"
    },
-   "n_regions": 18
+   "n_regions": 18,
+   "counts": [
+    32492,
+    32492
+   ]
   },
   "glasser": {
    "description": "HCP-MMP1, 360 regions",
@@ -244,7 +255,12 @@
     "179": "R_a32pr_ROI",
     "180": "R_p24_ROI"
    },
-   "n_regions": 181
+   "n_regions": 181,
+   "counts": [
+    32492,
+    32492
+   ]
   }
- }
+ },
+ "built_from_compressed_mesh": true
 }

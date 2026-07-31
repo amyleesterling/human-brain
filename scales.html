@@ -304,6 +304,8 @@
         <div class="tabs" role="tablist" aria-label="Band" data-band></div></div>
       <div class="srcrow"><span class="srclab">Eyes</span>
         <div class="tabs" role="tablist" aria-label="Eye state" data-srcstate></div></div>
+      <div class="srcrow"><span class="srclab">Surface</span>
+        <div class="tabs" role="tablist" aria-label="Surface" data-surfkind></div></div>
       <div class="srcrow"><span class="srclab">View</span>
         <div class="tabs" role="tablist" aria-label="View" data-srcview></div></div>
       <p class="srcinfo" data-srcinfo></p>
@@ -324,6 +326,16 @@
     concentrated in the lateral occipital cortex, the lingual gyrus and the
     cuneus, and it is <b>19.4 times</b> stronger than with the eyes open. The
     build script refuses to write the file unless all of that holds.</p>
+
+  <div class="note"><b>A better surface is not better data.</b> This is drawn
+    on the full fsaverage cortex, <b>163,842 vertices</b> per hemisphere, but
+    the inverse was solved on 10,242. Each vertex takes the value of the source
+    nearest to it, measured on the sphere so that distance means distance along
+    the cortical sheet rather than through the skull. Nothing is smoothed and
+    no value is invented: the patches you see are exactly the size of the
+    source space's own resolution. Switch to <b>folded</b> to see it on the
+    real anatomy, where most of the cortex is hidden inside sulci, which is why
+    the inflated view exists at all.</div>
 
   <div class="note"><b>An inverse solution is not a measurement.</b> Infinitely
     many arrangements of current inside a head produce exactly the same

@@ -1,0 +1,71 @@
+{
+ "about": "Full resolution fsaverage surfaces, and for every vertex the index of its nearest source in the ico-5 source space the inverse was solved on.",
+ "interpolation": "nearest neighbour, measured on the spherical surface so that distance means cortical distance rather than distance through the skull. No smoothing is applied and no value is invented: the patches are the size of the source space's own resolution.",
+ "honesty": "This is a better surface, not better data. The inverse solution still has 10,242 degrees of freedom per hemisphere.",
+ "head": "fsaverage (FreeSurfer). Check its terms before any commercial or museum licence.",
+ "vertices_per_hemisphere": 163842,
+ "sources_per_hemisphere": 10242,
+ "meshes": {
+  "lh-inflated": {
+   "file": "meshes/hires/lh-inflated.glb",
+   "vertices": 163842,
+   "faces": 327680,
+   "bytes": 5899060
+  },
+  "lh-white": {
+   "file": "meshes/hires/lh-white.glb",
+   "vertices": 163841,
+   "faces": 327680,
+   "bytes": 5899060
+  },
+  "rh-inflated": {
+   "file": "meshes/hires/rh-inflated.glb",
+   "vertices": 163842,
+   "faces": 327680,
+   "bytes": 5899056
+  },
+  "rh-white": {
+   "file": "meshes/hires/rh-white.glb",
+   "vertices": 163841,
+   "faces": 327680,
+   "bytes": 5899056
+  }
+ },
+ "bin": "data/hires.bin",
+ "layout": [
+  {
+   "hemi": "lh",
+   "kind": "inflated",
+   "offset": 0,
+   "count": 163842,
+   "source_offset": 0,
+   "sources": 10242
+  },
+  {
+   "hemi": "lh",
+   "kind": "white",
+   "offset": 327684,
+   "count": 163841,
+   "source_offset": 0,
+   "sources": 10242
+  },
+  {
+   "hemi": "rh",
+   "kind": "inflated",
+   "offset": 655366,
+   "count": 163842,
+   "source_offset": 10242,
+   "sources": 10242
+  },
+  {
+   "hemi": "rh",
+   "kind": "white",
+   "offset": 983050,
+   "count": 163841,
+   "source_offset": 10242,
+   "sources": 10242
+  }
+ ],
+ "built_from_compressed_mesh": true,
+ "per_surface_index": "Each surface has its own index array, because the inflated and folded meshes are compressed separately and Draco gives them different vertex orders."
+}
