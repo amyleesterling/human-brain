@@ -1,0 +1,421 @@
+{
+ "about": "What the named bundles are for, and a few ordinary things a person does, written as chains of the bundles that carry them. Every bundle id here exists in data/tracts.json and every length used is that bundle's own measured median. The chains are the classical anatomy of these pathways; the timings are arithmetic on real lengths.",
+ "caveat": "A pathway is a simplification. Real behaviour recruits far more than a handful of bundles, in parallel, with loops back. What is honest here is that each named leg is a real tract of a real measured length, and that the arithmetic on those lengths is done correctly.",
+ "synaptic_delay_ms": 1.0,
+ "synaptic_delay_note": "A chemical synapse takes roughly a millisecond to cross, so a pathway's delay is its cable time plus one of these per relay. This is a standard figure, not something measured here.",
+ "citation": "Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).",
+ "descriptions": {
+  "AF": "The language loop. Arches from the temporal lobe up and forward to the frontal lobe, connecting the region that recognises words to the region that produces them. Damage here leaves people able to understand and to speak, but unable to repeat what they just heard.",
+  "CST": "The main motor highway. Runs from the motor cortex at the top of the head down through the brainstem to the spinal cord. Every voluntary movement you make leaves the brain along this tract.",
+  "CBT": "The motor tract for the face. Same origin as the corticospinal tract, but it stops in the brainstem to reach the muscles of the jaw, lips and tongue rather than continuing to the body.",
+  "CC": "The bridge between the hemispheres. The largest fibre bundle in the brain, carrying traffic between left and right so the two halves behave as one.",
+  "AC": "A much older, much smaller commissure than the corpus callosum, connecting the temporal lobes and parts of the olfactory system beneath it.",
+  "OR": "Carries vision from the thalamus to the primary visual cortex at the very back of the head. Cutting part of it removes part of the visual field rather than dimming all of it.",
+  "AR": "Carries hearing from the thalamus to the auditory cortex on the upper surface of the temporal lobe.",
+  "CNII": "The optic nerve. Not really a nerve at all but a tract of the brain that grew out to meet the eye.",
+  "CNVIII": "The vestibulocochlear nerve, carrying both hearing and the sense of which way is up from the inner ear.",
+  "CNIII": "The oculomotor nerve, which moves the eye.",
+  "CNV": "The trigeminal nerve, which carries sensation from the face and drives the muscles of chewing.",
+  "CNVII": "The facial nerve, which moves every muscle of expression.",
+  "ML": "The medial lemniscus. Carries fine touch and the sense of where your limbs are from the spinal cord up to the thalamus.",
+  "IFOF": "The longest association bundle in the brain, running from the occipital lobe all the way to the frontal lobe. Implicated in reading meaning out of what is seen.",
+  "ILF": "Runs the length of the temporal lobe from the occipital pole, carrying visual information toward the structures that recognise objects, faces and words.",
+  "SLF1": "The dorsal-most branch of the superior longitudinal fasciculus, linking parietal cortex with frontal cortex. Associated with where things are and with reaching for them.",
+  "SLF2": "The middle branch, connecting parietal to frontal cortex. Associated with directing attention.",
+  "SLF3": "The ventral branch, linking the supramarginal gyrus to the frontal operculum. Associated with the body and the mouth.",
+  "UF": "Hooks from the front of the temporal lobe around into the orbital frontal cortex. Associated with linking things to their emotional value.",
+  "F": "The fornix. The output cable of the hippocampus, curving around to the hypothalamus and the mammillary bodies. Central to laying down memories.",
+  "MdLF": "Runs along the upper temporal lobe to the parietal lobe, associated with hearing and with language.",
+  "VOF": "A short vertical bundle at the back of the brain connecting dorsal and ventral visual areas.",
+  "FAT": "The frontal aslant tract, connecting the supplementary motor area to the inferior frontal gyrus. Associated with the initiation of speech and with stuttering.",
+  "EMC": "The extreme capsule, a ventral route between temporal and frontal cortex, often described as the other half of the language network alongside the arcuate.",
+  "MCP": "The middle cerebellar peduncle, the enormous input cable from the pons into the cerebellum.",
+  "SCP": "The superior cerebellar peduncle, the cerebellum's main output.",
+  "ICP": "The inferior cerebellar peduncle, carrying balance and body-position information into the cerebellum.",
+  "DRTT": "The dentatorubrothalamic tract, the cerebellum's route back to the motor cortex. The target of surgery for tremor.",
+  "RST": "The rubrospinal tract, an older motor route running beside the corticospinal tract.",
+  "TR_A": "The anterior thalamic radiation, connecting the thalamus to the prefrontal cortex.",
+  "TR_S": "The superior thalamic radiation, carrying touch and body sense from the thalamus up to the somatosensory cortex.",
+  "TR_P": "The posterior thalamic radiation, connecting the thalamus to parietal and occipital cortex.",
+  "CB": "The cerebellum's own internal fibres.",
+  "C_FP": "The cingulum, frontal to parietal segment. Runs above the corpus callosum as part of the limbic circuit.",
+  "C_PH": "The cingulum, parahippocampal segment, running into the medial temporal lobe.",
+  "PAT": "The parietal aslant tract.",
+  "CPT_F": "Frontopontine fibres, carrying the frontal lobe's instructions down to the pons and on to the cerebellum.",
+  "CS_A": "Anterior corticostriatal fibres, from cortex into the basal ganglia.",
+  "V": "The vermis, the midline strip of the cerebellum."
+ },
+ "actions": [
+  {
+   "id": "read-aloud",
+   "name": "Read a word out loud",
+   "blurb": "Light hits the retina, becomes a word, becomes a sound you make. The classical reading-aloud route, and the reason the arcuate fasciculus is the most famous bundle in the brain.",
+   "relays": 5,
+   "steps": [
+    {
+     "tract": "CNII_L",
+     "what": "Light on the retina leaves the eye",
+     "group": "Cranial nerve",
+     "length_mm": 54.5,
+     "cumulative_mm": 54.5
+    },
+    {
+     "tract": "OR_L",
+     "what": "The thalamus relays it to primary visual cortex",
+     "group": "Projection",
+     "length_mm": 107.1,
+     "cumulative_mm": 161.6
+    },
+    {
+     "tract": "ILF_L",
+     "what": "Forward along the temporal lobe, where shapes become a word",
+     "group": "Association",
+     "length_mm": 121.9,
+     "cumulative_mm": 283.5
+    },
+    {
+     "tract": "AF_L",
+     "what": "The arcuate carries the word to the frontal lobe",
+     "group": "Association",
+     "length_mm": 136.5,
+     "cumulative_mm": 420.0
+    },
+    {
+     "tract": "CBT_L",
+     "what": "Motor cortex drives the jaw, lips and tongue",
+     "group": "Projection",
+     "length_mm": 125.4,
+     "cumulative_mm": 545.4
+    }
+   ],
+   "total_mm": 545.4,
+   "timing": {
+    "1": {
+     "travel_ms": 545.4,
+     "synapses_ms": 5.0,
+     "total_ms": 550.4,
+     "synapses_share_pct": 1.0
+    },
+    "10": {
+     "travel_ms": 54.54,
+     "synapses_ms": 5.0,
+     "total_ms": 59.54,
+     "synapses_share_pct": 8.0
+    },
+    "60": {
+     "travel_ms": 9.09,
+     "synapses_ms": 5.0,
+     "total_ms": 14.09,
+     "synapses_share_pct": 35.0
+    },
+    "120": {
+     "travel_ms": 4.54,
+     "synapses_ms": 5.0,
+     "total_ms": 9.54,
+     "synapses_share_pct": 52.0
+    }
+   }
+  },
+  {
+   "id": "catch",
+   "name": "Catch a ball",
+   "blurb": "Vision to action, by the shortest route the brain has. Nothing here is about what the object is, only where it is and where your hand needs to go.",
+   "relays": 4,
+   "steps": [
+    {
+     "tract": "CNII_L",
+     "what": "The ball's image leaves the eye",
+     "group": "Cranial nerve",
+     "length_mm": 54.5,
+     "cumulative_mm": 54.5
+    },
+    {
+     "tract": "OR_L",
+     "what": "Relayed to primary visual cortex",
+     "group": "Projection",
+     "length_mm": 107.1,
+     "cumulative_mm": 161.6
+    },
+    {
+     "tract": "SLF1_L",
+     "what": "Up to parietal and frontal cortex: where is it, and where am I",
+     "group": "Association",
+     "length_mm": 89.0,
+     "cumulative_mm": 250.6
+    },
+    {
+     "tract": "CST_L",
+     "what": "Motor cortex to the spinal cord, and the hand closes",
+     "group": "Projection",
+     "length_mm": 134.3,
+     "cumulative_mm": 384.9
+    }
+   ],
+   "total_mm": 384.9,
+   "timing": {
+    "1": {
+     "travel_ms": 384.9,
+     "synapses_ms": 4.0,
+     "total_ms": 388.9,
+     "synapses_share_pct": 1.0
+    },
+    "10": {
+     "travel_ms": 38.49,
+     "synapses_ms": 4.0,
+     "total_ms": 42.49,
+     "synapses_share_pct": 9.0
+    },
+    "60": {
+     "travel_ms": 6.42,
+     "synapses_ms": 4.0,
+     "total_ms": 10.41,
+     "synapses_share_pct": 38.0
+    },
+    "120": {
+     "travel_ms": 3.21,
+     "synapses_ms": 4.0,
+     "total_ms": 7.21,
+     "synapses_share_pct": 55.0
+    }
+   }
+  },
+  {
+   "id": "flinch",
+   "name": "Flinch at a sound",
+   "blurb": "The shortest loop on this page. Hearing reaches the cortex over a remarkably small distance, which is part of why sound startles you faster than sight does.",
+   "relays": 4,
+   "steps": [
+    {
+     "tract": "CNVIII_L",
+     "what": "The inner ear sends it in",
+     "group": "Cranial nerve",
+     "length_mm": 58.3,
+     "cumulative_mm": 58.3
+    },
+    {
+     "tract": "AR_L",
+     "what": "The thalamus relays it to auditory cortex",
+     "group": "Projection",
+     "length_mm": 57.1,
+     "cumulative_mm": 115.4
+    },
+    {
+     "tract": "SLF3_L",
+     "what": "Forward to the frontal operculum",
+     "group": "Association",
+     "length_mm": 70.6,
+     "cumulative_mm": 186.0
+    },
+    {
+     "tract": "CST_L",
+     "what": "Out to the body",
+     "group": "Projection",
+     "length_mm": 134.3,
+     "cumulative_mm": 320.3
+    }
+   ],
+   "total_mm": 320.3,
+   "timing": {
+    "1": {
+     "travel_ms": 320.3,
+     "synapses_ms": 4.0,
+     "total_ms": 324.3,
+     "synapses_share_pct": 1.0
+    },
+    "10": {
+     "travel_ms": 32.03,
+     "synapses_ms": 4.0,
+     "total_ms": 36.03,
+     "synapses_share_pct": 11.0
+    },
+    "60": {
+     "travel_ms": 5.34,
+     "synapses_ms": 4.0,
+     "total_ms": 9.34,
+     "synapses_share_pct": 43.0
+    },
+    "120": {
+     "travel_ms": 2.67,
+     "synapses_ms": 4.0,
+     "total_ms": 6.67,
+     "synapses_share_pct": 60.0
+    }
+   }
+  },
+  {
+   "id": "hot",
+   "name": "Pull your hand off something hot",
+   "blurb": "Note what is not here: the reflex that actually yanks your hand back never reaches the brain at all, it turns around in the spinal cord. This is the slower path, the one by which you find out about it.",
+   "relays": 4,
+   "steps": [
+    {
+     "tract": "ML_L",
+     "what": "Touch and position climb from the spinal cord",
+     "group": "Projection",
+     "length_mm": 137.5,
+     "cumulative_mm": 137.5
+    },
+    {
+     "tract": "TR_S_L",
+     "what": "The thalamus relays it to somatosensory cortex",
+     "group": "Projection",
+     "length_mm": 64.1,
+     "cumulative_mm": 201.6
+    },
+    {
+     "tract": "SLF3_L",
+     "what": "Forward to frontal cortex",
+     "group": "Association",
+     "length_mm": 70.6,
+     "cumulative_mm": 272.2
+    },
+    {
+     "tract": "CST_L",
+     "what": "And back out to the arm",
+     "group": "Projection",
+     "length_mm": 134.3,
+     "cumulative_mm": 406.5
+    }
+   ],
+   "total_mm": 406.5,
+   "timing": {
+    "1": {
+     "travel_ms": 406.5,
+     "synapses_ms": 4.0,
+     "total_ms": 410.5,
+     "synapses_share_pct": 1.0
+    },
+    "10": {
+     "travel_ms": 40.65,
+     "synapses_ms": 4.0,
+     "total_ms": 44.65,
+     "synapses_share_pct": 9.0
+    },
+    "60": {
+     "travel_ms": 6.77,
+     "synapses_ms": 4.0,
+     "total_ms": 10.77,
+     "synapses_share_pct": 37.0
+    },
+    "120": {
+     "travel_ms": 3.39,
+     "synapses_ms": 4.0,
+     "total_ms": 7.39,
+     "synapses_share_pct": 54.0
+    }
+   }
+  },
+  {
+   "id": "name-face",
+   "name": "Recognise a face and name it",
+   "blurb": "The long way round. The inferior fronto-occipital fasciculus is the longest association bundle in the brain, and this route uses most of it.",
+   "relays": 5,
+   "steps": [
+    {
+     "tract": "CNII_L",
+     "what": "The face leaves the eye",
+     "group": "Cranial nerve",
+     "length_mm": 54.5,
+     "cumulative_mm": 54.5
+    },
+    {
+     "tract": "OR_L",
+     "what": "Relayed to primary visual cortex",
+     "group": "Projection",
+     "length_mm": 107.1,
+     "cumulative_mm": 161.6
+    },
+    {
+     "tract": "IFOF_L",
+     "what": "All the way forward, occipital to frontal",
+     "group": "Association",
+     "length_mm": 185.2,
+     "cumulative_mm": 346.8
+    },
+    {
+     "tract": "UF_L",
+     "what": "Hooked into orbitofrontal cortex, where it means something",
+     "group": "Association",
+     "length_mm": 82.2,
+     "cumulative_mm": 429.0
+    },
+    {
+     "tract": "CBT_L",
+     "what": "And out to the mouth to say the name",
+     "group": "Projection",
+     "length_mm": 125.4,
+     "cumulative_mm": 554.4
+    }
+   ],
+   "total_mm": 554.4,
+   "timing": {
+    "1": {
+     "travel_ms": 554.4,
+     "synapses_ms": 5.0,
+     "total_ms": 559.4,
+     "synapses_share_pct": 1.0
+    },
+    "10": {
+     "travel_ms": 55.44,
+     "synapses_ms": 5.0,
+     "total_ms": 60.44,
+     "synapses_share_pct": 8.0
+    },
+    "60": {
+     "travel_ms": 9.24,
+     "synapses_ms": 5.0,
+     "total_ms": 14.24,
+     "synapses_share_pct": 35.0
+    },
+    "120": {
+     "travel_ms": 4.62,
+     "synapses_ms": 5.0,
+     "total_ms": 9.62,
+     "synapses_share_pct": 52.0
+    }
+   }
+  },
+  {
+   "id": "cross",
+   "name": "Tell your other hemisphere",
+   "blurb": "Everything above happens on one side. Anything the two halves of the brain do together has to cross the corpus callosum, the largest bundle in the human brain.",
+   "relays": 2,
+   "steps": [
+    {
+     "tract": "CC",
+     "what": "Straight across the midline",
+     "group": "Commissural",
+     "length_mm": 131.3,
+     "cumulative_mm": 131.3
+    }
+   ],
+   "total_mm": 131.3,
+   "timing": {
+    "1": {
+     "travel_ms": 131.3,
+     "synapses_ms": 2.0,
+     "total_ms": 133.3,
+     "synapses_share_pct": 2.0
+    },
+    "10": {
+     "travel_ms": 13.13,
+     "synapses_ms": 2.0,
+     "total_ms": 15.13,
+     "synapses_share_pct": 13.0
+    },
+    "60": {
+     "travel_ms": 2.19,
+     "synapses_ms": 2.0,
+     "total_ms": 4.19,
+     "synapses_share_pct": 48.0
+    },
+    "120": {
+     "travel_ms": 1.09,
+     "synapses_ms": 2.0,
+     "total_ms": 3.09,
+     "synapses_share_pct": 65.0
+    }
+   }
+  }
+ ]
+}

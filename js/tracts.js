@@ -58,6 +58,10 @@ const NAMED = {
   CNVII: "Facial nerve", CNVIII: "Vestibulocochlear nerve",
 };
 
+function stemOf(id) {
+  return id.replace(/_(L|R)$/, "");
+}
+
 function prettyName(id) {
   const m = /^([A-Za-z_0-9]+?)(_[LR])?$/.exec(id);
   const stem = m ? m[1] : id;
@@ -79,6 +83,9 @@ const VERT = `
 attribute float cum;      // millimetres along this streamline
 attribute vec3 acolor;
 attribute float bundle;
+attribute float chOn;     // 1 if this bundle is in the chosen chain
+attribute float chOff;    // millimetres of chain already travelled before it
+uniform float uChain;     // 1 while a chain is chosen
 uniform float uBundle;    // -1 for all
 uniform float vmm;        // conduction velocity, mm per second
 uniform float slow;       // how many times slower than real this is shown
@@ -91,11 +98,16 @@ varying float vdrop;
 void main() {
   vcolor = acolor;
   vdrop = (uBundle < 0.0 || abs(bundle - uBundle) < 0.5) ? 0.0 : 1.0;
+  // A chain hides everything not in it, and gives each leg a head start equal
+  // to the length of the legs before it, so one pulse runs the whole route in
+  // order instead of every leg firing at once.
+  if (uChain > 0.5) vdrop = chOn > 0.5 ? 0.0 : 1.0;
+  float lead = uChain > 0.5 ? chOff : 0.0;
   // Arrival time at this point, from the real distance along the real
   // streamline divided by the chosen velocity. This is the whole physics.
   // The slow factor stretches the clock and nothing else: it cannot change
   // the ratio between two tracts, only how long you get to watch it.
-  float arrival = (cum / vmm) * slow;
+  float arrival = ((cum + lead) / vmm) * slow;
   float g = fract((time - arrival) / period);
   // a short bright head with a tail behind it
   float head = smoothstep(0.10, 0.0, g) + 0.35 * smoothstep(0.30, 0.05, g);
@@ -128,6 +140,11 @@ export async function mountTracts(el) {
   const meta = await fetch("data/tracts.json").then((r) => r.json());
   const buf = await fetch(meta.bin).then((r) => r.arrayBuffer());
   const surfMeta = await fetch("data/surface.json").then((r) => r.json());
+  /* What each bundle is for, and a few ordinary actions written as chains of
+     real bundles. The timings in it are arithmetic on the same median lengths
+     this page already draws. */
+  const paths = await fetch("data/pathways.json").then((r) => r.json())
+    .catch(() => ({ descriptions: {}, actions: [] }));
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 16 / 9, 1, 4000);
@@ -183,6 +200,10 @@ export async function mountTracts(el) {
   geom.setAttribute("acolor", new THREE.BufferAttribute(col, 3));
   geom.setAttribute("cum", new THREE.BufferAttribute(cum, 1));
   geom.setAttribute("bundle", new THREE.BufferAttribute(bid, 1));
+  const chOn = new Float32Array(segs * 2);
+  const chOff = new Float32Array(segs * 2);
+  geom.setAttribute("chOn", new THREE.BufferAttribute(chOn, 1));
+  geom.setAttribute("chOff", new THREE.BufferAttribute(chOff, 1));
   geom.computeBoundingSphere();
   centre.copy(geom.boundingSphere.center);
 
@@ -197,6 +218,7 @@ export async function mountTracts(el) {
          velocity, so every ratio on screen is still the real one. */
       slow: { value: 300 },
       pulse: { value: REDUCED ? 0 : 1 }, uBundle: { value: -1 },
+      uChain: { value: 0 },
       /* 489,258 additively blended segments stacked over one brain sum
          straight to white, and a saturated scene cannot show a pulse at all:
          measured, the lit fraction moved by 0.01 per cent across a whole
@@ -245,6 +267,11 @@ export async function mountTracts(el) {
     loader.load(surfMeta.surface.mesh[h], (g) => {
       const m = g.scene.getObjectByProperty("isMesh", true);
       if (!m) return res();
+      /* The exported GLB carries POSITION only. Without normals a Lambert
+         surface is shaded per face, so 64,980 triangles read as 64,980 flat
+         facets and the cortex looks far coarser than it is. The mesh was
+         never the problem; the missing normals were. */
+      m.geometry.computeVertexNormals();
       const mesh = new THREE.Mesh(m.geometry, surfMat());
       mesh.renderOrder = 2;
       hemis[h] = mesh;
@@ -283,7 +310,11 @@ export async function mountTracts(el) {
     back: { v: [0.05, -1, 0.14], label: "Back" },
     top: { v: [0.02, -0.1, 1], label: "Top" },
   };
-  const DIST = 430;
+  /* Measured off the framebuffer: at 430 the brain filled 44 per cent of the
+     canvas height with a quarter of the frame empty above and below. The
+     scene is about 180 mm across and the field of view is 40 degrees, so this
+     puts it at roughly four fifths of the height. */
+  const DIST = 268;
   function setView(k, animate) {
     const v = VIEWS[k] || VIEWS.left;
     const d = new THREE.Vector3(...v.v).normalize().multiplyScalar(DIST);
@@ -397,9 +428,11 @@ export async function mountTracts(el) {
      travels, which is the part that is a measurement. */
   function retime() {
     const vis = bundleList();
-    const longest = activeBundle >= 0
-      ? meta.bundles[activeBundle].length_mm.p95
-      : Math.max(...vis.map((b) => b.length_mm.p95));
+    const longest = action
+      ? action.total_mm
+      : activeBundle >= 0
+        ? meta.bundles[activeBundle].length_mm.p95
+        : Math.max(...vis.map((b) => b.length_mm.p95));
     const shown = (longest / mat.uniforms.vmm.value) * mat.uniforms.slow.value;
     mat.uniforms.period.value = Math.min(9, Math.max(1.4, shown * 1.45));
   }
@@ -427,6 +460,8 @@ export async function mountTracts(el) {
       `<div><dt>Drawn here</dt><dd>${fmt(b.lines)}</dd></div>` +
       `<div><dt>Crossing time at ${v} m/s</dt><dd>${ms(b.length_mm.median).toFixed(ms(b.length_mm.median) < 10 ? 2 : 1)} <u>ms</u></dd></div>` +
       `</div>` +
+      (paths.descriptions[stemOf(b.id)]
+        ? `<p class="whatfor">${paths.descriptions[stemOf(b.id)]}</p>` : "") +
       `<p class="slowline">Shown <b>${fmt(slow)} times slower</b> than real. ` +
       `At life speed this crossing would be over before the screen had ` +
       `finished drawing one frame.</p>`;
@@ -454,6 +489,12 @@ export async function mountTracts(el) {
       const b = e.target.closest("[data-b]");
       if (!b) return;
       const i = +b.dataset.b;
+      if (action) {
+        action = null;
+        if (actEl) actEl.querySelectorAll("[data-a]").forEach((x) =>
+          x.setAttribute("aria-selected", String(x.dataset.a === "none")));
+        applyChain();
+      }
       activeBundle = activeBundle === i ? -1 : i;
       mat.uniforms.uBundle.value = activeBundle;
       /* One bundle on its own is a hundredth of the ink, so it has to be
@@ -477,6 +518,103 @@ export async function mountTracts(el) {
       surfEl.querySelectorAll("[data-s]").forEach((x) =>
         x.setAttribute("aria-selected", String(x === b)));
       paintSurface();
+    });
+  }
+
+  /* ---- actions -----------------------------------------------------------
+     An ordinary thing a person does, written as a chain of real bundles. The
+     scene shows only that chain, each leg tinted along the sequence, and the
+     pulse walks the whole chain end to end with each leg starting where the
+     last one finished. The arithmetic is on the same measured lengths the
+     rest of the page uses. */
+  const actEl = el.querySelector("[data-actions]");
+  const actInfoEl = el.querySelector("[data-actinfo]");
+  let action = null;
+
+  /* One geometry holds every bundle, so a chain is drawn by allowing several
+     bundle ids at once and giving each an offset so the pulse runs through
+     them in order rather than all at the same time. */
+  const perBundleOn = new Float32Array(meta.bundles.length);
+  const perBundleOff = new Float32Array(meta.bundles.length);
+
+  function applyChain() {
+    perBundleOn.fill(0);
+    perBundleOff.fill(0);
+    if (action) {
+      let run = 0;
+      action.steps.forEach((st) => {
+        const i = meta.bundles.findIndex((b) => b.id === st.tract);
+        if (i < 0) return;
+        perBundleOn[i] = 1;
+        perBundleOff[i] = run;
+        run += st.length_mm;
+      });
+      mat.uniforms.uChain.value = 1;
+      mat.uniforms.dim.value = 0.9;
+    } else {
+      mat.uniforms.uChain.value = 0;
+      mat.uniforms.dim.value = activeBundle < 0 ? 0.16 : 0.75;
+    }
+    /* One pass over the vertices rather than a texture lookup per fragment.
+       This runs on a click, not on a frame. */
+    for (let i = 0; i < chOn.length; i++) {
+      const b = bid[i];
+      chOn[i] = perBundleOn[b];
+      chOff[i] = perBundleOff[b];
+    }
+    geom.attributes.chOn.needsUpdate = true;
+    geom.attributes.chOff.needsUpdate = true;
+    retime();
+    showAction();
+    loop.once();
+  }
+
+  function showAction() {
+    if (!actInfoEl) return;
+    if (!action) { actInfoEl.innerHTML = ""; return; }
+    const v = mat.uniforms.vmm.value / 1000;
+    const t = action.timing[String(v)] || action.timing["60"];
+    actInfoEl.innerHTML =
+      `<p class="actblurb">${action.blurb}</p>` +
+      `<ol class="chain">` + action.steps.map((st, i) =>
+        `<li style="--cc:${GROUP_COLOR[st.group] || "#8b94a3"}">` +
+        `<b>${prettyName(st.tract)}</b><span>${st.what}</span>` +
+        `<em>${fmt(st.length_mm)} mm</em></li>`).join("") + `</ol>` +
+      `<div class="rows">` +
+      `<div><dt>Total cable</dt><dd>${fmt(action.total_mm)} <u>mm</u></dd></div>` +
+      `<div><dt>Travel at ${v} m/s</dt><dd>${t.travel_ms} <u>ms</u></dd></div>` +
+      `<div><dt>${action.relays} synapses on the way</dt><dd>${t.synapses_ms} <u>ms</u></dd></div>` +
+      `<div><dt>All in</dt><dd><b>${t.total_ms}</b> <u>ms</u></dd></div>` +
+      `</div>` +
+      `<p class="tnote">At this speed the synapses are <b>${t.synapses_share_pct}%</b> ` +
+      `of the delay. Crossing a synapse costs about a millisecond however fast ` +
+      `the cable is, so the faster the fibre, the more of the wait is the gaps ` +
+      `rather than the wire.</p>`;
+  }
+
+  if (actEl && paths.actions.length) {
+    actEl.innerHTML =
+      `<button type="button" role="tab" data-a="none" aria-selected="true">` +
+      `Just the anatomy</button>` +
+      paths.actions.map((a) =>
+        `<button type="button" role="tab" data-a="${a.id}"` +
+        ` aria-selected="false">${a.name}</button>`).join("");
+    actEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-a]");
+      if (!b) return;
+      action = b.dataset.a === "none"
+        ? null : paths.actions.find((a) => a.id === b.dataset.a);
+      actEl.querySelectorAll("[data-a]").forEach((x) =>
+        x.setAttribute("aria-selected", String(x === b)));
+      /* A chain overrides any single bundle the reader had picked, or the two
+         filters fight and the scene shows neither. */
+      if (action) {
+        activeBundle = -1;
+        mat.uniforms.uBundle.value = -1;
+        renderBundles();
+        showInfo();
+      }
+      applyChain();
     });
   }
 
@@ -527,6 +665,7 @@ export async function mountTracts(el) {
       if (!b) return;
       mat.uniforms.vmm.value = +b.dataset.v * 1000;
       retime();
+      showAction();
       speedEl.querySelectorAll("[data-v]").forEach((x) =>
         x.setAttribute("aria-selected", String(x === b)));
       showInfo(); loop.once();

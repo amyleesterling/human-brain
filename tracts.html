@@ -22,6 +22,16 @@
     --edge: #4A5568; --accent: #3E96F0;
   }
   * { box-sizing: border-box; }
+  /* Windows draws a light scrollbar by default, which on a near black page
+     reads as a bright bar. Firefox takes scrollbar-color, WebKit needs the
+     pseudo elements. */
+  * { scrollbar-color: #2A313D transparent; scrollbar-width: thin; }
+  ::-webkit-scrollbar { width:11px; height:11px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#252C38; border-radius:6px;
+    border:2px solid transparent; background-clip:content-box; }
+  ::-webkit-scrollbar-thumb:hover { background:#39424f; background-clip:content-box; }
+
   body { margin: 0; background: var(--ground); color: var(--ink);
     font: 400 17px/1.7 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
     -webkit-text-size-adjust: 100%; overflow-x: hidden; }
@@ -107,7 +117,18 @@
     background:rgba(62,150,240,.10); }
 
   .bundles { display:flex; flex-wrap:wrap; gap:6px; max-height:184px; overflow-y:auto;
-    scrollbar-width:thin; padding-right:4px; }
+    scrollbar-width:thin; scrollbar-color:#2A313D transparent; padding-right:8px; }
+  /* Firefox takes scrollbar-color above; WebKit needs its own pseudo elements,
+     and without them Windows draws a light grey bar down a near black page. */
+  .bundles::-webkit-scrollbar, .cellrail::-webkit-scrollbar,
+  .typerail::-webkit-scrollbar { width:10px; height:10px; }
+  .bundles::-webkit-scrollbar-track, .cellrail::-webkit-scrollbar-track,
+  .typerail::-webkit-scrollbar-track { background:transparent; }
+  .bundles::-webkit-scrollbar-thumb, .cellrail::-webkit-scrollbar-thumb,
+  .typerail::-webkit-scrollbar-thumb { background:#252C38; border-radius:6px;
+    border:2px solid transparent; background-clip:content-box; }
+  .bundles::-webkit-scrollbar-thumb:hover { background:#39424f;
+    background-clip:content-box; }
   .bundles .lg { appearance:none; display:inline-flex; align-items:center; gap:8px;
     background:transparent; border:1px solid var(--line); border-radius:6px;
     color:var(--dim); font:inherit; font-size:12.5px; padding:5px 10px; cursor:pointer;
@@ -134,6 +155,24 @@
   /* micrometres and millimetres must not be shouted into MM */
   .rows dd u, .tabs button u { text-transform: none; text-decoration: none;
     color: var(--faint); font-size: 11.5px; }
+  .whatfor { font-size:13.5px; color:var(--dim); margin:12px 0 0;
+    border-left:2px solid var(--line); padding:1px 0 1px 14px; }
+  .actblurb { font-size:13.5px; color:var(--dim); margin:0 0 12px; }
+  ol.chain { list-style:none; margin:0 0 14px; padding:0;
+    counter-reset:leg; }
+  ol.chain li { counter-increment:leg; position:relative;
+    padding:7px 0 7px 34px; border-bottom:1px solid #12151C;
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px;
+    font-size:13px; color:var(--dim); }
+  ol.chain li::before { content:counter(leg); position:absolute; left:0; top:7px;
+    width:22px; height:22px; border-radius:50%; font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cc); border:1px solid color-mix(in srgb, var(--cc) 55%, transparent);
+    background:color-mix(in srgb, var(--cc) 14%, transparent); }
+  ol.chain li b { color:var(--ink); font-weight:500; }
+  ol.chain li span { flex:1 1 200px; color:var(--faint); font-size:12.5px; }
+  ol.chain li em { font-style:normal; color:var(--dim);
+    font-variant-numeric:tabular-nums; font-size:12px; }
   .fallback { color: var(--faint); font-size: 14px; margin: 8px 0 0; }
 
   footer { border-top:1px solid var(--line); color:var(--faint); font-size:13.5px;
@@ -165,6 +204,9 @@
 
   <div class="controls">
     <div class="in">
+      <div class="row"><h3>Something a person does</h3>
+        <div class="tabs" role="tablist" aria-label="Action" data-actions></div>
+        <div data-actinfo></div></div>
       <div class="row"><h3>Point of view</h3>
         <div class="tabs" role="tablist" aria-label="Point of view" data-view></div></div>
       <div class="row"><h3>Bundle family</h3>
@@ -200,6 +242,29 @@
     J Neurophysiol <b>106</b>, 1125 (2011). Parcellation
     <a href="https://doi.org/10.1152/jn.00338.2011">doi.org/10.1152/jn.00338.2011</a>.
   </div>
+
+  <h2>Doing something with it</h2>
+  <p>Pick an action above and the scene keeps only the bundles that carry it,
+    in order. The pulse starts at the first leg and each following leg begins
+    where the last one finished, because every leg is offset by the length of
+    everything before it. Reading a word aloud is five bundles and
+    <b>545 millimetres</b> of cable. Recognising a face and naming it is
+    <b>554</b>. Telling your other hemisphere something is <b>131</b>, all of it
+    corpus callosum.</p>
+  <p>The part worth watching is the arithmetic underneath. At 60 metres per
+    second, reading a word aloud takes about <b>9 milliseconds</b> of travel,
+    and the five synapses on the way cost another <b>5</b>. Push the fibres to
+    120 m/s and the travel halves but the synapses do not move at all, because
+    crossing a synapse takes about a millisecond however fast the cable is. Make
+    the wire fast enough and almost all of the delay is the gaps rather than the
+    wire.</p>
+
+  <div class="note"><b>A pathway is a simplification and these are the
+    classical ones.</b> Real behaviour recruits far more than four or five
+    bundles, in parallel, with loops running backwards the whole time. What is
+    honest here is narrower and still worth something: every leg is a real
+    named tract, its length is that tract's own measured median across 1,065
+    people, and the arithmetic on those lengths is done correctly.</div>
 
   <h2>How the two were put in one place</h2>
   <p>The tracts and the cortex come from different files in different spaces,
@@ -254,7 +319,7 @@
 </main>
 
 <script type="module">
-  import { mountTracts } from "./js/tracts.js?v=3";
+  import { mountTracts } from "./js/tracts.js?v=4";
   const el = document.getElementById("tracts");
   mountTracts(el).then(function (h) {
     /* The pane this was built in composites no frames, so requestAnimationFrame
