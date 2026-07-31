@@ -1,0 +1,243 @@
+{
+ "about": "Cortical source estimates of EEG band power, dSPM, on the fsaverage template head.",
+ "method": "Three shell BEM forward model on fsaverage, standard 10-05 electrode positions, noise covariance from the eyes-open recording, dSPM inverse with lambda2 = 1/9, loose 0.2, depth 0.8. Band power is the mean square of the band-filtered source time course, normalised to its own maximum.",
+ "caveat": "A distributed inverse solution is one of infinitely many current distributions that fit the same scalp data. dSPM assumes current is spread smoothly over the cortex. This is a standard published estimate, not a measurement, and the head is a template rather than this person's.",
+ "recording": "PhysioNet EEG Motor Movement/Imagery Database, subject 1, runs 1 and 2. ODC-BY 1.0.",
+ "head": "fsaverage (FreeSurfer). Check its terms before any commercial or museum licence.",
+ "sources": 20484,
+ "meshes": {
+  "l": {
+   "file": "meshes/sources/lh.glb",
+   "vertices": 10242,
+   "faces": 20480
+  },
+  "r": {
+   "file": "meshes/sources/rh.glb",
+   "vertices": 10242,
+   "faces": 20480
+  }
+ },
+ "bin": "data/sources.bin",
+ "layout": [
+  {
+   "band": "delta",
+   "state": "closed",
+   "offset": 0,
+   "count": 20484
+  },
+  {
+   "band": "delta",
+   "state": "open",
+   "offset": 81936,
+   "count": 20484
+  },
+  {
+   "band": "theta",
+   "state": "closed",
+   "offset": 163872,
+   "count": 20484
+  },
+  {
+   "band": "theta",
+   "state": "open",
+   "offset": 245808,
+   "count": 20484
+  },
+  {
+   "band": "alpha",
+   "state": "closed",
+   "offset": 327744,
+   "count": 20484
+  },
+  {
+   "band": "alpha",
+   "state": "open",
+   "offset": 409680,
+   "count": 20484
+  },
+  {
+   "band": "beta",
+   "state": "closed",
+   "offset": 491616,
+   "count": 20484
+  },
+  {
+   "band": "beta",
+   "state": "open",
+   "offset": 573552,
+   "count": 20484
+  },
+  {
+   "band": "gamma",
+   "state": "closed",
+   "offset": 655488,
+   "count": 20484
+  },
+  {
+   "band": "gamma",
+   "state": "open",
+   "offset": 737424,
+   "count": 20484
+  }
+ ],
+ "bands": [
+  {
+   "name": "delta",
+   "low_Hz": 1.0,
+   "high_Hz": 4.0,
+   "states": {
+    "closed": {
+     "max": 0.9683776328088943
+    },
+    "open": {
+     "max": 0.512484774369605
+    }
+   }
+  },
+  {
+   "name": "theta",
+   "low_Hz": 4.0,
+   "high_Hz": 8.0,
+   "states": {
+    "closed": {
+     "max": 1.0120584389843195
+    },
+    "open": {
+     "max": 0.20143462203329782
+    }
+   }
+  },
+  {
+   "name": "alpha",
+   "low_Hz": 8.0,
+   "high_Hz": 13.0,
+   "states": {
+    "closed": {
+     "max": 5.093089175842541
+    },
+    "open": {
+     "max": 0.2626784758502862
+    }
+   }
+  },
+  {
+   "name": "beta",
+   "low_Hz": 13.0,
+   "high_Hz": 30.0,
+   "states": {
+    "closed": {
+     "max": 1.0853974425130226
+    },
+    "open": {
+     "max": 0.3934912514059015
+    }
+   }
+  },
+  {
+   "name": "gamma",
+   "low_Hz": 30.0,
+   "high_Hz": 45.0,
+   "states": {
+    "closed": {
+     "max": 0.39374716422848904
+    },
+    "open": {
+     "max": 0.34796713331281587
+    }
+   }
+  }
+ ],
+ "top_regions_eyes_closed": {
+  "delta": [
+   [
+    "superiorparietal",
+    113
+   ],
+   [
+    "precuneus",
+    88
+   ],
+   [
+    "lateraloccipital",
+    84
+   ],
+   [
+    "cuneus",
+    33
+   ]
+  ],
+  "theta": [
+   [
+    "lateraloccipital",
+    112
+   ],
+   [
+    "lingual",
+    92
+   ],
+   [
+    "pericalcarine",
+    49
+   ],
+   [
+    "precuneus",
+    38
+   ]
+  ],
+  "alpha": [
+   [
+    "lateraloccipital",
+    102
+   ],
+   [
+    "precuneus",
+    67
+   ],
+   [
+    "lingual",
+    63
+   ],
+   [
+    "cuneus",
+    62
+   ]
+  ],
+  "beta": [
+   [
+    "cuneus",
+    93
+   ],
+   [
+    "lingual",
+    85
+   ],
+   [
+    "lateraloccipital",
+    76
+   ],
+   [
+    "pericalcarine",
+    71
+   ]
+  ],
+  "gamma": [
+   [
+    "superiortemporal",
+    214
+   ],
+   [
+    "middletemporal",
+    78
+   ],
+   [
+    "inferiortemporal",
+    56
+   ],
+   [
+    "precentral",
+    11
+   ]
+  ]
+ },
+ "alpha_closed_over_open": 19.4
+}

@@ -12,6 +12,11 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- three is vendored, same as the other pages. Without this the source
+     estimate's module cannot resolve "three" and fails silently. -->
+<script type="importmap">
+{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}
+</script>
 <style>
   :root {
     --ink: #EFF2F7; --dim: #9AA2B1; --faint: #666E7C;
@@ -157,6 +162,25 @@
     font-size:10.5px; margin-top:2px; }
   .headcard figcaption span b { color:var(--dim); }
 
+
+  /* ---- the source page --------------------------------------------------- */
+  .srcbox { background:#090B10; border:1px solid var(--line); border-radius:12px;
+    padding:0; margin:20px 0 0; overflow:hidden; }
+  .srcbox .canvas { height:min(64vh,560px); min-height:340px; width:100%; }
+  .srcctl { border-top:1px solid var(--line); padding:14px clamp(14px,3vw,20px) 16px; }
+  .srcrow { display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px;
+    margin:0 0 10px; }
+  .srclab { font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--faint); min-width:58px; }
+  .srcrow .tabs button { text-transform:capitalize; }
+  .srcinfo { font-size:13.5px; color:var(--dim); margin:4px 0 0; }
+  .srcinfo b { color:var(--ink); font-weight:500; }
+  .srcscale { display:flex; align-items:center; gap:10px; margin:12px 0 0;
+    font-size:11px; color:var(--faint); }
+  .srcscale i { flex:1; height:9px; border-radius:2px; background:linear-gradient(
+    90deg, rgb(14,18,28), rgb(30,52,96), rgb(40,120,186), rgb(58,200,186),
+    rgb(190,226,118), rgb(255,216,96), rgb(255,252,240)); }
+
   .legend { display:flex; flex-wrap:wrap; gap:6px 18px; margin:12px 0 0;
     font-size:12px; color:var(--dim); }
   .legend .lk { display:inline-flex; align-items:center; gap:7px; }
@@ -260,6 +284,61 @@
     onto the cortical surface a page away.</div>
 </main>
 
+
+<div class="wide">
+  <section class="srcbox" id="sources">
+    <div class="canvas" data-mount></div>
+    <p class="status" data-status style="padding:0 16px">Solving</p>
+    <div class="srcctl">
+      <div class="srcrow"><span class="srclab">Band</span>
+        <div class="tabs" role="tablist" aria-label="Band" data-band></div></div>
+      <div class="srcrow"><span class="srclab">Eyes</span>
+        <div class="tabs" role="tablist" aria-label="Eye state" data-srcstate></div></div>
+      <div class="srcrow"><span class="srclab">View</span>
+        <div class="tabs" role="tablist" aria-label="View" data-srcview></div></div>
+      <p class="srcinfo" data-srcinfo></p>
+      <div class="srcscale"><span>quiet</span><i></i><span>strong</span></div>
+    </div>
+  </section>
+</div>
+
+<main class="wrap">
+  <h2 style="margin-top:34px">On the cortex, not on the scalp</h2>
+  <p>The head maps above are scalp maps. This is the same recording pushed
+    through the other side of the problem: a three-shell model of brain, skull
+    and scalp says how a current at each of <b>20,484</b> points on the cortex
+    would look at each of the 64 electrodes, and the inverse runs that
+    backwards to ask which cortical currents best explain what was measured.</p>
+  <p>Alpha lands where a century of neurology says it should. With the eyes
+    closed, <b>70 per cent</b> of its strongest sources fall in visual cortex,
+    concentrated in the lateral occipital cortex, the lingual gyrus and the
+    cuneus, and it is <b>19.4 times</b> stronger than with the eyes open. The
+    build script refuses to write the file unless all of that holds.</p>
+
+  <div class="note"><b>An inverse solution is not a measurement.</b> Infinitely
+    many arrangements of current inside a head produce exactly the same
+    voltages on its surface, so the problem has no unique answer and what you
+    get back is what your assumptions asked for. This one assumes current is
+    spread smoothly over the cortical sheet. That is a standard and published
+    kind of estimate, and it is still an estimate. The head is fsaverage, an
+    average of many brains, not the head that was recorded.</div>
+
+  <div class="note"><b>Watch what happens to gamma.</b> It localises to the
+    superior temporal cortex, 54 per cent of its strongest sources, with more
+    in the middle and inferior temporal cortex. That is not a brain rhythm. It
+    is the temporalis muscle, and the inverse solution has faithfully placed a
+    clenched jaw on the nearest available cortex. Solving the inverse problem
+    does not remove an artefact. It gives it an anatomical address, which is
+    more convincing and no more true.</div>
+
+  <div class="note"><b>Delta moved, and that is the noise model working.</b> On
+    the scalp, delta peaked at AF8 above the eye. Here it does not, because the
+    covariance that whitens the data was computed from the eyes-open recording,
+    which is full of blinks, so the solution treats eye movement as noise and
+    discounts it. What survives is not frontal. That is a choice this page made
+    and it is visible in the result.</div>
+</main>
+
 <main class="wrap">
   <h2>What the picture says</h2>
   <p>Almost everything sits in a band running from bottom left to top right:
@@ -345,6 +424,14 @@
   import { mountScales } from "./js/scales.js";
   import { mountWaves } from "./js/waves.js";
   import { mountTopo } from "./js/topo.js";
+  import { mountSources } from "./js/sources.js";
+  mountSources(document.getElementById("sources")).then(function (h) {
+    window.__sources = h;
+  }).catch(function (e) {
+    const st = document.getElementById("sources").querySelector("[data-status]");
+    if (st) st.textContent = "The source estimate did not load. " + e.message;
+    throw e;
+  });
   mountTopo(document.getElementById("topo")).catch(function (e) {
     document.getElementById("topo").querySelector("[data-toponote]").textContent =
       "The head maps did not load. " + e.message;
