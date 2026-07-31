@@ -1,0 +1,61 @@
+{
+ "about": "One synapse from H01, reconstructed from the c3 segmentation at the resolution the microscope worked at.",
+ "citation": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+ "licence": "CC BY 4.0",
+ "source": "gs://h01-release/data/20210601/c3, synapse from proofread_104/synapse_locations.csv",
+ "on_cell": {
+  "segment": "3470629528",
+  "class": "pyramidal",
+  "layer": "L5",
+  "incoming_synapses": 3117
+ },
+ "voxel_nm": [
+  8.0,
+  8.0,
+  33.0
+ ],
+ "cube_um": [
+  3.04,
+  3.04,
+  3.04
+ ],
+ "junction_um": [
+  1.52,
+  1.52,
+  1.518
+ ],
+ "partner_separation_nm": 82.4,
+ "smoothing": "Taubin, 12 iterations. Marching cubes on a voxel grid gives stair steps, and the stairs are the grid rather than the membrane. Nothing else is altered.",
+ "parts": [
+  {
+   "role": "presynaptic",
+   "segment": 4022649290,
+   "colour": "#FFB24D",
+   "voxels": 224704,
+   "volume_um3": 0.475,
+   "faces": 126436,
+   "extent_um": [
+    1.67,
+    2.09,
+    1.61
+   ],
+   "file": "meshes/synapse/presynaptic.glb",
+   "bytes": 2278376
+  },
+  {
+   "role": "postsynaptic",
+   "segment": 3470629528,
+   "colour": "#3E96F0",
+   "voxels": 1648748,
+   "volume_um3": 3.482,
+   "faces": 307978,
+   "extent_um": [
+    3.03,
+    2.31,
+    2.34
+   ],
+   "file": "meshes/synapse/postsynaptic.glb",
+   "bytes": 5549784
+  }
+ ]
+}

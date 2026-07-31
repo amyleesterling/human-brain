@@ -101,10 +101,33 @@ def main():
         q = pt - lo
         return int(vol[q[0], q[1], q[2]])
 
-    seg_pre, seg_post = seg_at(pre), seg_at(post)
+    def partner_near(pt, exclude, r=(14, 14, 4)):
+        """The commonest segment in a small ball around a point, ignoring the
+        cell we already have and the background.
+
+        The release marks the two sides of a synapse about 80 nm apart, which
+        is ten voxels: close enough that the presynaptic marker often lands
+        just inside the postsynaptic membrane. Sampling a neighbourhood finds
+        the partner the marker was pointing at."""
+        q = pt - lo
+        sl = tuple(slice(max(0, q[i] - r[i]), min(vol.shape[i], q[i] + r[i] + 1))
+                   for i in range(3))
+        vals, counts = np.unique(vol[sl], return_counts=True)
+        keep = [(c, int(v)) for v, c in zip(vals, counts)
+                if v != 0 and int(v) not in exclude]
+        if not keep:
+            return None
+        return max(keep)[1]
+
+    seg_post = seg_at(post)
+    seg_pre = seg_at(pre)
+    if seg_pre in (0, seg_post):
+        seg_pre = partner_near(pre, exclude={seg_post})
+        print(f"  the presynaptic marker fell inside the postsynaptic cell, "
+              f"so the partner was taken from its neighbourhood")
     print(f"  presynaptic segment  {seg_pre}")
     print(f"  postsynaptic segment {seg_post}")
-    if seg_pre == 0 or seg_post == 0 or seg_pre == seg_post:
+    if not seg_pre or seg_post == 0 or seg_pre == seg_post:
         raise SystemExit("the two sides did not resolve to distinct segments")
 
     out = []
