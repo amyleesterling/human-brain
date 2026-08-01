@@ -421,7 +421,15 @@ export async function mountLadder(el) {
        rather than being hidden behind it. Deeper rungs therefore get a lower
        render order and go down first. */
     const idx = db.stages.indexOf(stage);
-    g.traverse((o) => { o.renderOrder = -idx; });
+    /* The fig leaf is the exception and has to be last of all. depthTest is
+       already off on it, but that only stops it being REJECTED by the depth
+       buffer; it does not decide when it is painted. Sharing a render order
+       with the body meant three.js sorted them back to front by distance, and
+       the anatomy protrudes in front of the sprite's centroid, so it was
+       painted after the sprite and straight over the top of it. */
+    g.traverse((o) => {
+      o.renderOrder = o.userData.role === "figleaf" ? 9999 : -idx;
+    });
     scene.add(g);
     built[stage.id] = g;
     return g;
