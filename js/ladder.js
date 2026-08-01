@@ -108,6 +108,12 @@ export async function mountLadder(el) {
 
   const db = await fetch("data/ladder.json").then((r) => r.json());
   const soma = await fetch("data/somas.json").then((r) => r.json());
+  /* Pia to white matter, fitted to the seven layer meshes. The neuron rungs
+     are drawn in the H01 block's frame, and the block is a tilted slab: its X
+     is 23.6 degrees off the cortical axis, so standing cells up along X hangs
+     them crooked. Same bug as the cell gallery on the front page. */
+  const depthAxis = await fetch("data/depth-axis.json")
+    .then((r) => r.json()).then((d) => d.depth_axis).catch(() => null);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(38, 16 / 9, 0.01, 400);
@@ -391,7 +397,13 @@ export async function mountLadder(el) {
          base than the solid surfaces do. */
       const m = new THREE.Mesh(geo, tissue("#8FC4FF", {
         roughness: 0.55, emissive: 0.30 }));
-      m.rotation.z = Math.PI / 2;      // the block's X is depth, so pia goes up
+      if (depthAxis) {
+        m.quaternion.setFromUnitVectors(
+          new THREE.Vector3().fromArray(depthAxis).normalize(),
+          new THREE.Vector3(0, -1, 0));    // pia up, white matter down
+      } else {
+        m.rotation.z = Math.PI / 2;
+      }
       g.add(m);
     } else if (stage.kind === "synapse") {
       for (const m of stage.meshes) {
@@ -465,6 +477,14 @@ export async function mountLadder(el) {
      neighbours, so the number on screen is always the true width. */
   const N = db.stages.length;
   const LOGF = db.stages.map((s) => Math.log10(s.fov_m));
+  /* How fast each rung grows as the ladder passes it. This was a flat 4.6x
+     everywhere, which meant the picture zoomed the same amount whether the
+     number changed by 1.7 times or by 244, and that mismatch is what reads as
+     the scale being wrong. Now it follows the real ratio, clamped: below two
+     the move is too small to register as a zoom at all, and above nine it is a
+     lurch. Only the two steps in the sky are big enough to hit the ceiling. */
+  const RATE = db.stages.map((s, i) => (i >= N - 1) ? 4.0
+    : Math.max(2.0, Math.min(9.0, s.fov_m / db.stages[i + 1].fov_m)));
   const Z = db.stages.map((_, i) => i);          // rung positions
   const zTop = 0, zBot = N - 1;
   let z = zTop, playing = !REDUCED, dir = 1;
@@ -565,7 +585,7 @@ export async function mountLadder(el) {
          screen in the readout, which is the channel that has to carry it; the
          transition only has to be legible. */
       const d = z - i;
-      const grow = Math.pow(4.6, d);
+      const grow = Math.pow(RATE[i], d);
       if (s.kind === "body") {
         /* The person rung does not get the gentle push the others do, because
            it has somewhere specific to go. It closes in on the head by exactly

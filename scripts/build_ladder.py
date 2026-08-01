@@ -48,13 +48,15 @@ def main():
     surf = json.load(open(p("data", "surface.json"), encoding="utf-8"))
     tracts = json.load(open(p("data", "tracts.json"), encoding="utf-8"))
 
-    # The hero cell: the biggest proofread pyramidal cell with a mesh, because
-    # the rung above it is a whole cubic millimetre and the eye needs the jump
-    # to land on something with reach.
-    pyr = [c for c in cells["cells"]
-           if c.get("klass") == "pyramidal" and c.get("mesh")]
-    hero = max(pyr, key=lambda c: max(
-        c["bounds_um"][1][i] - c["bounds_um"][0][i] for i in range(3)))
+    # The hero cell is the cell the synapse is ON, and that is not a detail.
+    # It used to be whichever proofread pyramidal cell had the longest reach,
+    # which looked better and meant the ladder flew into one neuron and landed
+    # on a junction belonging to a different one. Nothing on screen said so.
+    nz = json.load(open(p("data", "neuron-zoom.json"), encoding="utf-8"))
+    hero = next(c for c in cells["cells"]
+                if str(c["id"]) == str(nz["cell"]["segment"]))
+    assert str(hero["id"]) == str(syn["on_cell"]["segment"]), (
+        "the neuron rung is not the cell the synapse rung sits on")
     hero_ext = [round(hero["bounds_um"][1][i] - hero["bounds_um"][0][i], 1)
                 for i in range(3)]
     print(f"hero cell {hero['id']}: {hero['klass']}, {hero['layer']}, "
@@ -226,6 +228,17 @@ def main():
             "segment": hero["id"],
             "stats": {k: hero[k] for k in ("NSI", "NSIe", "NSIi", "NSO", "Sp")},
         },
+    ] + [
+        # The descent into the synapse, cropped from that same cell around the
+        # synapse's own position. Without these the ladder stepped 701 times in
+        # one go, where nothing else near it steps more than six.
+        {
+            "id": c["id"], "name": c["name"], "note": c["note"],
+            "fov_m": c["width_m"], "kind": "cell", "units_per_m": 1e6,
+            "mesh": c["file"], "source": cells["citation"],
+            "segment": nz["cell"]["segment"],
+        } for c in nz["crops"]
+    ] + [
         {
             "id": "synapse",
             "name": "One synapse",

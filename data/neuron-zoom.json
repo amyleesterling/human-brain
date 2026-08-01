@@ -1,0 +1,75 @@
+{
+ "about": "The gap between a whole neuron and one synapse, filled by cropping the same cell around the synapse's own position.",
+ "cell": {
+  "segment": "3470629528",
+  "class": "pyramidal",
+  "layer": "L5",
+  "incoming_synapses": 3117,
+  "full_extent_um": [
+   780.8,
+   1156.6,
+   174.6
+  ],
+  "full_width_um": 1156.6,
+  "full_width_m": 0.00115664,
+  "mesh": "meshes/cells/3470629528.glb"
+ },
+ "synapse_centre_um": [
+  1608.84,
+  1230.49,
+  25.01
+ ],
+ "nearest_surface_um": 0.13,
+ "why": "The ladder used to go from a 2.13 mm neuron to a 3.04 um synapse in one step of 701 times, and the neuron was not even the cell the synapse is on. Now it is, and the descent is one continuous push into one place on one cell.",
+ "method": "Faces whose centroid falls inside a box of the given width around the synapse. Whole faces rather than clipping planes: a clipped dendrite gets a flat cap and reads as a cut cable, where a ragged end reads as a broken branch.",
+ "crops": [
+  {
+   "id": "nz300",
+   "name": "A branch of it",
+   "note": "One dendrite leaving the cell body, with its side branches.",
+   "file": "meshes/neuron/crop300.glb",
+   "width_um": 300.0,
+   "width_m": 0.0003,
+   "faces": 69999,
+   "faces_before_decimation": 1220187,
+   "actual_extent_um": [
+    232.2,
+    244.0,
+    174.6
+   ],
+   "bytes": 1272400
+  },
+  {
+   "id": "nz80",
+   "name": "A length of dendrite",
+   "note": "Eighty micrometres of cable. Somewhere on this stretch is the junction the next rung shows.",
+   "file": "meshes/neuron/crop80.glb",
+   "width_um": 80.0,
+   "width_m": 8e-05,
+   "faces": 67552,
+   "faces_before_decimation": 67552,
+   "actual_extent_um": [
+    80.4,
+    46.9,
+    44.9
+   ],
+   "bytes": 1219880
+  },
+  {
+   "id": "nz20",
+   "name": "Where the synapse is",
+   "note": "Twenty micrometres. The swellings on the surface are where other cells arrive; this cell carries 3,117 of them.",
+   "file": "meshes/neuron/crop20.glb",
+   "width_um": 20.0,
+   "width_m": 2e-05,
+   "faces": 12652,
+   "faces_before_decimation": 12652,
+   "actual_extent_um": [
+    20.2,
+    7.0,
+    9.5
+   ],
+   "bytes": 229136
+  }
+ ]
+}

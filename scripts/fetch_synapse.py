@@ -167,6 +167,11 @@ def main():
         "on_cell": {"segment": cell["id"], "class": cell["klass"],
                     "layer": cell["layer"],
                     "incoming_synapses": cell["NSI"]},
+        # Where this synapse actually is in the volume. Without it the ladder
+        # cannot zoom into the synapse: it can only cut to it, and it was
+        # cutting to a synapse on a DIFFERENT cell from the neuron rung above.
+        "centre_voxel": [int(v) for v in xyz],
+        "centre_um": [round(float(v), 2) for v in xyz * VOX / 1000.0],
         "voxel_nm": VOX.tolist(),
         "cube_um": [round(float(x), 2) for x in (hi - lo) * VOX / 1000.0],
         "junction_um": [round(float(x), 3) for x in junction],

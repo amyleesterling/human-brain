@@ -173,25 +173,58 @@
   {
    "id": "cell",
    "name": "One neuron",
-   "fov_m": 0.0021324,
-   "note": "A layer 5 pyramidal cell, 3,347 synapses arriving on it, checked by hand.",
+   "fov_m": 0.0011567,
+   "note": "A layer 5 pyramidal cell, 3,117 synapses arriving on it, checked by hand.",
    "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
    "kind": "cell",
    "units_per_m": 1000000.0,
-   "mesh": "meshes/cells/5015035926.glb",
+   "mesh": "meshes/cells/3470629528.glb",
    "extent_um": [
-    2132.4,
-    974.2,
+    780.6,
+    1156.7,
     174.5
    ],
-   "segment": "5015035926",
+   "segment": "3470629528",
    "stats": {
-    "NSI": 3347,
-    "NSIe": 2076,
-    "NSIi": 1271,
-    "NSO": 142,
-    "Sp": 0.19657916617175436
+    "NSI": 3117,
+    "NSIe": 1882,
+    "NSIi": 1235,
+    "NSO": 59,
+    "Sp": 0.1601088558793514
    }
+  },
+  {
+   "id": "nz300",
+   "name": "A branch of it",
+   "note": "One dendrite leaving the cell body, with its side branches.",
+   "fov_m": 0.0003,
+   "kind": "cell",
+   "units_per_m": 1000000.0,
+   "mesh": "meshes/neuron/crop300.glb",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "segment": "3470629528"
+  },
+  {
+   "id": "nz80",
+   "name": "A length of dendrite",
+   "note": "Eighty micrometres of cable. Somewhere on this stretch is the junction the next rung shows.",
+   "fov_m": 8e-05,
+   "kind": "cell",
+   "units_per_m": 1000000.0,
+   "mesh": "meshes/neuron/crop80.glb",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "segment": "3470629528"
+  },
+  {
+   "id": "nz20",
+   "name": "Where the synapse is",
+   "note": "Twenty micrometres. The swellings on the surface are where other cells arrive; this cell carries 3,117 of them.",
+   "fov_m": 2e-05,
+   "kind": "cell",
+   "units_per_m": 1000000.0,
+   "mesh": "meshes/neuron/crop20.glb",
+   "source": "Shapson-Coe et al., Science 384, eadk4858 (2024)",
+   "segment": "3470629528"
   },
   {
    "id": "synapse",

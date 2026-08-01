@@ -9,6 +9,16 @@
   "layer": "L5",
   "incoming_synapses": 3117
  },
+ "centre_voxel": [
+  201105,
+  153811,
+  758
+ ],
+ "centre_um": [
+  1608.84,
+  1230.49,
+  25.01
+ ],
  "voxel_nm": [
   8.0,
   8.0,

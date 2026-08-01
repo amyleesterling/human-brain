@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>From Earth to a synapse</title>
-<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across thirteen rungs, every one a real photograph or a real measurement.">
+<meta name="description" content="One continuous push from Earth to a single synapse in one human brain, twelve and a half orders of magnitude across sixteen rungs, every one a real photograph or a real measurement.">
 <meta property="og:title" content="From Earth to a synapse">
 <meta property="og:description" content="Twelve and a half orders of magnitude, from a planet to a synapse, in one move.">
 <meta property="og:url" content="https://amyleesterling.github.io/human-brain/ladder.html">
@@ -114,7 +114,7 @@
 <main class="wrap">
   <h1>From Earth to a synapse</h1>
   <p class="lede">Twelve and a half orders of magnitude, in a single move.
-    Thirteen rungs from a planet down to one junction between two cells in one
+    Sixteen rungs from a planet down to one junction between two cells in one
     human brain, and every one of them is a real photograph or a real
     measurement. The number in the corner is the true width of what you are
     looking at, not a caption.</p>
@@ -195,12 +195,26 @@
   <p><b>One cubic millimetre, 3.9 mm.</b> H01: a piece of a living woman's
     temporal cortex, with all 49,379 of its cell bodies in the place the
     microscope found them. Photographing this much tissue took 1.4 petabytes.</p>
-  <p><b>One neuron, 2.1 mm.</b> A layer 5 pyramidal cell from that block,
-    followed by hand through the whole volume, carrying 3,347 incoming
+  <p><b>One neuron, 1.16 mm.</b> A layer 5 pyramidal cell from that block,
+    followed by hand through the whole volume, carrying 3,117 incoming
     synapses.</p>
-  <p><b>One synapse, 3 &micro;m.</b> An axon ending and the dendrite it is
-    talking to, pulled straight out of the electron microscopy. The gap between
-    them is about 20 nanometres.</p>
+  <p><b>300 µm, 80 µm, 20 µm.</b> The same cell, three times closer, each crop
+    taken around the position of one particular synapse so the descent lands
+    somewhere rather than merely getting smaller.</p>
+  <p><b>One synapse, 3 µm.</b> That synapse. An axon ending and the dendrite it
+    is talking to, pulled straight out of the electron microscopy. The gap
+    between them is about 20 nanometres.</p>
+
+  <div class="note"><b>This used to be one step of seven hundred times, onto
+    the wrong cell.</b> The ladder went from a 2.13 mm neuron straight to a
+    3.04 µm synapse, where nothing else near it steps by more than six. Worse,
+    the neuron was segment 5015035926 and the synapse was on 3470629528, so the
+    zoom flew into one cell and landed on a junction belonging to a different
+    one. Nothing on screen said so, which is exactly why it needed saying. The
+    neuron rung is now the cell the synapse is actually on, and the three crops
+    between them come from that one mesh, around that one synapse: 3.9, 3.7,
+    4.0 and 6.6 times. The closest point of the cell surface to that synapse is
+    0.13 µm, which is the check that it really is on this cell.</div>
 
   <div class="note"><b>At 21 micrometres you can see that cells are there, and
     not much else.</b> A human cortical cell body is between half a pixel and
@@ -216,7 +230,7 @@
     0.85 mm down through the densely packed layers, then falling away again
     into white matter.</div>
 
-  <h2>Why this is thirteen scenes and not one</h2>
+  <h2>Why this is sixteen scenes and not one</h2>
   <p>Earth is 1.3&times;10<sup>7</sup> metres across. A synaptic cleft is
     2&times;10<sup>-8</sup>. That is fifteen orders of magnitude, and a 32-bit
     float carries about seven significant digits, so a single scene holding both
@@ -229,8 +243,10 @@
     oversize and on its way out of frame. The growth rate is a fixed factor per
     rung rather than the true ratio, because those ratios run from 1.7 to 701
     and driving the picture with them would make one step a lurch and the next
-    barely move. The honest number is on screen in the readout, which is the
-    channel that has to carry it. The zoom you see is continuous; the arithmetic
+    barely move. So the growth now follows the real ratio between neighbours,
+    clamped between two and nine: below two the move does not register as a
+    zoom at all, above nine it is a lurch. Only the two steps in the sky are
+    large enough to hit that ceiling. The zoom you see is continuous; the arithmetic
     behind it never spans more than one rung at a time. The readout is computed
     from the real measurements, so it cannot drift away from the picture.</p>
 
@@ -285,7 +301,7 @@
 </main>
 
 <script type="module">
-  import { mountLadder } from "./js/ladder.js?v=19";
+  import { mountLadder } from "./js/ladder.js?v=20";
   const el = document.getElementById("ladder");
   mountLadder(el).then(function (h) { window.__ladder = h; }).catch(function (e) {
     const s = el.querySelector("[data-status]");
