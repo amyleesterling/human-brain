@@ -179,7 +179,12 @@ export async function mountLadder(el) {
         uniforms: { day: { value: day }, night: { value: night },
                     sun: { value: new THREE.Vector3(0.72, 0.34, 0.60) },
                     opacity: { value: 1 } },
-        transparent: true,
+        /* Transparent AND writing depth is the combination that flickers.
+           Every rung sits at the same origin, so two crossfading rungs fight
+           over the depth buffer and which one wins changes with the sort,
+           frame to frame. Order is already decided explicitly by renderOrder;
+           the depth buffer must not get a second vote. */
+        transparent: true, depthWrite: false,
         vertexShader: `varying vec2 vUv; varying vec3 vN;
           void main(){ vUv = uv; vN = normalize(normalMatrix * normal);
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
@@ -230,7 +235,7 @@ export async function mountLadder(el) {
       g.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), cut
         ? new THREE.ShaderMaterial({
             uniforms: { map: { value: t }, opacity: { value: 1 } },
-            transparent: true, side: THREE.DoubleSide,
+            transparent: true, side: THREE.DoubleSide, depthWrite: false,
             vertexShader: `varying vec2 vUv;
               void main(){ vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
@@ -247,7 +252,8 @@ export async function mountLadder(el) {
                 #include <colorspace_fragment> }`,
           })
         : new THREE.MeshBasicMaterial({ map: t, transparent: true,
-                                        side: THREE.DoubleSide })));
+                                        side: THREE.DoubleSide,
+                                        depthWrite: false })));
     } else if (stage.kind === "body") {
       /* Three layers from one scan in one frame, so the brain does not have to
          be placed inside the head by eye. The reveal is driven by position on
@@ -292,10 +298,18 @@ export async function mountLadder(el) {
         /* The shell is a glass case around the structures rather than a solid
            object, so it must not write depth or it culls its own contents. */
         const solid = m.role === "interior";
-        g.add(new THREE.Mesh(geo, tissue(m.colour, {
+        const mat = tissue(m.colour, {
           roughness: solid ? 0.6 : 0.75, opacity: m.opacity,
           depthWrite: solid, emissive: solid ? 0.06 : 0.03,
-        })));
+        });
+        /* The shell is glass and must be FrontSide. DoubleSide draws the far
+           wall of the skull as well as the near one, so every place the
+           surface folds gets two translucent layers instead of one and the
+           brain fills with bright patches that look like structures and are
+           not. tracts.js already says this in as many words about its own
+           glass brain; this rung never got the same treatment. */
+        if (!solid) mat.side = THREE.FrontSide;
+        g.add(new THREE.Mesh(geo, mat));
       }
     } else if (stage.kind === "surface") {
       for (const m of stage.meshes) {
@@ -567,10 +581,22 @@ export async function mountLadder(el) {
            are the same size in the same place and the join does not jump. The
            pan is minus the brain's position times the current scale, which
            holds it dead centre the whole way in. */
+        /* THE PAN HAS TO LEAD THE ZOOM, not travel with it. Both ran on the
+           same ramp before, and the arithmetic of that is unforgiving: the
+           head sits 0.89 units above the body's centre, and if the pan is only
+           half done when the scale is already up five times, the head is
+           0.89 x 5.26 x 0.5 = 2.3 units above frame centre, in a frame two
+           units tall. So the zoom went into the belly, the head climbed out of
+           the top of the picture, and it only came back at the very end.
+
+           The pan is therefore finished by 45 per cent of the way through the
+           rung while the zoom keeps going to the end: settle on the head
+           first, then close on it. */
         const e = smooth(0, 1, u);
+        const f = smooth(0, 0.45, u);
         const Zf = (1 + (g.userData.brainZoom - 1) * e) * Math.min(1, grow);
         g.scale.setScalar(g.userData.baseScale * Zf);
-        g.position.copy(g.userData.brainWorld).multiplyScalar(-Zf * e);
+        g.position.copy(g.userData.brainWorld).multiplyScalar(-f * Zf);
       } else {
         g.scale.setScalar(g.userData.baseScale * grow);
         g.position.set(0, 0, 0);
