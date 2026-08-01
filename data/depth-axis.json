@@ -1,0 +1,9 @@
+{
+ "depth_axis": [
+  -0.916147,
+  0.400826,
+  0.003646
+ ],
+ "meaning": "unit vector from pia toward white matter in the H01 mesh frame, fitted to the seven layer-mesh centroids",
+ "angle_to_x_deg": 23.6
+}

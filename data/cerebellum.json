@@ -1,0 +1,18 @@
+{
+ "about": "The parts of the brain the HCP cortical surface does not represent: cerebellum, brainstem and deep grey. Added because the tractography includes cerebellar bundles and cranial nerves, and those were being drawn diving out of the bottom of a cortex-only glass brain into empty space.",
+ "citation": "MNI152NLin2009cAsym brain mask, via TemplateFlow. Fonov V, et al. Unbiased average age-appropriate atlases for pediatric studies. NeuroImage 54, 313 (2011).",
+ "licence": "CC BY 4.0",
+ "source": "https://templateflow.s3.amazonaws.com/tpl-MNI152NLin2009cAsym/tpl-MNI152NLin2009cAsym_res-01_desc-brain_mask.nii.gz",
+ "space": "MNI, the same millimetres as the tractography",
+ "method": "Brain mask minus every voxel within 10 mm of the cortical surface, largest connected piece, marching cubes. Subtraction is by distance rather than containment because the midthickness surface is not reliably watertight and containment on an open surface answers nonsense.",
+ "control": {
+  "cerebellar_bundles_inside": "7 of 7",
+  "association_bundles_inside": "0 of 34",
+  "why_both": "One alone proves nothing. A mesh the size of the whole head would contain every cerebellar bundle and every association bundle too."
+ },
+ "reaches_to_z_mm": -72.5,
+ "cortex_reaches_to_z_mm": -45.3,
+ "faces": 80342,
+ "file": "meshes/cerebellum/rest.glb",
+ "limits": "A template average, and a mask rather than an anatomical segmentation: this is the shape of the tissue, not named structures."
+}

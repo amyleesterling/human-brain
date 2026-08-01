@@ -285,6 +285,30 @@ export async function mountTracts(el) {
     }, undefined, () => res());
   })));
 
+  /* The rest of the brain. The surface above is the cerebral cortex and
+     nothing else, so the Cerebellum group and the cranial nerves were being
+     drawn diving out of the bottom of the glass into empty space. This is the
+     MNI152 brain mask minus everything the cortical surface already
+     represents: cerebellum, brainstem and deep grey. It is checked, not
+     assumed: all seven cerebellar bundles have their centres inside it and
+     none of the thirty four association bundles do. */
+  const restMeta = await fetch("data/cerebellum.json")
+    .then((r) => r.json()).catch(() => null);
+  let restMesh = null;
+  if (restMeta) {
+    await new Promise((res) => {
+      loader.load(restMeta.file, (g) => {
+        const m = g.scene.getObjectByProperty("isMesh", true);
+        if (!m) return res();
+        m.geometry.computeVertexNormals();
+        restMesh = new THREE.Mesh(m.geometry, surfMat());
+        restMesh.renderOrder = 2;
+        cortex.add(restMesh);
+        res();
+      }, undefined, () => res());
+    });
+  }
+
   labelBuf = await fetch(surfMeta.bin).then((r) => r.arrayBuffer());
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -352,6 +376,20 @@ export async function mountTracts(el) {
 
   function paintSurface() {
     const set = surfMeta.sets[surfMode];
+    /* The cerebellum and brainstem follow the veil with the hemispheres, or
+       they would sit at their loading opacity while the cortex went
+       transparent around them and read as a separate object bolted on. They
+       never take a parcellation tint: the label files cover the cortical
+       surface only, so colouring this by them would be inventing data. */
+    if (restMesh) {
+      restMesh.material.vertexColors = false;
+      restMesh.material.color.setHex(0x9fc4e8);
+      restMesh.material.opacity = set ? VEIL[veil] * 0.85 : 0.075;
+      restMesh.material.blending = set ? THREE.NormalBlending
+                                       : THREE.AdditiveBlending;
+      restMesh.material.depthWrite = !!set && veil === "solid";
+      restMesh.material.needsUpdate = true;
+    }
     ["L", "R"].forEach((h, hi) => {
       const mesh = hemis[h];
       if (!mesh) return;

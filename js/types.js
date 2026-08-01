@@ -163,6 +163,10 @@ export async function mountTypes(el) {
 
   const man = await fetch("meshes/types/manifest.json").then((r) => r.json());
   const soma = await fetch("data/somas.json").then((r) => r.json());
+  /* Pia to white matter, fitted to the seven layer meshes. Loaded rather than
+     written in, so it stays tied to the geometry it was measured from. */
+  const depthAxis = await fetch("data/depth-axis.json")
+    .then((r) => r.json()).then((d) => d.depth_axis);
   const NEU = new Set(soma.neuronal), GLI = new Set(soma.glial);
   const groupOf = (t) => NEU.has(t) ? "neuron" : GLI.has(t) ? "glia" : "other";
 
@@ -255,8 +259,23 @@ export async function mountTypes(el) {
       }));
       inner.add(solid);
       solid.position.copy(centre).multiplyScalar(-1);
-      /* The block's X is depth, so a raw mesh arrives on its side. */
-      inner.rotation.z = Math.PI / 2;
+      /* Stand the cell up along the real cortical axis.
+         This used to rotate 90 degrees about Z, on the assumption that the
+         block's X is depth. It is not, and build_data.py says so in as many
+         words: the block is a tilted slab and depth cannot be read off any
+         axis of it. Measured from the seven layer meshes, pia to white matter
+         runs [-0.916, 0.401, 0.004], which is 23.6 degrees off X. Treating X
+         as vertical therefore hung every cell at an angle, and since the
+         turntable spins about screen-vertical, a cell whose long axis is not
+         vertical sweeps a cone: it tumbles instead of turning.
+
+         With the true axis, up on screen means toward the pia, which is a
+         thing worth meaning, and the spin is about the cortical depth axis.
+         Any lean left over is the cell's own: real pyramidal cells are not
+         perfectly radial, and this one leans about 28 degrees. */
+      inner.quaternion.setFromUnitVectors(
+        new THREE.Vector3().fromArray(depthAxis).normalize(),
+        new THREE.Vector3(0, -1, 0));   // pia at the top, white matter below
       inner.scale.setScalar(s);
       group = new THREE.Group();
       group.add(inner);
