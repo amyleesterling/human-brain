@@ -307,7 +307,8 @@ def fetch_surface():
         json.dump({
             "surface": {
                 "source": f"{HCPU}S1200.[LR].midthickness_MSMAll.32k_fs_LR.surf.gii",
-                "citation": "HCP S1200 group average, Van Essen et al., "
+                "licence": "HCP Open Access Data Use Terms",
+            "citation": "HCP S1200 group average, Van Essen et al., "
                             "NeuroImage 80:62 (2013). MSMAll registered.",
                 "vertices_per_hemisphere": int(nvert),
                 "mesh": {"L": "meshes/cortex/L.glb", "R": "meshes/cortex/R.glb"},

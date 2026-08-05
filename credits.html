@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citations and credits</title>
+<meta name="description" content="Every dataset behind this site, who made it, what licence it carries, and which page uses it. Generated from the data files themselves.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root { --ink:#EFF2F7; --dim:#9AA2B1; --faint:#666E7C; --ground:#05060A;
+    --line:#1D222B; --accent:#3E96F0; }
+  * { box-sizing:border-box; scrollbar-color:#2A313D transparent; scrollbar-width:thin; }
+  ::-webkit-scrollbar { width:11px; height:11px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#252C38; border-radius:6px;
+    border:2px solid transparent; background-clip:content-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font:400 17px/1.7 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%; overflow-x:hidden; }
+  .wrap { max-width:820px; margin:0 auto;
+    padding:clamp(24px,5vw,44px) clamp(16px,5vw,32px) 20px; }
+  h1 { margin:0 0 8px; font-size:clamp(22px,4.8vw,32px); font-weight:500;
+    letter-spacing:-.015em; }
+  h2 { margin:44px 0 12px; font-size:13px; font-weight:500; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--faint); }
+  p { margin:0 0 15px; }
+  a { color:var(--accent); }
+  .lede { color:var(--dim); font-size:15.5px; }
+  .note { font-size:14.5px; color:var(--dim); border-left:2px solid var(--line);
+    padding:2px 0 2px 16px; margin:22px 0; }
+  .note b { color:var(--ink); font-weight:500; }
+  .cite { border-top:1px solid var(--line); padding:14px 0 2px; }
+  .cite .ref { margin:0 0 4px; font-size:15.5px; }
+  .cite .meta { margin:0; font-size:13px; color:var(--faint); }
+  .cite .meta b { color:var(--dim); font-weight:500; }
+  footer { border-top:1px solid var(--line); color:var(--faint); font-size:13.5px;
+    padding:26px 0 0; margin:46px 0 0; }
+  footer a { color:var(--dim); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Citations and credits</h1>
+  <p class="lede">Every dataset behind this site: who made it, what licence it
+    carries, and which page uses it. Nothing here was measured by me. The
+    pictures are mine; the science is theirs, and it is the reason any of this
+    is possible.</p>
+
+  <div class="note"><b>This page is generated, not written.</b> It is built by
+    reading which module each page imports, which data file each module
+    fetches, and the citation and licence recorded inside that file by the
+    script that produced it. A dataset cannot appear on the site without
+    appearing here, and cannot be described here in terms that differ from what
+    the fetch actually recorded. A hand-written credits page is wrong the day
+    after it is written.</div>
+
+  <h2>If you use any of this</h2>
+  <p>Cite the people who made the data, not this site. Every reference below is
+    the one its authors asked for.</p>
+
+  <h2>The sources</h2>
+    <div class="cite"><p class="ref">Borner K, et al. Human Reference Atlas. Nature Methods (2025). Geometry derives from the Allen Human Reference Atlas 3D, Ding et al.</p><p class="meta"><b>CC BY 4.0</b> &middot; <a href="https://raw.githubusercontent.com/hubmapconsortium/ccf-releases/main/v2.0/models/3d-vh-f-allen-brain.glb" rel="noopener">the data</a> &middot; used on <a href="ladder.html">From Earth to a synapse</a></p></div>
+    <div class="cite"><p class="ref">Faizy TD, Kumar D, Broocks G, et al. Age-related measures of the human brain&#x27;s white matter myelin. Sci Rep 8, 14991 (2018). doi.org/10.1038/s41598-018-33112-8</p><p class="meta"><b>CC BY 4.0</b> &middot; <a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41598-018-33112-8/MediaObjects/41598_2018_33112_MOESM2_ESM.xlsx" rel="noopener">the data</a> &middot; used on <a href="scales.html">Microseconds to decades</a></p></div>
+    <div class="cite"><p class="ref">MNI152NLin2009cAsym brain mask, via TemplateFlow. Fonov V, et al. Unbiased average age-appropriate atlases for pediatric studies. NeuroImage 54, 313 (2011).</p><p class="meta"><b>CC BY 4.0</b> &middot; <a href="https://templateflow.s3.amazonaws.com/tpl-MNI152NLin2009cAsym/tpl-MNI152NLin2009cAsym_res-01_desc-brain_mask.nii.gz" rel="noopener">the data</a> &middot; used on <a href="tracts.html">The white matter</a></p></div>
+    <div class="cite"><p class="ref">Shapson-Coe et al., Science 384, eadk4858 (2024)</p><p class="meta"><b>CC BY 4.0</b> &middot; used on <a href="index.html">A cubic millimetre</a> &middot; <a href="ladder.html">From Earth to a synapse</a></p></div>
+    <div class="cite"><p class="ref">Amunts K, Lepage C, Borgeat L, et al. BigBrain: An Ultrahigh-Resolution 3D Human Brain Model. Science 340, 1472 (2013). (CC BY-NC-SA 4.0). No citation is recorded upstream.</p><p class="meta"><b>CC BY-NC-SA 4.0</b> &middot; <a href="https://neuroglancer.humanbrainproject.eu/precomputed/BigBrainRelease.2015/8bit" rel="noopener">the data</a> &middot; used on <a href="ladder.html">From Earth to a synapse</a></p></div>
+    <div class="cite"><p class="ref">BodyParts3D, The Database Center for Life Science (DBCLS). Mitsuhashi N, et al. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res 37, D782 (2009). (CC BY-SA 2.1 Japan). No citation is recorded upstream.</p><p class="meta"><b>CC BY-SA 2.1 Japan</b> &middot; <a href="https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/partof_BP3D_4.0_obj_99.zip" rel="noopener">the data</a> &middot; used on <a href="ladder.html">From Earth to a synapse</a></p></div>
+    <div class="cite"><p class="ref">Yeh FC, Population-based tract-to-region connectome of the human brain. Nat Commun 13, 4933 (2022).</p><p class="meta"><b>CC-BY-SA 4.0</b> &middot; <a href="https://github.com/data-others/atlas/releases/download/hcp1065/hcp1065_avg_tracts_trk.zip" rel="noopener">the data</a> &middot; used on <a href="ladder.html">From Earth to a synapse</a> &middot; <a href="tracts.html">The white matter</a></p></div>
+    <div class="cite"><p class="ref">OpenNeuro ds007095, human stereo EEG.</p><p class="meta"><b>CC0</b> &middot; <a href="https://s3.amazonaws.com/openneuro.org/ds007095/sub-01/ses-01/ieeg/sub-01_ses-01_task-seizure_run-01_ieeg.edf" rel="noopener">the data</a> &middot; used on <a href="scales.html">Microseconds to decades</a></p></div>
+    <div class="cite"><p class="ref">The dataset&#x27;s own dataset_description.json lists its authors as a TODO placeholder, so there is no paper to cite and nobody named to credit. It is CC0 and the credit is owed to NYU CBI regardless.</p><p class="meta"><b>CC0</b> &middot; <a href="https://s3.amazonaws.com/openneuro.org/ds007283 (sub-wlsubj016), OpenNeuro ds007283" rel="noopener">the data</a> &middot; used on <a href="retinotopy.html">Retinotopy</a></p></div>
+    <div class="cite"><p class="ref">Whole cell current clamp from human cortical tissue, DANDI dandiset 000293.</p><p class="meta"><b>CC0-1.0</b> &middot; <a href="https://api.dandiarchive.org/api/dandisets/000293/versions/0.220708.1652/assets/747e0b3a-b61b-45c5-94cd-f2cd9b8e80cd/download/" rel="noopener">the data</a> &middot; used on <a href="scales.html">Microseconds to decades</a></p></div>
+    <div class="cite"><p class="ref">HCP S1200 group average, Van Essen et al., NeuroImage 80:62 (2013). MSMAll registered.</p><p class="meta"><b>HCP Open Access Data Use Terms</b> &middot; <a href="https://raw.githubusercontent.com/rmldj/hcp-utils/master/hcp_utils/data/S1200.[LR].midthickness_MSMAll.32k_fs_LR.surf.gii" rel="noopener">the data</a> &middot; used on <a href="tracts.html">The white matter</a></p></div>
+    <div class="cite"><p class="ref">PhysioNet EEG Motor Movement/Imagery Database, subject 1, runs 1 and 2, all 64 channels. Electrode coordinates are the standard 10-05 template (MNE), not this person&#x27;s head.</p><p class="meta"><b>ODC-BY 1.0</b> &middot; used on <a href="scales.html">Microseconds to decades</a></p></div>
+    <div class="cite"><p class="ref">Blue Marble and city lights: NASA Earth Observatory / NASA Worldview (GIBS). Satellite frames: NASA GIBS, MODIS on Terra. Aerial: USGS National Agriculture Imagery Program, 1 m.</p><p class="meta"><b>Public domain (NASA and USGS)</b> &middot; used on <a href="ladder.html">From Earth to a synapse</a></p></div>
+
+  <h2>Licences worth knowing about</h2>
+  <p>Most of what is here is free for any use. Two things are not, and they are
+    flagged above: 1 dataset carries a
+    noncommercial clause, and 4 carry share-alike, which means anything
+    derived from them inherits the same terms. If this site is ever licensed
+    commercially, those are the parts that have to come out.</p>
+
+  <h2>Tools</h2>
+  <p>Built with <a href="https://threejs.org" rel="noopener">three.js</a>,
+    <a href="https://github.com/seung-lab/cloud-volume" rel="noopener">CloudVolume</a>,
+    <a href="https://trimesh.org" rel="noopener">trimesh</a>,
+    <a href="https://mne.tools" rel="noopener">MNE-Python</a>,
+    <a href="https://nipy.org/nibabel/" rel="noopener">NiBabel</a>,
+    scikit-image, NumPy and SciPy.</p>
+
+  <footer>
+    <p><a href="./">A cubic millimetre</a> &middot;
+      <a href="tracts.html">The white matter</a> &middot;
+      <a href="scales.html">Microseconds to decades</a> &middot;
+      <a href="retinotopy.html">Retinotopy</a> &middot;
+      <a href="ladder.html">Brain to synapse</a> &middot;
+      Source: <a href="https://github.com/amyleesterling/human-brain">github.com/amyleesterling/human-brain</a>.
+      Built by <a href="https://x.com/amyneurons">Amy Sterling</a>.</p>
+  </footer>
+</main>
+</body>
+</html>

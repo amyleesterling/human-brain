@@ -10,7 +10,8 @@
    "L": "meshes/cortex/L.glb",
    "R": "meshes/cortex/R.glb"
   },
-  "space": "MNI, same as the tractography"
+  "space": "MNI, same as the tractography",
+  "licence": "HCP Open Access Data Use Terms"
  },
  "bin": "data/surface-labels.bin",
  "layout": "uint16 per vertex, left hemisphere then right, one block per label set at its offset",
